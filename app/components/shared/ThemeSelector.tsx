@@ -9,10 +9,11 @@ export function ThemeSelector() {
 
   return (
     <select
-      className="select select-bordered"
+      className="select select-sm select-bordered w-fit bg-base-100 text-base-content"
       value={theme}
       onChange={(e) => changeTheme(e.target.value as (typeof themes)[number])}
     >
+      <option disabled>Theme</option>
       {themes.map((t) => (
         <option key={t} value={t}>
           {t}

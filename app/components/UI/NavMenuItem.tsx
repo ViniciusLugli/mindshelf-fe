@@ -13,7 +13,7 @@ export default function NavMenuItem({ item, mobile }: NavMenuItemProps) {
         <li>
           <details>
             <summary>{item.label}</summary>
-            <ul className="bg-neutral p-2">
+            <ul className="rounded-box bg-neutral p-2 text-neutral-content">
               {item.children.map((child, index) => (
                 <NavMenuItem key={index} item={child} mobile={mobile} />
               ))}
@@ -27,7 +27,7 @@ export default function NavMenuItem({ item, mobile }: NavMenuItemProps) {
       <li>
         <details>
           <summary>{item.label}</summary>
-          <ul className="bg-neutral p-2">
+          <ul className="rounded-box bg-neutral p-2 text-neutral-content">
             {item.children.map((child) => (
               <NavMenuItem key={child.label} item={child} mobile={mobile} />
             ))}
@@ -39,7 +39,9 @@ export default function NavMenuItem({ item, mobile }: NavMenuItemProps) {
 
   return (
     <li>
-      <Link href={item.href}>{item.label}</Link>
+      <Link href={item.href} className="text-inherit">
+        {item.label}
+      </Link>
     </li>
   );
 }
