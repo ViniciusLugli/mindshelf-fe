@@ -1,11 +1,11 @@
 "use client";
 
-import Logo from "../../shared/Logo";
+import Logo from "../Logo";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavMenu from "./NavMenu";
 import { navbarLinks } from "./navbar.links";
 import Link from "next/link";
-import { ThemeSelector } from "../../shared/ThemeSelector";
+import { ThemeSelector } from "../ThemeSelector";
 import { AccountCircle } from "@mui/icons-material";
 
 export default function Navbar() {

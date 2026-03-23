@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import "./globals.css";
-import Footer from "./components/UI/Footer";
+import Footer from "./components/shared/Footer";
 
 export const metadata: Metadata = {
   title: "MindShelf",

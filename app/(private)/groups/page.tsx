@@ -1,8 +1,11 @@
+import UserCard from "@/app/components/shared/UserCard";
+
 export default function GroupsPage() {
   return (
     <>
-      <h1>Groups</h1>
-      <h2>Your Groups</h2>
+      <div>
+        <UserCard name="Vinícius Lugli" unreadMessages={3} />
+      </div>
     </>
   );
 }

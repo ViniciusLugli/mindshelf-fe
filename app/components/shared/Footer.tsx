@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "../shared/Logo";
+import Logo from "./Logo";
 import { navbarLinks } from "./Navbar/navbar.links";
 
 const year = new Date().getFullYear();
