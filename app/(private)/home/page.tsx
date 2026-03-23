@@ -75,7 +75,7 @@ const groups: Group[] = [
 
 export default function GroupsPage() {
   return (
-    <section className="space-y-8 px-5 py-3">
+    <section className="space-y-8 px-5">
       <div className="w-full h-full">
         <UserCarousel users={users} />
       </div>
@@ -83,7 +83,7 @@ export default function GroupsPage() {
       <div className="pb-3">
         <LatestGroups groups={groups} />
       </div>
-      <div className="space-y-2 px-1">
+      <div className="space-y-2 pb-5">
         <LatestNotes notes={notes} />
       </div>
     </section>

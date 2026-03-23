@@ -23,7 +23,10 @@ export default function GroupCard({ title, color }: GroupCardProps) {
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-base-content/45">
             Group
           </p>
-          <h3 className="line-clamp-2 text-xl font-semibold leading-tight text-base-content transition-colors group-hover/group:text-primary">
+          <h3
+            className="line-clamp-2 text-xl font-semibold leading-tight transition-colors"
+            style={{ color }}
+          >
             {title}
           </h3>
         </div>
