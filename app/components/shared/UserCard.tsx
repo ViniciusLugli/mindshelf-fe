@@ -16,9 +16,8 @@ export default function UserCard({
 
   return (
     <article className="card group/card relative min-w-44 max-w-44 shrink-0 overflow-hidden border border-base-300/70 bg-base-100/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-base-content/10">
-      <figure className="relative h-28 overflow-hidden border-b border-base-300/60 bg-gradient-to-br from-primary/18 via-base-200 to-secondary/12">
+      <figure className="relative h-28 overflow-hidden border-b border-base-300/60 bg-linear-to-br from-primary/18 via-base-200 to-secondary/12">
         {avatarUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={avatarUrl}
             alt={name}
@@ -26,12 +25,12 @@ export default function UserCard({
             className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary to-secondary text-4xl font-semibold text-primary-content">
+          <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary to-secondary text-4xl font-semibold text-primary-content">
             {initial}
           </div>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-base-content/25 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-base-content/25 to-transparent" />
       </figure>
 
       {unreadMessages > 0 && (
