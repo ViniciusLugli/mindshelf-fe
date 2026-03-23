@@ -7,7 +7,7 @@ export type NavbarItem = {
 export const navbarLinks: NavbarItem[] = [
   {
     label: "Home",
-    href: "/",
+    href: "/home",
   },
   { label: "Groups", href: "/groups" },
   {

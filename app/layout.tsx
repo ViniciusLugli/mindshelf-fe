@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import "./globals.css";
+import Footer from "./components/UI/Footer";
 
 export const metadata: Metadata = {
   title: "MindShelf",
@@ -33,7 +34,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body className="min-h-screen bg-base-100 text-base-content antialiased">
+        <div className="flex min-h-screen flex-col">
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }

@@ -1,11 +1,12 @@
 "use client";
 
-import Logo from "../shared/Logo";
+import Logo from "../../shared/Logo";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavMenu from "./NavMenu";
 import { navbarLinks } from "./navbar.links";
 import Link from "next/link";
-import { ThemeSelector } from "../shared/ThemeSelector";
+import { ThemeSelector } from "../../shared/ThemeSelector";
+import { AccountCircle } from "@mui/icons-material";
 
 export default function Navbar() {
   return (
@@ -28,9 +29,12 @@ export default function Navbar() {
           </ul>
         </div>
 
-        <a className="mx-2 h-auto min-h-0 hover:bg-transparent sm:mx-4">
+        <Link
+          href={"/"}
+          className="mx-2 h-auto min-h-0 hover:bg-transparent sm:mx-4"
+        >
           <Logo size="sm" />
-        </a>
+        </Link>
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -46,7 +50,7 @@ export default function Navbar() {
           href="/signin"
           className="btn btn-ghost h-auto min-h-0 px-2 text-sm text-inherit hover:bg-transparent sm:px-3 sm:text-base lg:text-lg"
         >
-          Sign In
+          <AccountCircle />
         </Link>
       </div>
     </div>
