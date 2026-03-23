@@ -1,8 +1,8 @@
-type UserCardProprs = {
+type UserCardProps = {
   name: string;
   avatarUrl?: string;
   unreadMessages: number;
-  status?: "online" | "offline";
+  status: "online" | "offline";
 };
 
 export default function UserCard({
@@ -10,10 +10,10 @@ export default function UserCard({
   avatarUrl,
   unreadMessages,
   status,
-}: UserCardProprs) {
+}: UserCardProps) {
   return (
-    <div className="card bg-base-100 w-40 h-32 shadow-sm card-border border-accent">
-      <figure className="w-full h-full">
+    <div className="card bg-base-100 w-40 h-40 shadow-sm card-border border-accent">
+      <figure className="w-full h-20">
         {avatarUrl ? (
           <img src={avatarUrl} alt={name} />
         ) : (
@@ -29,9 +29,18 @@ export default function UserCard({
         </span>
       )}
 
-      <div className="card-body h-10 items-center text-center ">
-        <h2 className="card-title">{name}</h2>
-        <p>Status: {status}</p>
+      <div className="card-body items-center p-2">
+        <h3 className="card-title">{name}</h3>
+
+        {status === "online" ? (
+          <p>
+            <span className="badge badge-success">Online</span>
+          </p>
+        ) : (
+          <p>
+            <span className="badge badge-neutral">Offline</span>
+          </p>
+        )}
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap");
 @import "tailwindcss";
 @plugin "daisyui" {
   themes:
@@ -5,4 +6,15 @@
     dim --prefersdark,
     night,
     retro;
+}
+
+@theme {
+  --font-display: "Cormorant Garamond", serif;
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+h1,
+h2 {
+  @apply text-2xl font-bold mb-4 font-display;
 }
