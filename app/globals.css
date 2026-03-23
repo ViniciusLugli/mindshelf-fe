@@ -7,14 +7,3 @@
     night,
     retro;
 }
-
-@theme {
-  --font-display: "Cormorant Garamond", serif;
-  --font-sans: "DM Sans", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
-}
-
-h1,
-h2 {
-  @apply text-2xl font-bold mb-4 font-display;
-}

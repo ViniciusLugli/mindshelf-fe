@@ -30,12 +30,15 @@ const users: CarouselUser[] = [
   },
   { id: "7", name: "Patrícia Santos", unreadMessages: 0, status: "offline" },
   { id: "8", name: "Roberto Lima", unreadMessages: 0, status: "online" },
+  { id: "9", name: "Sofia Fernandes", unreadMessages: 2, status: "offline" },
+  { id: "10", name: "Ricardo Oliveira", unreadMessages: 0, status: "online" },
+  { id: "11", name: "Camila Rodrigues", unreadMessages: 7, status: "online" },
 ];
 
 export default function GroupsPage() {
   return (
     <>
-      <div className="w-full h-full bg-amber-300">
+      <div className="w-full h-full">
         <UserCarousel users={users} />
       </div>
     </>

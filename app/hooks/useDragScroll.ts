@@ -10,6 +10,9 @@ export function useDragScroll() {
     isDragging.current = true;
     startX.current = e.pageX - (scrollRef.current?.offsetLeft || 0);
     scrollLeft.current = scrollRef.current?.scrollLeft || 0;
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grabbing";
+    }
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
@@ -17,7 +20,7 @@ export function useDragScroll() {
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX.current) * 1.5;
-    scrollRef.current.scrollLeft = scrollLeft.current + walk;
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   const onMouseUp = () => {

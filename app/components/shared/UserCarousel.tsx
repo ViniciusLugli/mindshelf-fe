@@ -34,13 +34,15 @@ export default function UserCarousel({
   if (!users.length) return null;
 
   return (
-    <div className="w-full">
-      <h2 className="text-lg font-semibold mb-3 px-1">{title}</h2>
+    <div className="w-full m-5">
+      <h2 className="mb-4 px-1 text-lg font-bold text-base-content sm:text-2xl">
+        {title}
+      </h2>
 
-      <div className="relative group">
+      <div className="group/carousel relative">
         <button
           onClick={() => scroll("left")}
-          className="btn btn-circle btn-sm btn-ghost absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-base-100 shadow"
+          className="btn btn-circle btn-sm absolute left-1 top-1/2 z-10 -translate-x-2 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:-translate-x-3 hover:bg-base-100"
         >
           <ChevronLeft fontSize="small" />
         </button>
@@ -51,7 +53,7 @@ export default function UserCarousel({
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
           onMouseLeave={onMouseUp}
-          className="flex gap-3 overflow-x-auto scroll-smooth pb-2 select-none"
+          className="flex snap-x snap-proximity gap-4 overflow-x-auto px-1 pb-3 pt-1 select-none"
           style={{ scrollbarWidth: "none", cursor: "grab" }}
         >
           {users.map((user) => (
@@ -61,7 +63,7 @@ export default function UserCarousel({
 
         <button
           onClick={() => scroll("right")}
-          className="btn btn-circle btn-sm btn-ghost absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-base-100 shadow"
+          className="btn btn-circle btn-sm absolute right-1 top-1/2 z-10 translate-x-2 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:translate-x-3 hover:bg-base-100"
         >
           <ChevronRight fontSize="small" />
         </button>
