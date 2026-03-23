@@ -34,15 +34,15 @@ export default function UserCarousel({
   if (!users.length) return null;
 
   return (
-    <div className="w-full m-5">
-      <h2 className="mb-4 px-1 text-lg font-bold text-base-content sm:text-2xl">
+    <div className="w-full px-5 py-4">
+      <h2 className="my-4 px-2 text-lg font-bold text-base-content sm:text-3xl">
         {title}
       </h2>
 
-      <div className="group/carousel relative">
+      <div className="group/carousel relative px-12">
         <button
           onClick={() => scroll("left")}
-          className="btn btn-circle btn-sm absolute left-1 top-1/2 z-10 -translate-x-2 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:-translate-x-3 hover:bg-base-100"
+          className="btn btn-circle btn-sm absolute left-0 top-1/2 z-10 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:bg-base-100"
         >
           <ChevronLeft fontSize="small" />
         </button>
@@ -53,7 +53,7 @@ export default function UserCarousel({
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
           onMouseLeave={onMouseUp}
-          className="flex snap-x snap-proximity gap-4 overflow-x-auto px-1 pb-3 pt-1 select-none"
+          className="flex gap-4 overflow-x-auto px-1 pb-3 pt-1 select-none"
           style={{ scrollbarWidth: "none", cursor: "grab" }}
         >
           {users.map((user) => (
@@ -63,7 +63,7 @@ export default function UserCarousel({
 
         <button
           onClick={() => scroll("right")}
-          className="btn btn-circle btn-sm absolute right-1 top-1/2 z-10 translate-x-2 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:translate-x-3 hover:bg-base-100"
+          className="btn btn-circle btn-sm absolute right-0 top-1/2 z-10 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:bg-base-100"
         >
           <ChevronRight fontSize="small" />
         </button>

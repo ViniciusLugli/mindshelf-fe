@@ -7,19 +7,19 @@ export function useDragScroll() {
   const scrollLeft = React.useRef(0);
 
   const onMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+
     isDragging.current = true;
-    startX.current = e.pageX - (scrollRef.current?.offsetLeft || 0);
-    scrollLeft.current = scrollRef.current?.scrollLeft || 0;
-    if (scrollRef.current) {
-      scrollRef.current.style.cursor = "grabbing";
-    }
+    startX.current = e.clientX;
+    scrollLeft.current = scrollRef.current.scrollLeft;
+    scrollRef.current.style.cursor = "grabbing";
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
     if (!isDragging.current || !scrollRef.current) return;
+
     e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5;
+    const walk = (e.clientX - startX.current) * 1.1;
     scrollRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
@@ -27,6 +27,21 @@ export function useDragScroll() {
     isDragging.current = false;
     if (scrollRef.current) scrollRef.current.style.cursor = "grab";
   };
+
+  React.useEffect(() => {
+    const stopDragging = () => {
+      isDragging.current = false;
+      if (scrollRef.current) {
+        scrollRef.current.style.cursor = "grab";
+      }
+    };
+
+    window.addEventListener("mouseup", stopDragging);
+
+    return () => {
+      window.removeEventListener("mouseup", stopDragging);
+    };
+  }, []);
 
   return { scrollRef, onMouseDown, onMouseMove, onMouseUp };
 }
