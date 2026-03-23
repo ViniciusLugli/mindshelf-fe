@@ -1,3 +1,5 @@
+import LatestNotes, { Note } from "@/app/components/shared/LastestNotes";
+import LatestGroups, { Group } from "@/app/components/shared/LatestGroups";
 import UserCarousel, {
   CarouselUser,
 } from "@/app/components/shared/UserCarousel";
@@ -35,12 +37,55 @@ const users: CarouselUser[] = [
   { id: "11", name: "Camila Rodrigues", unreadMessages: 7, status: "online" },
 ];
 
+const notes: Note[] = [
+  {
+    id: "1",
+    groupTitle: "Product Design",
+    groupColor: "#E76F51",
+    noteTitle:
+      "Refinar o fluxo de onboarding para diminuir abandono no primeiro acesso",
+  },
+  {
+    id: "2",
+    groupTitle: "Marketing Sprint",
+    groupColor: "#2A9D8F",
+    noteTitle: "Ideias de campanha para lancamento do plano colaborativo",
+  },
+  {
+    id: "3",
+    groupTitle: "Book Club",
+    groupColor: "#264653",
+    noteTitle:
+      "Resumo dos capitulos 3 e 4 com perguntas para a proxima reuniao",
+  },
+  {
+    id: "4",
+    groupTitle: "Weekend Ideas",
+    groupColor: "#F4A261",
+    noteTitle: "Lista curta de passeios, cafes e exposicoes para sabado",
+  },
+];
+
+const groups: Group[] = [
+  { id: "1", title: "Product Design", color: "#E76F51" },
+  { id: "2", title: "Marketing Sprint", color: "#2A9D8F" },
+  { id: "3", title: "Book Club", color: "#264653" },
+  { id: "4", title: "Weekend Ideas", color: "#F4A261" },
+];
+
 export default function GroupsPage() {
   return (
-    <>
+    <section className="space-y-8 px-5 py-3">
       <div className="w-full h-full">
         <UserCarousel users={users} />
       </div>
-    </>
+
+      <div className="pb-3">
+        <LatestGroups groups={groups} />
+      </div>
+      <div className="space-y-2 px-1">
+        <LatestNotes notes={notes} />
+      </div>
+    </section>
   );
 }
