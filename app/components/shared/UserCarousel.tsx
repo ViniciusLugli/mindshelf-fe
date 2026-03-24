@@ -21,7 +21,13 @@ export default function UserCarousel({
   users,
   title = "Your Contacts",
 }: UserCarouselProps) {
-  const { scrollRef, onMouseDown, onMouseMove, onMouseUp } = useDragScroll();
+  const {
+    scrollRef,
+    onPointerDown,
+    onPointerMove,
+    onPointerUp,
+    onPointerCancel,
+  } = useDragScroll();
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -41,20 +47,28 @@ export default function UserCarousel({
 
       <div className="group/carousel relative px-12">
         <button
+          type="button"
           onClick={() => scroll("left")}
-          className="btn btn-circle btn-sm absolute left-0 top-1/2 z-10 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:bg-base-100"
+          className="btn btn-circle btn-sm absolute left-0 top-1/2 z-10 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 hover:bg-base-100 md:opacity-0 md:group-hover/carousel:opacity-100"
         >
           <ChevronLeft fontSize="small" />
         </button>
 
         <div
           ref={scrollRef}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerCancel}
+          onPointerLeave={onPointerCancel}
           className="flex gap-4 overflow-x-auto px-1 pb-3 pt-1 select-none"
-          style={{ scrollbarWidth: "none", cursor: "grab" }}
+          style={{
+            scrollbarWidth: "none",
+            cursor: "grab",
+            touchAction: "pan-y",
+          }}
+          role="region"
+          aria-label={title}
         >
           {users.map((user) => (
             <UserCard key={user.id} {...user} />
@@ -62,8 +76,9 @@ export default function UserCarousel({
         </div>
 
         <button
+          type="button"
           onClick={() => scroll("right")}
-          className="btn btn-circle btn-sm absolute right-0 top-1/2 z-10 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content opacity-0 shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 group-hover/carousel:opacity-100 hover:bg-base-100"
+          className="btn btn-circle btn-sm absolute right-0 top-1/2 z-10 -translate-y-1/2 border border-base-300/70 bg-base-100/90 text-base-content shadow-md shadow-base-content/10 backdrop-blur transition-all duration-200 hover:bg-base-100 md:opacity-0 md:group-hover/carousel:opacity-100"
         >
           <ChevronRight fontSize="small" />
         </button>

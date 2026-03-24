@@ -2,46 +2,67 @@ import React from "react";
 
 export function useDragScroll() {
   const scrollRef = React.useRef<HTMLDivElement>(null);
-  const isDragging = React.useRef(false);
-  const startX = React.useRef(0);
-  const scrollLeft = React.useRef(0);
+  const dragState = React.useRef({
+    isDragging: false,
+    pointerId: -1,
+    startX: 0,
+    scrollLeft: 0,
+  });
 
-  const onMouseDown = (e: React.MouseEvent) => {
+  const stopDragging = React.useCallback(() => {
+    dragState.current.isDragging = false;
+    dragState.current.pointerId = -1;
+
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = "grab";
+    }
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!scrollRef.current) return;
 
-    isDragging.current = true;
-    startX.current = e.clientX;
-    scrollLeft.current = scrollRef.current.scrollLeft;
+    dragState.current.isDragging = true;
+    dragState.current.pointerId = e.pointerId;
+    dragState.current.startX = e.clientX;
+    dragState.current.scrollLeft = scrollRef.current.scrollLeft;
     scrollRef.current.style.cursor = "grabbing";
+    scrollRef.current.setPointerCapture(e.pointerId);
   };
 
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !scrollRef.current) return;
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!scrollRef.current || !dragState.current.isDragging) return;
+    if (dragState.current.pointerId !== e.pointerId) return;
 
     e.preventDefault();
-    const walk = (e.clientX - startX.current) * 1.1;
-    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+    const walk = (e.clientX - dragState.current.startX) * 1.1;
+    scrollRef.current.scrollLeft = dragState.current.scrollLeft - walk;
   };
 
-  const onMouseUp = () => {
-    isDragging.current = false;
-    if (scrollRef.current) scrollRef.current.style.cursor = "grab";
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!scrollRef.current) return;
+
+    if (scrollRef.current.hasPointerCapture(e.pointerId)) {
+      scrollRef.current.releasePointerCapture(e.pointerId);
+    }
+
+    stopDragging();
   };
 
   React.useEffect(() => {
-    const stopDragging = () => {
-      isDragging.current = false;
-      if (scrollRef.current) {
-        scrollRef.current.style.cursor = "grab";
-      }
-    };
-
     window.addEventListener("mouseup", stopDragging);
+    window.addEventListener("pointerup", stopDragging);
 
     return () => {
       window.removeEventListener("mouseup", stopDragging);
+      window.removeEventListener("pointerup", stopDragging);
     };
-  }, []);
+  }, [stopDragging]);
 
-  return { scrollRef, onMouseDown, onMouseMove, onMouseUp };
+  return {
+    scrollRef,
+    onPointerDown,
+    onPointerMove,
+    onPointerUp,
+    onPointerCancel: stopDragging,
+  };
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import GroupCard from "./GroupCard";
 
 export type Group = {
@@ -23,7 +24,9 @@ export default function LatestGroups({
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {groups.map((group) => (
-          <GroupCard key={group.id} title={group.title} color={group.color} />
+          <Link key={group.id} href={`/groups/${group.id}`}>
+            <GroupCard key={group.id} title={group.title} color={group.color} />
+          </Link>
         ))}
       </div>
     </div>

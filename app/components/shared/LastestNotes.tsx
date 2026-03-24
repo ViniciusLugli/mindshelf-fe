@@ -1,3 +1,4 @@
+import Link from "next/link";
 import NoteCard from "./NoteCard";
 
 export type Note = {
@@ -24,12 +25,14 @@ export default function LatestNotes({
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {notes.map((note) => (
-          <NoteCard
-            key={note.id}
-            groupTitle={note.groupTitle}
-            groupColor={note.groupColor}
-            noteTitle={note.noteTitle}
-          />
+          <Link key={note.id} href={`/groups/${note.id}`}>
+            <NoteCard
+              key={note.id}
+              groupTitle={note.groupTitle}
+              groupColor={note.groupColor}
+              noteTitle={note.noteTitle}
+            />
+          </Link>
         ))}
       </div>
     </div>
