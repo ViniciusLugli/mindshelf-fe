@@ -11,7 +11,9 @@ export default function GroupsPage() {
   return (
     <section className="space-y-6 px-5 py-6">
       <div className="space-y-2">
-        <h1>Your Groups</h1>
+        <h1 className="text-lg font-bold text-base-content sm:text-3xl">
+          Your Groups
+        </h1>
         <p className="text-sm text-base-content/65 sm:text-base">
           Organize your spaces with a visual identity for each group.
         </p>

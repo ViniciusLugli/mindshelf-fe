@@ -49,10 +49,12 @@ export function useDragScroll() {
   };
 
   React.useEffect(() => {
+    window.addEventListener("pagehide", stopDragging);
     window.addEventListener("mouseup", stopDragging);
     window.addEventListener("pointerup", stopDragging);
 
     return () => {
+      window.removeEventListener("pagehide", stopDragging);
       window.removeEventListener("mouseup", stopDragging);
       window.removeEventListener("pointerup", stopDragging);
     };

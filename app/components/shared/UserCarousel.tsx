@@ -2,6 +2,7 @@
 
 import { useDragScroll } from "@/app/hooks/useDragScroll";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 
 export type CarouselUser = {
@@ -21,6 +22,7 @@ export default function UserCarousel({
   users,
   title = "Your Contacts",
 }: UserCarouselProps) {
+  const [instanceKey, setInstanceKey] = useState(0);
   const {
     scrollRef,
     onPointerDown,
@@ -28,6 +30,20 @@ export default function UserCarousel({
     onPointerUp,
     onPointerCancel,
   } = useDragScroll();
+
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setInstanceKey((current) => current + 1);
+      }
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -55,6 +71,7 @@ export default function UserCarousel({
         </button>
 
         <div
+          key={instanceKey}
           ref={scrollRef}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
