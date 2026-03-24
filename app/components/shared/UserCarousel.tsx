@@ -3,7 +3,7 @@
 import { useDragScroll } from "@/app/hooks/useDragScroll";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import UserCard from "./UserCard";
+import UserCard from "./Cards/UserCard";
 
 export type CarouselUser = {
   id: string;

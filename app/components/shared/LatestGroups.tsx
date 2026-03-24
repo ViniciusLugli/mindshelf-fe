@@ -1,5 +1,5 @@
 import Link from "next/link";
-import GroupCard from "./GroupCard";
+import GroupCard from "./Cards/GroupCard";
 
 export type Group = {
   id: string;

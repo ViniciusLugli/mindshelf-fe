@@ -18,7 +18,6 @@ export default function UserCard({
     <article className="card group/card relative min-w-44 max-w-44 shrink-0 overflow-hidden border border-base-300/70 bg-base-100/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-base-content/10">
       <figure className="relative h-28 overflow-hidden border-b border-base-300/60 bg-linear-to-br from-primary/18 via-base-200 to-secondary/12">
         {avatarUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={avatarUrl}
             alt={name}

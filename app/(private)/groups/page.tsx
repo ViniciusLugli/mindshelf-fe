@@ -1,4 +1,4 @@
-import GroupCard from "@/app/components/shared/GroupCard";
+import GroupCard from "@/app/components/shared/Cards/GroupCard";
 
 const groups = [
   { id: "1", title: "Product Design", color: "#E76F51" },

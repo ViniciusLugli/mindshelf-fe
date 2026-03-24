@@ -1,5 +1,5 @@
 import Link from "next/link";
-import NoteCard from "./NoteCard";
+import NoteCard from "./Cards/NoteCard";
 
 export type Note = {
   id: string;
