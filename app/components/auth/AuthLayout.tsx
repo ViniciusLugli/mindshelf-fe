@@ -34,7 +34,7 @@ export default function AuthLayout({
           </span>
         </div>
 
-        <div className="relative max-w-[420px]">{leftPanelContent}</div>
+        <div className="relative max-w-105">{leftPanelContent}</div>
 
         <div className="relative">
           <p className="text-[11px] tracking-wide text-neutral-content/30">
@@ -44,7 +44,7 @@ export default function AuthLayout({
       </aside>
 
       <main className="flex flex-1 flex-col items-center justify-center overflow-y-auto bg-base-100 px-6 py-14 sm:px-12">
-        <div className="w-full max-w-[380px] space-y-8">
+        <div className="w-full max-w-95 space-y-8">
           <Link
             href="/"
             className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-base-content/40 transition-colors hover:text-base-content lg:hidden"

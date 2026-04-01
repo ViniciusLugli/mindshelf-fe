@@ -186,7 +186,7 @@ export default function AuthForm({ mode, embedded = false }: AuthFormProps) {
             id={AUTH_FORM_ERROR_ID}
             role="alert"
             aria-live="polite"
-            className="rounded-lg border border-error/20 bg-error/8 px-4 py-2.5 text-[13px] text-error"
+            className="rounded-lg border border-error/20 bg-error/8 mt-5 px-4 py-2.5 text-[13px] text-error"
           >
             {errorMessage}
           </div>

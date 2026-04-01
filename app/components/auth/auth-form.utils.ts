@@ -35,6 +35,7 @@ export function getCopy(mode: AuthMode) {
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const strongPasswordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
 export function validateAuthForm(
   mode: AuthMode,
@@ -56,6 +57,10 @@ export function validateAuthForm(
 
     if (!name) {
       return "Name is required.";
+    }
+
+    if (!strongPasswordRegex.test(password)) {
+      return "Password must have at least 8 characters, 1 uppercase letter, 1 number, and 1 special character.";
     }
 
     if (password !== state.confirmPassword) {
