@@ -10,6 +10,7 @@ type CookieOptions = {
   path?: string;
   sameSite?: "Lax" | "Strict" | "None";
   secure?: boolean;
+  persistent?: boolean;
 };
 
 function isBrowser() {
@@ -39,6 +40,7 @@ export function setAuthTokenCookie(token: string, options?: CookieOptions) {
     return;
   }
 
+  const persistent = options?.persistent ?? true;
   const days = options?.days ?? 7;
   const path = options?.path ?? "/";
   const sameSite = options?.sameSite ?? "Lax";
@@ -48,9 +50,10 @@ export function setAuthTokenCookie(token: string, options?: CookieOptions) {
   const expires = new Date(
     Date.now() + days * 24 * 60 * 60 * 1000,
   ).toUTCString();
+  const expiresPart = persistent ? `; Expires=${expires}` : "";
   const securePart = secure ? "; Secure" : "";
 
-  document.cookie = `${AUTH_TOKEN_COOKIE_KEY}=${encodeURIComponent(token)}; Expires=${expires}; Path=${path}; SameSite=${sameSite}${securePart}`;
+  document.cookie = `${AUTH_TOKEN_COOKIE_KEY}=${encodeURIComponent(token)}${expiresPart}; Path=${path}; SameSite=${sameSite}${securePart}`;
 }
 
 export function clearAuthTokenCookie(path = "/") {
