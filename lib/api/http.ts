@@ -2,8 +2,13 @@ import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
 import type { ApiError } from "./types";
 
 export const AUTH_TOKEN_COOKIE_KEY = "mindshelf_token";
+const API_PROXY_PREFIX = "/ms-api";
+const API_PROXY_TARGET =
+  process.env.API_PROXY_TARGET ?? "http://localhost:8080";
+
 const DEFAULT_API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
+  process.env.NEXT_PUBLIC_API_BASE_URL ??
+  (typeof window === "undefined" ? API_PROXY_TARGET : API_PROXY_PREFIX);
 
 type CookieOptions = {
   days?: number;
