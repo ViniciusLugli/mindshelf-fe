@@ -1,5 +1,7 @@
 import Link from "next/link";
 import GroupCard from "./Cards/GroupCard";
+import EmptyCard from "../UI/EmptyCard";
+import { Dashboard } from "@mui/icons-material";
 
 export type Group = {
   id: string;
@@ -16,6 +18,20 @@ export default function LatestGroups({
   groups,
   title = "Latest Groups",
 }: LatestGroupsProps) {
+  if (!groups.length)
+    return (
+      <div className="w-full px-5 mb-5">
+        <h2 className="my-4 px-2 text-lg font-bold text-base-content sm:text-3xl">
+          {title}
+        </h2>
+        <EmptyCard
+          title="No groups found"
+          description="When you create or join groups, they will appear here."
+          icon={<Dashboard fontSize="small" />}
+        />
+      </div>
+    );
+
   return (
     <div className="w-full px-5 mb-5">
       <h2 className="my-4 px-2 text-lg font-bold text-base-content sm:text-3xl">

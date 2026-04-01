@@ -1,5 +1,7 @@
 import Link from "next/link";
 import NoteCard from "./Cards/NoteCard";
+import EmptyCard from "../UI/EmptyCard";
+import { StickyNote2 } from "@mui/icons-material";
 
 export type Note = {
   id: string;
@@ -17,6 +19,21 @@ export default function LatestNotes({
   notes,
   title = "Latest Notes",
 }: LatestNotesProps) {
+  if (!notes.length)
+    return (
+      <div className="w-full px-5 mb-5">
+        <h2 className="my-4 px-2 text-lg font-bold text-base-content sm:text-3xl">
+          {title}
+        </h2>
+
+        <EmptyCard
+          title="No Notes Found"
+          description="When you create or edit notes, they will appear here."
+          icon={<StickyNote2 fontSize="small" />}
+        />
+      </div>
+    );
+
   return (
     <div className="w-full px-5 mb-5">
       <h2 className="my-4 px-2 text-lg font-bold text-base-content sm:text-3xl">

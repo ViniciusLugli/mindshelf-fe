@@ -1,9 +1,15 @@
 "use client";
 
 import { useDragScroll } from "@/app/hooks/useDragScroll";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Person,
+  StickyNote2,
+} from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import UserCard from "./Cards/UserCard";
+import EmptyCard from "../UI/EmptyCard";
 
 export type CarouselUser = {
   id: string;
@@ -53,7 +59,20 @@ export default function UserCarousel({
     });
   };
 
-  if (!users.length) return null;
+  if (!users.length)
+    return (
+      <div className="w-full px-5 py-4">
+        <h2 className="my-4 px-2 text-lg font-bold text-base-content sm:text-3xl">
+          {title}
+        </h2>
+
+        <EmptyCard
+          title="No Contacts Found"
+          description="When you have contacts, they will appear in this list."
+          icon={<Person fontSize="small" />}
+        />
+      </div>
+    );
 
   return (
     <div className="w-full px-5 py-4">
