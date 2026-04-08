@@ -40,9 +40,12 @@ export default function LatestGroups({
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {groups.map((group) => (
-          <Link key={group.id} href={`/groups/${group.id}`}>
-            <GroupCard key={group.id} title={group.title} color={group.color} />
-          </Link>
+          <GroupCard
+            key={group.id}
+            title={group.title}
+            color={group.color}
+            href={`/groups/${group.id}`}
+          />
         ))}
       </div>
     </div>

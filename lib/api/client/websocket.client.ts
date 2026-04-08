@@ -2,6 +2,7 @@ import { httpGet, httpPost } from "../http";
 import type {
   FriendRequest,
   GetChatRequest,
+  MarkMessagesRead,
   SendChatRequest,
   SimpleMessageResponse,
 } from "../types";
@@ -46,6 +47,13 @@ export const websocketApi = {
   sendMessage(payload: SendChatRequest): Promise<SimpleMessageResponse> {
     return httpPost<SimpleMessageResponse, SendChatRequest>(
       "/ws/send_message",
+      payload,
+    );
+  },
+
+  markMessagesRead(payload: MarkMessagesRead): Promise<SimpleMessageResponse> {
+    return httpPost<SimpleMessageResponse, MarkMessagesRead>(
+      "/ws/mark_messages_read",
       payload,
     );
   },

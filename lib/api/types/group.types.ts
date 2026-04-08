@@ -10,6 +10,7 @@ export type PaginatedGroupResponse = PaginatedResponse<GroupResponse>;
 
 export type CreateGroupRequest = {
   name: string;
+  color: string;
 };
 
 export type UpdateGroupRequest = {
