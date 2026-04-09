@@ -54,7 +54,8 @@ export default function NewGroupPage() {
     try {
       await groupApi.create({ name: groupName, color: normalizedGroupColor });
       router.push("/groups");
-    } catch {
+    } catch (error) {
+      console.error("Failed to create group", error);
       setErrorMessage("Não foi possível criar o grupo. Tente novamente.");
     } finally {
       setIsSubmitting(false);
@@ -63,10 +64,8 @@ export default function NewGroupPage() {
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px]">
-      {/* ── Coluna esquerda: formulário ──────────────────────────── */}
       <div className="flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-16 xl:px-20">
         <div className="mx-auto w-full max-w-lg space-y-10">
-          {/* Cabeçalho */}
           <div className="space-y-3">
             <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-base-content/35">
               Grupos · Novo
@@ -83,9 +82,7 @@ export default function NewGroupPage() {
             </p>
           </div>
 
-          {/* Formulário */}
           <form className="space-y-8" onSubmit={handleSubmit}>
-            {/* Seção: Nome */}
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-content">
@@ -105,10 +102,8 @@ export default function NewGroupPage() {
               />
             </div>
 
-            {/* Divisor */}
             <div className="border-t border-base-300/60" />
 
-            {/* Seção: Cor */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-content">
@@ -119,7 +114,6 @@ export default function NewGroupPage() {
                 </p>
               </div>
 
-              {/* Swatches de preset */}
               <div className="flex flex-wrap items-center gap-2.5">
                 {PRESET_COLORS.map((presetColor) => (
                   <button
@@ -159,7 +153,6 @@ export default function NewGroupPage() {
                   </button>
                 ))}
 
-                {/* Separador vertical */}
                 <div className="mx-1 h-6 w-px bg-base-300/70" />
 
                 <ColorPicker
@@ -171,17 +164,14 @@ export default function NewGroupPage() {
               </div>
             </div>
 
-            {/* Divisor */}
             <div className="border-t border-base-300/60" />
 
-            {/* Erro */}
             {errorMessage && (
               <div className="rounded-xl border border-error/20 bg-error/8 px-4 py-2.5 text-[13px] text-error">
                 {errorMessage}
               </div>
             )}
 
-            {/* Ações */}
             <div className="flex items-center gap-3">
               <button
                 type="button"
@@ -210,7 +200,6 @@ export default function NewGroupPage() {
         </div>
       </div>
 
-      {/* ── Coluna direita: preview ──────────────────────────────── */}
       <aside
         className="hidden lg:flex flex-col justify-between relative overflow-hidden border-l border-base-300/50"
         style={{
@@ -218,7 +207,6 @@ export default function NewGroupPage() {
           transition: "background 0.4s ease",
         }}
       >
-        {/* Grade pontilhada */}
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -228,14 +216,11 @@ export default function NewGroupPage() {
           }}
         />
 
-        {/* Conteúdo */}
         <div className="relative flex flex-1 flex-col p-10">
-          {/* Label topo */}
           <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-base-content/30">
             Preview
           </p>
 
-          {/* Card centralizado */}
           <div className="flex flex-1 items-center justify-center">
             <div className="pointer-events-none w-full max-w-70">
               <GroupCard title={previewTitle} color={previewColor} href="#" />
