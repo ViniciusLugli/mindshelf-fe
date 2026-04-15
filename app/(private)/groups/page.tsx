@@ -2,51 +2,18 @@
 
 import GroupCard from "@/app/components/shared/Cards/GroupCard";
 import SearchField from "@/app/components/UI/SearchField";
-import { groupApi } from "@/lib/api";
-import type { GroupResponse } from "@/lib/api/types";
+import { useDebouncedValue } from "@/app/hooks/useDebouncedValue";
+import { useGroupsQuery } from "@/lib/api";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function GroupsPage() {
   const [search, setSearch] = useState("");
-  const [groups, setGroups] = useState<GroupResponse[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [feedback, setFeedback] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadGroups = async () => {
-      setIsLoading(true);
-      try {
-        const response = search.trim()
-          ? await groupApi.getByName(search.trim(), 1, 24)
-          : await groupApi.getPaginated(1, 24);
-        if (!cancelled) {
-          setGroups(response.data);
-          setFeedback(null);
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setFeedback(
-            error instanceof Error
-              ? error.message
-              : "Nao foi possivel carregar os grupos.",
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    const timeout = window.setTimeout(loadGroups, 250);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timeout);
-    };
-  }, [search]);
+  const debouncedSearch = useDebouncedValue(search, 250);
+  const { data, isLoading, error } = useGroupsQuery(debouncedSearch, 1, 24);
+  const groups = data?.data ?? [];
+  const feedback =
+    error instanceof Error ? error.message : error ? "Nao foi possivel carregar os grupos." : null;
 
   return (
     <section className="space-y-6 px-5 py-6">

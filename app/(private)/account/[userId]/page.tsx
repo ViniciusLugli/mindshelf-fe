@@ -4,53 +4,25 @@ import RelationshipActions from "@/app/components/social/RelationshipActions";
 import UserAvatar from "@/app/components/UI/UserAvatar";
 import { useRealtime } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { userApi } from "@/lib/api";
-import type { UserResponse } from "@/lib/api/types";
+import { useUserProfileQuery } from "@/lib/api";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export default function AccountProfilePage() {
   const params = useParams<{ userId: string }>();
   const userId = params.userId;
   const { currentUser } = useSession();
   const { friends, pendingInvites, outgoingInviteIds } = useRealtime();
-  const [profile, setProfile] = useState<UserResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadProfile = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await userApi.getByIdOrEmail({ id: userId });
-        if (!cancelled) {
-          setProfile(response);
-        }
-      } catch (loadError) {
-        if (!cancelled) {
-          setError(
-            loadError instanceof Error
-              ? loadError.message
-              : "Nao foi possivel carregar esse perfil.",
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void loadProfile();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [userId]);
+  const profileQuery = useUserProfileQuery(userId);
+  const profile = profileQuery.data ?? null;
+  const isLoading = profileQuery.isLoading;
+  const error =
+    profileQuery.error instanceof Error
+      ? profileQuery.error.message
+      : profileQuery.error
+        ? "Nao foi possivel carregar esse perfil."
+        : null;
 
   const relationship = useMemo(() => {
     return {

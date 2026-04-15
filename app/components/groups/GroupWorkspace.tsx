@@ -3,55 +3,39 @@
 import AppModal from "@/app/components/UI/AppModal";
 import SearchField from "@/app/components/UI/SearchField";
 import TaskCard from "@/app/components/tasks/TaskCard";
-import { groupApi, taskApi } from "@/lib/api";
-import type { GroupResponse, TaskResponse } from "@/lib/api/types";
+import {
+  useCreateTaskMutation,
+  useGroupWorkspaceQuery,
+  useUpdateGroupMutation,
+} from "@/lib/api";
 import { stripHtml } from "@/lib/utils/text";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function GroupWorkspace({ groupId }: { groupId: string }) {
-  const [group, setGroup] = useState<GroupResponse | null>(null);
-  const [tasks, setTasks] = useState<TaskResponse[]>([]);
+  const groupWorkspaceQuery = useGroupWorkspaceQuery(groupId);
+  const createTaskMutation = useCreateTaskMutation();
+  const updateGroupMutation = useUpdateGroupMutation();
   const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [taskModalOpen, setTaskModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
   const [taskTitle, setTaskTitle] = useState("");
-  const [groupName, setGroupName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const loadGroup = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const [groupResponse, tasksResponse] = await Promise.all([
-        groupApi.getById(groupId),
-        taskApi.getByGroup(groupId, 1, 50),
-      ]);
-      setGroup(groupResponse);
-      setGroupName(groupResponse.name);
-      setTasks(tasksResponse.data);
-      setFeedback(null);
-    } catch (error) {
-      setFeedback(
-        error instanceof Error ? error.message : "Nao foi possivel carregar o grupo.",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, [groupId]);
-
-  useEffect(() => {
-    void loadGroup();
-  }, [loadGroup]);
+  const [groupNameDraft, setGroupNameDraft] = useState<string | null>(null);
+  const group = groupWorkspaceQuery.data?.group ?? null;
+  const tasks = groupWorkspaceQuery.data?.tasks;
+  const isLoading = groupWorkspaceQuery.isLoading;
+  const isSubmitting = createTaskMutation.isPending || updateGroupMutation.isPending;
+  const taskList = useMemo(() => tasks ?? [], [tasks]);
+  const groupName = groupNameDraft ?? group?.name ?? "";
 
   const filteredTasks = useMemo(() => {
     const term = search.trim().toLowerCase();
     if (!term) {
-      return tasks;
+      return taskList;
     }
 
-    return tasks.filter((task) => {
+    return taskList.filter((task) => {
       const notes = stripHtml(task.notes).toLowerCase();
       return (
         task.title.toLowerCase().includes(term) ||
@@ -59,7 +43,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
         notes.includes(term)
       );
     });
-  }, [search, tasks]);
+  }, [search, taskList]);
 
   const handleCreateTask = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -67,20 +51,19 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
       return;
     }
 
-    setIsSubmitting(true);
     setFeedback(null);
     try {
-      await taskApi.create({ group_id: groupId, title: taskTitle.trim() });
+      await createTaskMutation.mutateAsync({
+        group_id: groupId,
+        title: taskTitle.trim(),
+      });
       setTaskTitle("");
       setTaskModalOpen(false);
-      await loadGroup();
       setFeedback("Task criada com sucesso.");
     } catch (error) {
       setFeedback(
         error instanceof Error ? error.message : "Nao foi possivel criar a task.",
       );
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -90,19 +73,16 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
       return;
     }
 
-    setIsSubmitting(true);
     setFeedback(null);
     try {
-      await groupApi.update({ id: group.id, name: groupName.trim() });
+      await updateGroupMutation.mutateAsync({ id: group.id, name: groupName.trim() });
+      setGroupNameDraft(groupName.trim());
       setGroupModalOpen(false);
-      await loadGroup();
       setFeedback("Grupo atualizado com sucesso.");
     } catch (error) {
       setFeedback(
         error instanceof Error ? error.message : "Nao foi possivel atualizar o grupo.",
       );
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -120,7 +100,10 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
     return (
       <section className="px-5 py-8">
         <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
-          {feedback || "Grupo nao encontrado."}
+          {feedback ??
+            (groupWorkspaceQuery.error instanceof Error
+              ? groupWorkspaceQuery.error.message
+              : "Grupo nao encontrado.")}
         </div>
       </section>
     );
@@ -158,7 +141,10 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
               <button
                 type="button"
                 className="btn btn-ghost rounded-full"
-                onClick={() => setGroupModalOpen(true)}
+                onClick={() => {
+                  setGroupNameDraft(group.name);
+                  setGroupModalOpen(true);
+                }}
               >
                 Configurar grupo
               </button>
@@ -181,7 +167,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
               Visao geral
             </p>
             <h2 className="mt-2 text-xl font-semibold text-base-content">
-              {tasks.length} tasks no grupo
+              {taskList.length} tasks no grupo
             </h2>
           </div>
           <div className="rounded-[1.5rem] border border-base-300/60 bg-base-200/35 p-4 text-sm text-base-content/60">
@@ -283,7 +269,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
             <input
               className="input input-bordered rounded-2xl border-base-300/70"
               value={groupName}
-              onChange={(event) => setGroupName(event.target.value)}
+              onChange={(event) => setGroupNameDraft(event.target.value)}
             />
           </label>
 

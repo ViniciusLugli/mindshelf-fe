@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { authApi } from "@/lib/api";
+import { useLoginMutation, useRegisterMutation } from "@/lib/api";
 import AuthInputField from "./AuthInputField";
 import {
   type AuthMode,
@@ -24,9 +24,12 @@ const AUTH_FORM_ERROR_ID = "auth-form-error";
 export default function AuthForm({ mode, embedded = false }: AuthFormProps) {
   const router = useRouter();
   const copy = getCopy(mode);
+  const loginMutation = useLoginMutation();
+  const registerMutation = useRegisterMutation();
   const [state, setState] = useState(initialState);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isSubmitting = loginMutation.isPending || registerMutation.isPending;
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,28 +45,24 @@ export default function AuthForm({ mode, embedded = false }: AuthFormProps) {
     const email = state.email.trim();
     const password = state.password;
 
-    setIsSubmitting(true);
-
     try {
       if (copy.isRegister) {
-        await authApi.register({
+        await registerMutation.mutateAsync({
           name: state.name.trim(),
           email,
           password,
         });
       } else {
-        await authApi.login(
-          { email, password },
-          { staySignedIn: state.staySignedIn, rememberDays: 30 },
-        );
+        await loginMutation.mutateAsync({
+          payload: { email, password },
+          options: { staySignedIn: state.staySignedIn, rememberDays: 30 },
+        });
       }
 
       router.push("/home");
       router.refresh();
     } catch (error) {
       setErrorMessage(formatAuthError(error));
-    } finally {
-      setIsSubmitting(false);
     }
   }
 

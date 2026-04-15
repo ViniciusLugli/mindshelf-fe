@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## MindShelf Frontend
 
-## Getting Started
-
-First, run the development server:
+### Desenvolvimento
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra `http://localhost:3000` ou o IP da maquina na rede local.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Arquitetura de consumo de API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- REST no browser passa pelo proprio Next em rotas ` /api/... `
+- As rotas `app/api/**` funcionam como um proxy/BFF para o backend Go
+- WebSocket continua conectando direto no backend em `/api/ws`
+- Auth HTTP usa ` /api/auth/login ` e ` /api/auth/register ` no frontend
 
-## Learn More
+### Env recomendado do frontend
 
-To learn more about Next.js, take a look at the following resources:
+```env
+API_ORIGIN=http://localhost:8080
+NEXT_PUBLIC_API_ORIGIN=http://localhost:8080
+NEXT_PUBLIC_WS_PATH=/api/ws
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Explicacao:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `API_ORIGIN`: origem do backend usada pelo proxy server-side do Next
+- `NEXT_PUBLIC_API_ORIGIN`: origem publica usada para montar a URL do WebSocket no browser
+- `NEXT_PUBLIC_WS_PATH`: caminho do WebSocket, padrao `/api/ws`
 
-## Deploy on Vercel
+### Backend esperado
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- REST: `http://localhost:8080`
+- WebSocket autenticado: `ws://localhost:8080/api/ws`
+- O backend precisa aceitar a origem do frontend em `ALLOWED_ORIGINS`
+- O cookie `mindshelf_token` precisa funcionar no handshake do WebSocket
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Exemplo no backend:
+
+```env
+ALLOWED_ORIGINS=http://localhost:3000,http://192.168.68.51:3000
+```

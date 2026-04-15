@@ -2,53 +2,40 @@
 
 import AppModal from "@/app/components/UI/AppModal";
 import RichTextEditor from "@/app/components/tasks/RichTextEditor";
-import { groupApi, taskApi } from "@/lib/api";
-import type { GroupResponse, TaskResponse } from "@/lib/api/types";
+import {
+  useCreateTaskMutation,
+  useDeleteTaskMutation,
+  useTaskWorkspaceQuery,
+  useUpdateTaskMutation,
+} from "@/lib/api";
 import { stripHtml } from "@/lib/utils/text";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function TaskWorkspace({ taskId }: { taskId: string }) {
   const router = useRouter();
-  const [task, setTask] = useState<TaskResponse | null>(null);
-  const [groups, setGroups] = useState<GroupResponse[]>([]);
-  const [title, setTitle] = useState("");
-  const [notes, setNotes] = useState("");
-  const [selectedGroupId, setSelectedGroupId] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
+  const taskWorkspaceQuery = useTaskWorkspaceQuery(taskId);
+  const createTaskMutation = useCreateTaskMutation();
+  const updateTaskMutation = useUpdateTaskMutation();
+  const deleteTaskMutation = useDeleteTaskMutation();
+  const [titleDraft, setTitleDraft] = useState<string | null>(null);
+  const [notesDraft, setNotesDraft] = useState<string | null>(null);
+  const [selectedGroupIdDraft, setSelectedGroupIdDraft] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [configOpen, setConfigOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const task = taskWorkspaceQuery.data?.task ?? null;
+  const groups = taskWorkspaceQuery.data?.groups ?? [];
+  const isLoading = taskWorkspaceQuery.isLoading;
+  const isSaving =
+    createTaskMutation.isPending ||
+    updateTaskMutation.isPending ||
+    deleteTaskMutation.isPending;
 
-  const loadTask = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const [taskResponse, groupsResponse] = await Promise.all([
-        taskApi.getById(taskId),
-        groupApi.getPaginated(1, 50),
-      ]);
-
-      const hydratedTask = { ...taskResponse, id: taskResponse.id ?? taskId };
-      setTask(hydratedTask);
-      setTitle(hydratedTask.title);
-      setNotes(hydratedTask.notes || "<p></p>");
-      setSelectedGroupId(hydratedTask.group_id);
-      setGroups(groupsResponse.data);
-      setFeedback(null);
-    } catch (error) {
-      setFeedback(
-        error instanceof Error ? error.message : "Nao foi possivel carregar a task.",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, [taskId]);
-
-  useEffect(() => {
-    void loadTask();
-  }, [loadTask]);
+  const title = titleDraft ?? task?.title ?? "";
+  const notes = notesDraft ?? task?.notes ?? "<p></p>";
+  const selectedGroupId = selectedGroupIdDraft ?? task?.group_id ?? "";
 
   const hasChanges = useMemo(() => {
     if (!task) {
@@ -67,34 +54,34 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
       return;
     }
 
-    setIsSaving(true);
     setFeedback(null);
     try {
       if (selectedGroupId !== task.group_id) {
-        await taskApi.create({
+        await createTaskMutation.mutateAsync({
           group_id: selectedGroupId,
           title: title.trim(),
           notes,
         });
-        await taskApi.delete({ id: task.id ?? taskId });
+        await deleteTaskMutation.mutateAsync({ id: task.id ?? taskId });
         router.push(`/groups/${selectedGroupId}`);
         router.refresh();
         return;
       }
 
-      await taskApi.update({
+      await updateTaskMutation.mutateAsync({
         id: task.id ?? taskId,
         title: title.trim(),
         notes,
       });
-      await loadTask();
+      await taskWorkspaceQuery.refetch();
+      setTitleDraft(null);
+      setNotesDraft(null);
+      setSelectedGroupIdDraft(null);
       setFeedback("Task salva com sucesso.");
     } catch (error) {
       setFeedback(
         error instanceof Error ? error.message : "Nao foi possivel salvar a task.",
       );
-    } finally {
-      setIsSaving(false);
     }
   };
 
@@ -103,17 +90,15 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
       return;
     }
 
-    setIsSaving(true);
     setFeedback(null);
     try {
-      await taskApi.delete({ id: task.id ?? taskId });
+      await deleteTaskMutation.mutateAsync({ id: task.id ?? taskId });
       router.push(`/groups/${task.group_id}`);
       router.refresh();
     } catch (error) {
       setFeedback(
         error instanceof Error ? error.message : "Nao foi possivel apagar a task.",
       );
-      setIsSaving(false);
     }
   };
 
@@ -131,7 +116,10 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
     return (
       <section className="px-5 py-8">
         <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
-          {feedback || "Task nao encontrada."}
+          {feedback ??
+            (taskWorkspaceQuery.error instanceof Error
+              ? taskWorkspaceQuery.error.message
+              : "Task nao encontrada.")}
         </div>
       </section>
     );
@@ -155,7 +143,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
             <input
               className="w-full bg-transparent text-4xl font-bold tracking-tight text-base-content outline-none"
               value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={(event) => setTitleDraft(event.target.value)}
             />
             <p className="text-sm text-base-content/55">
               Edite a nota completa com um editor rico e ajuste as configuracoes da task quando precisar.
@@ -195,7 +183,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
         </div>
       ) : null}
 
-      <RichTextEditor value={notes} onChange={setNotes} placeholder="Escreva como se estivesse no Word: titulos, listas, destaques e links." />
+      <RichTextEditor value={notes} onChange={setNotesDraft} placeholder="Escreva como se estivesse no Word: titulos, listas, destaques e links." />
 
       <div className="rounded-[1.8rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
         <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
@@ -226,7 +214,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
             <input
               className="input input-bordered rounded-2xl border-base-300/70"
               value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={(event) => setTitleDraft(event.target.value)}
             />
           </label>
 
@@ -235,7 +223,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
             <select
               className="select select-bordered rounded-2xl border-base-300/70"
               value={selectedGroupId}
-              onChange={(event) => setSelectedGroupId(event.target.value)}
+              onChange={(event) => setSelectedGroupIdDraft(event.target.value)}
             >
               {groups.map((group) => (
                 <option key={group.id} value={group.id}>

@@ -2,51 +2,18 @@
 
 import SearchField from "@/app/components/UI/SearchField";
 import TaskCard from "@/app/components/tasks/TaskCard";
-import { taskApi } from "@/lib/api";
-import type { TaskResponse } from "@/lib/api/types";
+import { useDebouncedValue } from "@/app/hooks/useDebouncedValue";
+import { useTasksQuery } from "@/lib/api";
 import { stripHtml } from "@/lib/utils/text";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function TasksPage() {
   const [search, setSearch] = useState("");
-  const [tasks, setTasks] = useState<TaskResponse[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [feedback, setFeedback] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadTasks = async () => {
-      setIsLoading(true);
-      try {
-        const response = search.trim()
-          ? await taskApi.getByTitle(search.trim(), 1, 24)
-          : await taskApi.getPaginated(1, 24);
-        if (!cancelled) {
-          setTasks(response.data);
-          setFeedback(null);
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setFeedback(
-            error instanceof Error
-              ? error.message
-              : "Nao foi possivel carregar as tasks.",
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    const timeout = window.setTimeout(loadTasks, 250);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timeout);
-    };
-  }, [search]);
+  const debouncedSearch = useDebouncedValue(search, 250);
+  const { data, isLoading, error } = useTasksQuery(debouncedSearch, 1, 24);
+  const tasks = data?.data ?? [];
+  const feedback =
+    error instanceof Error ? error.message : error ? "Nao foi possivel carregar as tasks." : null;
 
   return (
     <section className="space-y-6 px-5 py-6">

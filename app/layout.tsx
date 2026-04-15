@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import "./globals.css";
 import Footer from "./components/shared/Footer";
+import QueryProvider from "./providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: "MindShelf",
@@ -35,10 +36,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-base-100 text-base-content antialiased">
-        <div className="flex min-h-screen flex-col">
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <QueryProvider>
+          <div className="flex min-h-screen flex-col">
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -3,10 +3,11 @@
 import SearchField from "@/app/components/UI/SearchField";
 import UserAvatar from "@/app/components/UI/UserAvatar";
 import TaskCard from "@/app/components/tasks/TaskCard";
+import { useDebouncedValue } from "@/app/hooks/useDebouncedValue";
 import { useRealtime } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { taskApi } from "@/lib/api";
-import type { TaskResponse, UserResponse } from "@/lib/api";
+import { useTasksQuery } from "@/lib/api";
+import type { UserResponse } from "@/lib/api";
 import { formatDateTime, formatTime } from "@/lib/utils/date";
 import { stripHtml, truncateText } from "@/lib/utils/text";
 import { Share, Wifi, WifiOff } from "@mui/icons-material";
@@ -102,10 +103,17 @@ export default function ChatWorkspace({
   const [draft, setDraft] = useState("");
   const [sharingOpen, setSharingOpen] = useState(false);
   const [taskSearch, setTaskSearch] = useState("");
-  const [shareableTasks, setShareableTasks] = useState<TaskResponse[]>([]);
-  const [isLoadingTasks, setIsLoadingTasks] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const debouncedTaskSearch = useDebouncedValue(taskSearch, 250);
+  const shareTasksQuery = useTasksQuery(
+    debouncedTaskSearch,
+    1,
+    20,
+    sharingOpen,
+  );
+  const shareableTasks = shareTasksQuery.data?.data ?? [];
+  const isLoadingTasks = shareTasksQuery.isLoading;
 
   const conversationEntries = useMemo<ConversationEntry[]>(() => {
     const entries = new Map<string, ConversationEntry>();
@@ -192,39 +200,6 @@ export default function ChatWorkspace({
       });
     }
   }, [markMessagesRead, messages, selectedFriendId]);
-
-  useEffect(() => {
-    let cancelled = false;
-    const loadTasks = async () => {
-      if (!sharingOpen) {
-        return;
-      }
-
-      setIsLoadingTasks(true);
-      try {
-        const response = taskSearch.trim()
-          ? await taskApi.getByTitle(taskSearch.trim(), 1, 20)
-          : await taskApi.getPaginated(1, 20);
-        if (!cancelled) {
-          setShareableTasks(response.data);
-        }
-      } catch {
-        if (!cancelled) {
-          setShareableTasks([]);
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoadingTasks(false);
-        }
-      }
-    };
-
-    const timeout = window.setTimeout(loadTasks, 250);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timeout);
-    };
-  }, [sharingOpen, taskSearch]);
 
   const handleSendMessage = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

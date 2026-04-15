@@ -12,7 +12,10 @@ export const authApi = {
     payload: LoginRequest,
     options?: LoginOptions,
   ): Promise<AuthResponse> {
-    const data = await httpPost<AuthResponse, LoginRequest>("/login", payload);
+    const data = await httpPost<AuthResponse, LoginRequest>(
+      "/api/auth/login",
+      payload,
+    );
 
     if (!data?.token || !data?.user) {
       throw new Error("Nao foi possivel entrar. Verifique suas credenciais.");
@@ -34,7 +37,7 @@ export const authApi = {
 
   async register(payload: CreateUserRequest): Promise<AuthResponse> {
     const data = await httpPost<AuthResponse, CreateUserRequest>(
-      "/register",
+      "/api/auth/register",
       payload,
     );
 

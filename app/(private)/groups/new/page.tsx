@@ -3,7 +3,7 @@
 import GroupCard from "@/app/components/shared/Cards/GroupCard";
 import ColorPicker from "@/app/components/UI/ColorPicker";
 import InputField from "@/app/components/UI/InputField";
-import { groupApi } from "@/lib/api";
+import { useCreateGroupMutation } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -26,12 +26,13 @@ function normalizeHexColor(value: string): string | null {
 
 export default function NewGroupPage() {
   const router = useRouter();
+  const createGroupMutation = useCreateGroupMutation();
   const [state, setState] = useState({
     groupName: "",
     groupColor: DEFAULT_GROUP_COLOR,
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const isSubmitting = createGroupMutation.isPending;
 
   const previewTitle = state.groupName.trim() || "Novo Grupo";
   const normalizedGroupColor = normalizeHexColor(state.groupColor);
@@ -50,15 +51,15 @@ export default function NewGroupPage() {
       return;
     }
 
-    setIsSubmitting(true);
     try {
-      await groupApi.create({ name: groupName, color: normalizedGroupColor });
+      await createGroupMutation.mutateAsync({
+        name: groupName,
+        color: normalizedGroupColor,
+      });
       router.push("/groups");
     } catch (error) {
       console.error("Failed to create group", error);
       setErrorMessage("Não foi possível criar o grupo. Tente novamente.");
-    } finally {
-      setIsSubmitting(false);
     }
   }
 

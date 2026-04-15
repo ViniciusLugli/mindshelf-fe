@@ -1,183 +1,191 @@
 import Link from "next/link";
 
-const pillars = [
+const featureBlocks = [
   {
-    title: "Grupos com contexto real",
+    title: "Grupos para separar contexto",
     description:
-      "Crie espacos para times, estudos, projetos pessoais ou qualquer frente que precise de ordem e identidade propria.",
+      "Cada frente ganha seu proprio espaco. Isso funciona para times, estudos, pesquisas ou projetos pessoais sem misturar tudo no mesmo lugar.",
   },
   {
-    title: "Tasks com notas completas",
+    title: "Tasks que guardam raciocinio",
     description:
-      "Trabalhe em tarefas que tambem funcionam como documentos vivos, com espaco para texto rico, refinamento e historico.",
+      "As tasks podem ser desenvolvidas como notas vivas, com texto rico, listas, links e o contexto necessario para continuar depois.",
   },
   {
-    title: "Conversa ligada ao trabalho",
+    title: "Chat que continua o trabalho",
     description:
-      "Troque mensagens, acompanhe nao lidas e compartilhe tasks direto no chat para manter a colaboracao no mesmo fluxo.",
+      "Quando algo precisa de resposta rapida, voce conversa e compartilha a task no mesmo fluxo, sem perder a historia do que estava sendo feito.",
   },
 ] as const;
 
-const workflow = [
-  "Crie um grupo para organizar um assunto ou projeto.",
-  "Adicione tasks e desenvolva as notas com profundidade.",
-  "Conecte-se com amigos e compartilhe o que esta avancando.",
+const productFlow = [
+  {
+    step: "01",
+    title: "Crie um grupo",
+    description:
+      "Abra um espaco para um assunto, time ou projeto e mantenha tudo sob o mesmo contexto.",
+  },
+  {
+    step: "02",
+    title: "Desenvolva a task",
+    description:
+      "Transforme uma ideia em algo concreto com uma task que aceita escrita completa e refinamento real.",
+  },
+  {
+    step: "03",
+    title: "Compartilhe no chat",
+    description:
+      "Leve a task para a conversa quando precisar alinhar, pedir feedback ou tomar uma decisao.",
+  },
 ] as const;
 
 export default function LandingPage() {
   return (
     <div className="bg-base-100 text-base-content">
       <section className="relative overflow-hidden border-b border-base-300/60">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(231,111,81,0.18),transparent_32%),radial-gradient(circle_at_80%_18%,rgba(42,157,143,0.15),transparent_26%),radial-gradient(circle_at_70%_80%,rgba(244,162,97,0.12),transparent_28%)]" />
-        <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-center gap-12 px-6 py-14 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-center lg:px-10">
-          <div className="space-y-8">
-            <div className="space-y-5">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_18%,rgba(231,111,81,0.16),transparent_28%),radial-gradient(circle_at_84%_16%,rgba(42,157,143,0.12),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.3),transparent)]" />
+
+        <div className="relative mx-auto max-w-7xl px-6 py-6 lg:px-10 lg:py-8">
+          <header className="flex flex-col gap-4 border-b border-base-300/60 pb-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-base-content/35">
                 MindShelf
               </p>
-              <h1
-                className="max-w-4xl text-5xl font-bold leading-[0.94] text-base-content sm:text-6xl xl:text-7xl"
-                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-              >
-                Um lugar para organizar ideias, evoluir tasks e colaborar sem perder o contexto.
-              </h1>
-              <p className="max-w-2xl text-base leading-relaxed text-base-content/60 sm:text-lg">
-                O MindShelf junta grupos, notas ricas e conversa em tempo real numa
-                interface feita para transformar pensamento solto em trabalho claro,
-                compartilhado e vivo.
+              <p className="mt-2 text-sm text-base-content/52">
+                Grupos, tasks e conversa no mesmo fluxo.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href="/login" className="btn btn-primary btn-lg rounded-full px-8">
+            <div className="flex gap-3">
+              <Link href="/login" className="btn btn-ghost rounded-full px-6">
                 Entrar
               </Link>
-              <Link href="/register" className="btn btn-outline btn-lg rounded-full px-8">
+              <Link href="/register" className="btn btn-primary rounded-full px-6">
                 Criar conta
               </Link>
             </div>
+          </header>
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-[1.4rem] border border-base-300/60 bg-base-100/80 px-4 py-4 shadow-sm">
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                  Organize
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-base-content/60">
-                  Estruture por grupos e mantenha cada assunto no seu devido lugar.
-                </p>
-              </div>
-              <div className="rounded-[1.4rem] border border-base-300/60 bg-base-100/80 px-4 py-4 shadow-sm">
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                  Desenvolva
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-base-content/60">
-                  Escreva tarefas como documentos completos, com espaco para profundidade.
-                </p>
-              </div>
-              <div className="rounded-[1.4rem] border border-base-300/60 bg-base-100/80 px-4 py-4 shadow-sm">
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                  Compartilhe
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-base-content/60">
-                  Converse com amigos e envie tasks no mesmo fluxo de colaboracao.
-                </p>
+          <div className="grid gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end lg:py-16">
+            <div className="space-y-6">
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+                Workspace social para conhecimento
+              </p>
+              <h1
+                className="max-w-4xl text-4xl font-bold leading-[1.02] text-base-content sm:text-5xl xl:text-6xl"
+                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+              >
+                Organize ideias, desenvolva tasks e alinhe conversas sem quebrar o contexto.
+              </h1>
+              <p className="max-w-2xl text-base leading-relaxed text-base-content/60 sm:text-lg">
+                O MindShelf existe para o momento em que uma ideia precisa virar trabalho real. Em vez de espalhar grupo, nota e conversa em lugares diferentes, voce continua tudo dentro do mesmo ambiente.
+              </p>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link href="/register" className="btn btn-primary btn-lg rounded-full px-8">
+                  Comecar agora
+                </Link>
+                <Link href="/login" className="btn btn-outline btn-lg rounded-full px-8">
+                  Ja tenho conta
+                </Link>
               </div>
             </div>
+
+            <aside className="rounded-[2rem] border border-base-300/70 bg-base-100/92 p-5 shadow-sm">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                Em que tipo de rotina ele ajuda
+              </p>
+
+              <div className="mt-5 space-y-3">
+                <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
+                  <p className="font-semibold text-base-content">Times pequenos</p>
+                  <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+                    Para acompanhar ideias, backlog e conversas sem perder continuidade.
+                  </p>
+                </div>
+                <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
+                  <p className="font-semibold text-base-content">Pesquisa e estudo</p>
+                  <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+                    Para guardar aprendizado, desenvolver notas e compartilhar recortes importantes.
+                  </p>
+                </div>
+                <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
+                  <p className="font-semibold text-base-content">Projetos pessoais</p>
+                  <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+                    Para transformar pensamentos soltos em algo que pode evoluir com clareza.
+                  </p>
+                </div>
+              </div>
+            </aside>
           </div>
 
-          <div className="relative mx-auto w-full max-w-2xl">
-            <div className="absolute -left-6 top-8 hidden h-28 w-28 rounded-full border border-base-300/60 bg-base-100/40 lg:block" />
-            <div className="absolute -right-6 bottom-10 hidden h-20 w-20 rounded-full border border-base-300/60 bg-base-100/40 lg:block" />
+          <div className="grid gap-4 pb-12 lg:grid-cols-[0.9fr_1.2fr_0.95fr] lg:pb-16">
+            <article className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                Grupo ativo
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold text-base-content">
+                Product Design
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+                Um espaco para discovery, backlog e alinhamento de decisoes sem misturar com outras frentes.
+              </p>
 
-            <div className="relative overflow-hidden rounded-[2.2rem] border border-base-300/70 bg-base-100/95 shadow-2xl shadow-base-content/10">
-              <div className="border-b border-base-300/60 px-5 py-4">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-base-content/35">
-                      Preview da experiencia
-                    </p>
-                    <p className="mt-1 text-lg font-semibold text-base-content">
-                      Planejamento com conversa e contexto
-                    </p>
-                  </div>
-                  <span className="badge badge-primary badge-lg rounded-full px-4">
-                    MindShelf
-                  </span>
+              <div className="mt-5 space-y-3">
+                <div className="rounded-[1.3rem] border border-base-300/60 bg-base-200/25 px-4 py-3 text-sm text-base-content/60">
+                  Refinar onboarding da squad nova
+                </div>
+                <div className="rounded-[1.3rem] border border-base-300/60 bg-base-200/25 px-4 py-3 text-sm text-base-content/60">
+                  Consolidar aprendizados das entrevistas
+                </div>
+              </div>
+            </article>
+
+            <article className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                    Task aberta
+                  </p>
+                  <h2 className="mt-3 text-2xl font-semibold text-base-content">
+                    Refinar onboarding da squad nova
+                  </h2>
+                </div>
+                <span className="badge rounded-full border-0 bg-primary/10 px-4 py-3 text-primary">
+                  texto rico
+                </span>
+              </div>
+
+              <div className="mt-5 rounded-[1.5rem] border border-base-300/60 bg-base-200/30 p-4 text-sm leading-relaxed text-base-content/58">
+                A task funciona como documento vivo: contexto, decisoes, lista de proximos passos e referencias ficam no mesmo lugar para que o trabalho continue depois.
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-base-content/35">
+                <span className="rounded-full bg-base-200 px-3 py-2">Titulos</span>
+                <span className="rounded-full bg-base-200 px-3 py-2">Listas</span>
+                <span className="rounded-full bg-base-200 px-3 py-2">Links</span>
+                <span className="rounded-full bg-base-200 px-3 py-2">Notas longas</span>
+              </div>
+            </article>
+
+            <article className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                Conversa recente
+              </p>
+
+              <div className="mt-5 space-y-3">
+                <div className="rounded-[1.3rem] border border-base-300/60 bg-base-200/25 px-4 py-3 text-sm leading-relaxed text-base-content/60">
+                  <span className="font-semibold text-base-content">Ana</span>: compartilha a task no chat para pedir feedback.
+                </div>
+                <div className="ml-auto max-w-[88%] rounded-[1.3rem] bg-primary px-4 py-3 text-sm leading-relaxed text-primary-content shadow-sm">
+                  Quem recebe entende o contexto rapido e responde em cima do que ja estava sendo construido.
                 </div>
               </div>
 
-              <div className="grid gap-4 p-5 lg:grid-cols-3">
-                <article className="rounded-[1.7rem] border border-base-300/60 bg-base-200/35 p-4">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                    Grupos
-                  </p>
-                  <div className="mt-4 space-y-3">
-                    <div className="rounded-[1.2rem] border border-base-300/60 bg-base-100 px-3 py-3">
-                      <p className="text-sm font-semibold text-base-content">Product Strategy</p>
-                      <p className="mt-1 text-xs text-base-content/45">Roadmap e backlog</p>
-                    </div>
-                    <div className="rounded-[1.2rem] border border-base-300/60 bg-base-100 px-3 py-3">
-                      <p className="text-sm font-semibold text-base-content">Research Vault</p>
-                      <p className="mt-1 text-xs text-base-content/45">Aprendizados e entrevistas</p>
-                    </div>
-                    <p className="text-sm leading-relaxed text-base-content/55">
-                      Cada grupo concentra tasks, notas e o contexto de um assunto.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="rounded-[1.7rem] border border-base-300/60 bg-base-100 p-4 lg:col-span-1">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                        Task em foco
-                      </p>
-                      <h2 className="mt-2 text-xl font-semibold text-base-content xl:text-2xl">
-                        Refinar onboarding da squad nova
-                      </h2>
-                    </div>
-                    <span className="badge border-0 bg-primary/10 text-primary">
-                      editor rico
-                    </span>
-                  </div>
-
-                  <div className="mt-4 space-y-3 rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4 text-sm leading-relaxed text-base-content/60">
-                    <p>
-                      A task funciona como documento vivo: ideias, decisoes, destaques e proximo passo no mesmo lugar.
-                    </p>
-                    <div className="flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                      <span className="rounded-full bg-base-100 px-3 py-2">Titulos</span>
-                      <span className="rounded-full bg-base-100 px-3 py-2">Listas</span>
-                      <span className="rounded-full bg-base-100 px-3 py-2">Links</span>
-                    </div>
-                  </div>
-                </article>
-
-                <article className="rounded-[1.7rem] border border-base-300/60 bg-base-100 p-4">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                    Colaboracao
-                  </p>
-                  <div className="mt-4 space-y-3">
-                    <div className="rounded-[1.2rem] border border-base-300/60 bg-base-200/30 p-3">
-                      <p className="text-sm font-semibold text-base-content">
-                        Chat integrado
-                      </p>
-                      <p className="mt-1 text-sm leading-relaxed text-base-content/55">
-                        Compartilhe uma task no meio da conversa sem perder o fio.
-                      </p>
-                    </div>
-                    <div className="rounded-[1.2rem] border border-base-300/60 bg-base-200/30 p-3">
-                      <p className="text-sm font-semibold text-base-content">
-                        Fluxo claro
-                      </p>
-                      <p className="mt-1 text-sm leading-relaxed text-base-content/55">
-                        Menos troca de aba, menos perda de contexto e mais continuidade.
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
+              <p className="mt-5 text-sm leading-relaxed text-base-content/55">
+                O chat complementa o trabalho, nao compete com ele.
+              </p>
+            </article>
           </div>
         </div>
       </section>
@@ -185,66 +193,63 @@ export default function LandingPage() {
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-10">
         <div className="max-w-3xl space-y-3">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-            O que o MindShelf resolve
+            O que muda na pratica
           </p>
           <h2
             className="text-4xl font-bold leading-tight text-base-content sm:text-5xl"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
-            Menos fragmentacao entre organizar, escrever e conversar.
+            Menos troca de contexto. Mais continuidade entre o que voce pensa, escreve e compartilha.
           </h2>
-          <p className="text-base leading-relaxed text-base-content/60 sm:text-lg">
-            O projeto nasce para quem pensa melhor quando o contexto continua presente: grupos para estruturar, tasks para desenvolver e chat para decidir sem soltar o fio da meada.
-          </p>
         </div>
 
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {pillars.map((pillar) => (
+          {featureBlocks.map((item) => (
             <article
-              key={pillar.title}
+              key={item.title}
               className="rounded-[1.9rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm"
             >
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                Pilar
-              </p>
-              <h3 className="mt-4 text-2xl font-semibold text-base-content">
-                {pillar.title}
+              <h3 className="text-2xl font-semibold text-base-content">
+                {item.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-base-content/60">
-                {pillar.description}
+              <p className="mt-4 text-sm leading-relaxed text-base-content/58 sm:text-base">
+                {item.description}
               </p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="border-y border-base-300/60 bg-base-200/25">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-18 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:px-10">
-          <div className="space-y-4">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-              Como funciona
-            </p>
-            <h2
-              className="text-4xl font-bold leading-tight text-base-content sm:text-5xl"
-              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-            >
-              Um fluxo simples para ideias que precisam continuar crescendo.
-            </h2>
+      <section className="border-y border-base-300/60 bg-base-200/20">
+        <div className="mx-auto max-w-7xl px-6 py-18 lg:px-10">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl space-y-3">
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+                Fluxo do produto
+              </p>
+              <h2
+                className="text-4xl font-bold leading-tight text-base-content sm:text-5xl"
+                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+              >
+                O ciclo do MindShelf e bem direto: organizar, desenvolver e compartilhar.
+              </h2>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            {workflow.map((step, index) => (
-              <div
-                key={step}
-                className="flex gap-4 rounded-[1.8rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm"
+          <div className="mt-10 grid gap-4 lg:grid-cols-3">
+            {productFlow.map((item) => (
+              <article
+                key={item.step}
+                className="rounded-[1.9rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-content text-lg font-bold">
-                  {index + 1}
-                </div>
-                <p className="pt-1 text-base leading-relaxed text-base-content/65">
-                  {step}
+                <p className="text-sm font-bold text-primary">{item.step}</p>
+                <h3 className="mt-4 text-2xl font-semibold text-base-content">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-base-content/58 sm:text-base">
+                  {item.description}
                 </p>
-              </div>
+              </article>
             ))}
           </div>
         </div>
@@ -255,25 +260,28 @@ export default function LandingPage() {
           <div className="grid gap-8 px-6 py-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-10">
             <div className="space-y-4">
               <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-content/35">
-                Pronto para entrar?
+                Entrar no fluxo
               </p>
               <h2
                 className="max-w-3xl text-4xl font-bold leading-tight text-neutral-content sm:text-5xl"
                 style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
               >
-                Organize melhor, escreva com profundidade e compartilhe sem perder o contexto.
+                Se o seu trabalho mistura contexto, escrita e conversa, o MindShelf foi feito para esse tipo de rotina.
               </h2>
               <p className="max-w-2xl text-base leading-relaxed text-neutral-content/60">
-                Se a sua rotina mistura planejamento, escrita e troca com outras pessoas, o MindShelf foi pensado para esse tipo de trabalho.
+                Comece com um grupo, desenvolva a primeira task e convide quem precisa continuar a conversa com voce.
               </p>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Link href="/login" className="btn btn-primary btn-lg rounded-full px-8">
-                Entrar agora
-              </Link>
-              <Link href="/register" className="btn btn-outline btn-lg rounded-full border-neutral-content/20 text-neutral-content hover:bg-neutral-content hover:text-neutral">
+              <Link href="/register" className="btn btn-primary btn-lg rounded-full px-8">
                 Criar conta
+              </Link>
+              <Link
+                href="/login"
+                className="btn btn-outline btn-lg rounded-full border-neutral-content/20 text-neutral-content hover:bg-neutral-content hover:text-neutral"
+              >
+                Entrar
               </Link>
             </div>
           </div>

@@ -393,7 +393,9 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const socket = new WebSocket(buildWebSocketUrl());
+    const wsUrl = buildWebSocketUrl();
+
+    const socket = new WebSocket(wsUrl);
     socketRef.current = socket;
 
     socket.onopen = () => {
@@ -541,9 +543,15 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
-    socket.onclose = () => {
+    socket.onclose = (event) => {
       socketRef.current = null;
       setConnectionStatus("disconnected");
+
+      if (!event.wasClean && shouldReconnectRef.current) {
+        setLastError(
+          `Conexao em tempo real encerrada (${event.code}). Verifique o backend em ${wsUrl}.`,
+        );
+      }
 
       if (!shouldReconnectRef.current) {
         return;
@@ -559,7 +567,9 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
     };
 
     socket.onerror = () => {
-      setLastError("Falha na conexao em tempo real.");
+      setLastError(
+        `Falha na conexao em tempo real com ${wsUrl}. Confira o endpoint /api/ws e ALLOWED_ORIGINS no backend.`,
+      );
     };
   }, [
     activeConversationId,

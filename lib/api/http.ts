@@ -1,14 +1,12 @@
-import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosHeaders,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosResponseHeaders,
+} from "axios";
 import type { ApiError } from "./types";
 
 export const AUTH_TOKEN_COOKIE_KEY = "mindshelf_token";
-const API_PROXY_PREFIX = "/ms-api";
-const API_PROXY_TARGET =
-  process.env.API_PROXY_TARGET ?? "http://localhost:8080";
-
-const DEFAULT_API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ??
-  (typeof window === "undefined" ? API_PROXY_TARGET : API_PROXY_PREFIX);
 
 type CookieOptions = {
   days?: number;
@@ -18,8 +16,100 @@ type CookieOptions = {
   persistent?: boolean;
 };
 
+type ApiRequestConfig<TBody = unknown> = Omit<AxiosRequestConfig<TBody>, "url"> & {
+  url: string;
+};
+
 function isBrowser() {
   return typeof document !== "undefined";
+}
+
+function isAbsoluteUrl(value: string) {
+  return value.startsWith("http://") || value.startsWith("https://");
+}
+
+function normalizeApiPath(value: string) {
+  if (isAbsoluteUrl(value)) {
+    return value;
+  }
+
+  return value.startsWith("/") ? value : `/${value}`;
+}
+
+function createRequestHeaders(headers?: AxiosRequestConfig["headers"]) {
+  const normalizedHeaders =
+    headers instanceof AxiosHeaders
+      ? headers
+      : AxiosHeaders.from((headers ?? {}) as Record<string, string>);
+  const token = getAuthTokenFromCookie();
+
+  if (token && !normalizedHeaders.has("Authorization")) {
+    normalizedHeaders.set("Authorization", `Bearer ${token}`);
+  }
+
+  if (!normalizedHeaders.has("Content-Type")) {
+    normalizedHeaders.set("Content-Type", "application/json");
+  }
+
+  return normalizedHeaders;
+}
+
+function isHtmlResponse(
+  payload: unknown,
+  headers?: AxiosResponseHeaders | Record<string, unknown>,
+) {
+  const contentType = headers?.["content-type"];
+  return typeof payload === "string" && contentType?.includes("text/html");
+}
+
+function formatApiError(error: unknown): never {
+  if (axios.isAxiosError<ApiError>(error)) {
+    const status = error.response?.status;
+    const payload = error.response?.data;
+
+    if (
+      status &&
+      isHtmlResponse(
+        payload,
+        error.response?.headers as AxiosResponseHeaders | Record<string, unknown> | undefined,
+      )
+    ) {
+      throw new Error(
+        `API ${status}: o frontend recebeu HTML em vez de JSON. Verifique se a rota /api do Next esta proxyando corretamente para o backend.`,
+      );
+    }
+
+    if (status && payload) {
+      throw new Error(`API ${status}: ${JSON.stringify(payload)}`);
+    }
+
+    if (status) {
+      throw new Error(`API ${status}: ${error.message}`);
+    }
+
+    throw new Error(`API error: ${error.message}`);
+  }
+
+  throw error;
+}
+
+async function requestApi<TResponse, TBody = unknown>({
+  headers,
+  withCredentials = true,
+  ...config
+}: ApiRequestConfig<TBody>): Promise<TResponse> {
+  try {
+    const response = await axios.request<TResponse, AxiosResponse<TResponse>, TBody>({
+      ...config,
+      url: normalizeApiPath(config.url),
+      withCredentials,
+      headers: createRequestHeaders(headers),
+    });
+
+    return response.data;
+  } catch (error) {
+    formatApiError(error);
+  }
 }
 
 export function getAuthTokenFromCookie(): string | null {
@@ -69,99 +159,49 @@ export function clearAuthTokenCookie(path = "/") {
   document.cookie = `${AUTH_TOKEN_COOKIE_KEY}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=${path}; SameSite=Lax`;
 }
 
-export const http = axios.create({
-  baseURL: DEFAULT_API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-http.interceptors.request.use((config) => {
-  const token = getAuthTokenFromCookie();
-
-  if (token) {
-    const headers = AxiosHeaders.from(config.headers);
-
-    if (!headers.has("Authorization")) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
-
-    config.headers = headers;
-  }
-
-  return config;
-});
-
-function throwFormattedApiError(error: unknown): never {
-  if (axios.isAxiosError<ApiError>(error)) {
-    const status = error.response?.status;
-    const payload = error.response?.data;
-
-    if (status && payload) {
-      throw new Error(`API ${status}: ${JSON.stringify(payload)}`);
-    }
-
-    if (status) {
-      throw new Error(`API ${status}: ${error.message}`);
-    }
-
-    throw new Error(`API error: ${error.message}`);
-  }
-
-  throw error;
+export function httpGet<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  return requestApi<T>({
+    ...(config ?? {}),
+    method: "GET",
+    url,
+  });
 }
 
-export async function httpGet<T>(
-  url: string,
-  config?: AxiosRequestConfig,
-): Promise<T> {
-  try {
-    const response = await http.get<T>(url, config);
-    return response.data;
-  } catch (error) {
-    throwFormattedApiError(error);
-  }
-}
-
-export async function httpPost<TResponse, TBody = unknown>(
+export function httpPost<TResponse, TBody = unknown>(
   url: string,
   body?: TBody,
-  config?: AxiosRequestConfig,
+  config?: AxiosRequestConfig<TBody>,
 ): Promise<TResponse> {
-  try {
-    const response = await http.post<TResponse>(url, body, config);
-    return response.data;
-  } catch (error) {
-    throwFormattedApiError(error);
-  }
+  return requestApi<TResponse, TBody>({
+    ...(config ?? {}),
+    method: "POST",
+    url,
+    data: body,
+  });
 }
 
-export async function httpPatch<TResponse, TBody = unknown>(
+export function httpPatch<TResponse, TBody = unknown>(
   url: string,
   body: TBody,
-  config?: AxiosRequestConfig,
+  config?: AxiosRequestConfig<TBody>,
 ): Promise<TResponse> {
-  try {
-    const response = await http.patch<TResponse>(url, body, config);
-    return response.data;
-  } catch (error) {
-    throwFormattedApiError(error);
-  }
+  return requestApi<TResponse, TBody>({
+    ...(config ?? {}),
+    method: "PATCH",
+    url,
+    data: body,
+  });
 }
 
-export async function httpDelete<TResponse, TBody = unknown>(
+export function httpDelete<TResponse, TBody = unknown>(
   url: string,
   body?: TBody,
-  config?: AxiosRequestConfig,
+  config?: AxiosRequestConfig<TBody>,
 ): Promise<TResponse> {
-  try {
-    const response = await http.delete<TResponse>(url, {
-      ...config,
-      data: body,
-    });
-
-    return response.data;
-  } catch (error) {
-    throwFormattedApiError(error);
-  }
+  return requestApi<TResponse, TBody>({
+    ...(config ?? {}),
+    method: "DELETE",
+    url,
+    data: body,
+  });
 }

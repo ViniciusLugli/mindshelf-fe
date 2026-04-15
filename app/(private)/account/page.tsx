@@ -2,101 +2,70 @@
 
 import SearchField from "@/app/components/UI/SearchField";
 import UserAvatar from "@/app/components/UI/UserAvatar";
+import { useDebouncedValue } from "@/app/hooks/useDebouncedValue";
 import { ThemeSelector } from "@/app/components/shared/ThemeSelector";
 import RelationshipActions from "@/app/components/social/RelationshipActions";
 import { useRealtime } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { userApi } from "@/lib/api";
-import type { UserResponse } from "@/lib/api/types";
+import { useUpdateCurrentUserMutation, useUserSearchQuery } from "@/lib/api";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function AccountPage() {
   const { currentUser, setCurrentUser } = useSession();
   const { friends, pendingInvites, outgoingInviteIds } = useRealtime();
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState<{
+    name: string;
+    email: string;
+    password: string;
+  } | null>(null);
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState<UserResponse[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const debouncedSearch = useDebouncedValue(search, 280);
+  const updateUserMutation = useUpdateCurrentUserMutation();
+  const userSearchQuery = useUserSearchQuery(debouncedSearch, 1, 12);
 
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
+  const results = userSearchQuery.data?.data ?? [];
+  const isSearching = userSearchQuery.isLoading;
+  const isSaving = updateUserMutation.isPending;
 
-    setForm({
-      name: currentUser.name,
-      email: currentUser.email,
-      password: "",
-    });
-  }, [currentUser]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadResults = async () => {
-      const term = search.trim();
-      if (!term) {
-        setResults([]);
-        return;
-      }
-
-      setIsSearching(true);
-      try {
-        const response = await userApi.getByName(term, 1, 12);
-        if (!cancelled) {
-          setResults(response.data);
-        }
-      } catch {
-        if (!cancelled) {
-          setResults([]);
-        }
-      } finally {
-        if (!cancelled) {
-          setIsSearching(false);
-        }
-      }
-    };
-
-    const timeout = window.setTimeout(loadResults, 280);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timeout);
-    };
-  }, [search]);
+  const resolvedForm = form ?? {
+    name: currentUser?.name ?? "",
+    email: currentUser?.email ?? "",
+    password: "",
+  };
 
   const pendingCount = pendingInvites.length;
 
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSaving(true);
     setFeedback(null);
 
     try {
-      await userApi.updateAuthenticated({
-        name: form.name.trim() || undefined,
-        email: form.email.trim() || undefined,
-        password: form.password.trim() || undefined,
+      await updateUserMutation.mutateAsync({
+        name: resolvedForm.name.trim() || undefined,
+        email: resolvedForm.email.trim() || undefined,
+        password: resolvedForm.password.trim() || undefined,
       });
 
       if (currentUser) {
         setCurrentUser({
           ...currentUser,
-          name: form.name.trim() || currentUser.name,
-          email: form.email.trim() || currentUser.email,
+          name: resolvedForm.name.trim() || currentUser.name,
+          email: resolvedForm.email.trim() || currentUser.email,
         });
       }
 
-      setForm((current) => ({ ...current, password: "" }));
+      setForm({
+        name: resolvedForm.name,
+        email: resolvedForm.email,
+        password: "",
+      });
       setFeedback("Suas configuracoes foram atualizadas.");
     } catch (error) {
       setFeedback(
         error instanceof Error ? error.message : "Nao foi possivel salvar a conta.",
       );
-    } finally {
-      setIsSaving(false);
     }
   };
 
@@ -206,9 +175,12 @@ export default function AccountPage() {
                     <input
                       id="account-name"
                       className="input input-bordered h-13 w-full rounded-2xl border-base-300/70 bg-base-100 px-4"
-                      value={form.name}
+                      value={resolvedForm.name}
                       onChange={(event) =>
-                        setForm((current) => ({ ...current, name: event.target.value }))
+                        setForm((current) => ({
+                          ...(current ?? resolvedForm),
+                          name: event.target.value,
+                        }))
                       }
                     />
                   </div>
@@ -224,9 +196,12 @@ export default function AccountPage() {
                       id="account-email"
                       type="email"
                       className="input input-bordered h-13 w-full rounded-2xl border-base-300/70 bg-base-100 px-4"
-                      value={form.email}
+                      value={resolvedForm.email}
                       onChange={(event) =>
-                        setForm((current) => ({ ...current, email: event.target.value }))
+                        setForm((current) => ({
+                          ...(current ?? resolvedForm),
+                          email: event.target.value,
+                        }))
                       }
                     />
                   </div>
@@ -243,10 +218,10 @@ export default function AccountPage() {
                       type="password"
                       placeholder="Preencha apenas se quiser trocar"
                       className="input input-bordered h-13 w-full rounded-2xl border-base-300/70 bg-base-100 px-4"
-                      value={form.password}
+                      value={resolvedForm.password}
                       onChange={(event) =>
                         setForm((current) => ({
-                          ...current,
+                          ...(current ?? resolvedForm),
                           password: event.target.value,
                         }))
                       }
