@@ -1,12 +1,8 @@
 import GroupCard from "@/app/components/shared/Cards/GroupCard";
+import { groupApi } from "@/lib/api";
 import Link from "next/link";
 
-const groups = [
-  { id: "1", title: "Product Design", color: "#E76F51" },
-  { id: "2", title: "Marketing Sprint", color: "#2A9D8F" },
-  { id: "3", title: "Book Club", color: "#264653" },
-  { id: "4", title: "Weekend Ideas", color: "#F4A261" },
-];
+const groups = await groupApi.getPaginated(1, 20);
 
 export default function GroupsPage() {
   return (
@@ -27,10 +23,10 @@ export default function GroupsPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {groups.map((group) => (
+        {groups.data.map((group) => (
           <GroupCard
             key={group.id}
-            title={group.title}
+            title={group.name}
             color={group.color}
             href={`/groups/${group.id}`}
           />
