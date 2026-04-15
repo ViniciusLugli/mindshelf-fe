@@ -10,6 +10,7 @@ export const navbarLinks: NavbarItem[] = [
     href: "/home",
   },
   { label: "Groups", href: "/groups" },
-  { label: "Notes", href: "/notes" },
-  { label: "Contacts", href: "/contacts" },
+  { label: "Tasks", href: "/tasks" },
+  { label: "Chat", href: "/chat" },
+  { label: "Invites", href: "/contacts/pending" },
 ];

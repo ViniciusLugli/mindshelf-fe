@@ -8,6 +8,7 @@ export type Note = {
   groupTitle: string;
   groupColor: string;
   noteTitle: string;
+  href?: string;
 };
 
 type LatestNotesProps = {
@@ -40,9 +41,9 @@ export default function LatestNotes({
         {title}
       </h2>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {notes.map((note) => (
-          <Link key={note.id} href={`/groups/${note.id}`}>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {notes.map((note) => (
+          <Link key={note.id} href={note.href ?? "/tasks"}>
             <NoteCard
               key={note.id}
               groupTitle={note.groupTitle}

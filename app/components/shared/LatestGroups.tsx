@@ -1,4 +1,3 @@
-import Link from "next/link";
 import GroupCard from "./Cards/GroupCard";
 import EmptyCard from "../UI/EmptyCard";
 import { Dashboard } from "@mui/icons-material";

@@ -5,7 +5,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NavMenu from "./NavMenu";
 import { navbarLinks } from "./navbar.links";
 import Link from "next/link";
-import { ThemeSelector } from "../ThemeSelector";
 import { AccountCircle } from "@mui/icons-material";
 
 export default function Navbar() {
@@ -44,10 +43,8 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-end">
-        <ThemeSelector />
-
         <Link
-          href="/signin"
+          href="/account"
           className="btn btn-ghost h-auto min-h-0 px-2 text-sm text-inherit hover:bg-transparent sm:px-3 sm:text-base lg:text-lg"
         >
           <AccountCircle />

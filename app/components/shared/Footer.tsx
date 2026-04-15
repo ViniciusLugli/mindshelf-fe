@@ -36,11 +36,11 @@ export default function Footer() {
             <div>
               <h2 className="footer-title mb-3 opacity-100">Account</h2>
               <div className="flex flex-col gap-2 text-sm sm:text-base">
-                <Link href="/signin" className="link link-hover">
-                  Sign In
+                <Link href="/login" className="link link-hover">
+                  Login
                 </Link>
-                <Link href="/signup" className="link link-hover">
-                  Sign Up
+                <Link href="/register" className="link link-hover">
+                  Register
                 </Link>
               </div>
             </div>

@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Person,
-  StickyNote2,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import UserCard from "./Cards/UserCard";

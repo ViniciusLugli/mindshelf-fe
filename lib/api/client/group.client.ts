@@ -1,4 +1,4 @@
-import { httpGet, httpPatch, httpPost } from "../http";
+import { httpDelete, httpGet, httpPatch, httpPost } from "../http";
 import type {
   CreateGroupRequest,
   GroupResponse,
@@ -24,7 +24,7 @@ export const groupApi = {
   },
 
   delete(id: string): Promise<void> {
-    return httpPost<void>("/api/group/delete", undefined, {
+    return httpDelete<void>("/api/group/delete", undefined, {
       params: { id },
     });
   },

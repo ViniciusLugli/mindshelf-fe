@@ -21,6 +21,7 @@ export type UpdateTaskRequest = {
   id: string;
   title?: string;
   notes?: string;
+  group_id?: string;
 };
 
 export type DeleteTaskRequest = {

@@ -1,6 +1,10 @@
 export type ApiError = Record<string, string>;
 export type SimpleMessageResponse = Record<string, string>;
 
+export type StatusMessageResponse = {
+  message: string;
+};
+
 export type PaginationMeta = {
   page: number;
   limit: number;

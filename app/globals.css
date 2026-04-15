@@ -7,3 +7,64 @@
     night,
     retro;
 }
+
+body {
+  font-family: "DM Sans", sans-serif;
+}
+
+.ProseMirror {
+  min-height: 360px;
+  line-height: 1.75;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: color-mix(in srgb, currentColor 35%, transparent);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3 {
+  font-family: "Cormorant Garamond", serif;
+  line-height: 1.1;
+  margin: 1.4rem 0 0.7rem;
+}
+
+.ProseMirror h1 {
+  font-size: 2rem;
+}
+
+.ProseMirror h2 {
+  font-size: 1.65rem;
+}
+
+.ProseMirror h3 {
+  font-size: 1.35rem;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid color-mix(in srgb, currentColor 25%, transparent);
+  margin: 1.2rem 0;
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+.ProseMirror hr {
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  margin: 1.5rem 0;
+}
+
+.ProseMirror a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}

@@ -1,4 +1,7 @@
+"use client";
+
 import { useState, type ChangeEventHandler } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type AuthInputFieldProps = {
   id: string;
@@ -34,15 +37,18 @@ export default function AuthInputField({
     : type;
 
   return (
-    <label className="form-control w-full" htmlFor={id}>
-      <span className="label-text mb-1.5 text-[13px] font-medium text-base-content/60">
-        {label}
-      </span>
+    <div className="form-control w-full">
+      <label htmlFor={id} className="mb-1.5 block">
+        <span className="label-text text-[13px] font-medium text-base-content/60">
+          {label}
+        </span>
+      </label>
+
       <div className="relative">
         <input
           id={id}
           type={resolvedType}
-          className="input input-bordered w-full pr-18 focus:input-primary"
+          className="input input-bordered w-full pr-14 focus:input-primary"
           value={value}
           autoComplete={autoComplete}
           disabled={disabled}
@@ -56,15 +62,20 @@ export default function AuthInputField({
         {isPasswordField ? (
           <button
             type="button"
-            className="btn btn-ghost btn-xs absolute right-2 top-1/2 -translate-y-1/2 normal-case"
+            className="btn btn-ghost btn-sm absolute right-1.5 top-1/2 h-9 min-h-0 w-9 -translate-y-1/2 rounded-full p-0"
             aria-label={isPasswordVisible ? `Hide ${label}` : `Show ${label}`}
+            aria-pressed={isPasswordVisible}
             onClick={() => setIsPasswordVisible((previous) => !previous)}
             disabled={disabled}
           >
-            {isPasswordVisible ? "Hide" : "Show"}
+            {isPasswordVisible ? (
+              <VisibilityOff fontSize="small" />
+            ) : (
+              <Visibility fontSize="small" />
+            )}
           </button>
         ) : null}
       </div>
-    </label>
+    </div>
   );
 }

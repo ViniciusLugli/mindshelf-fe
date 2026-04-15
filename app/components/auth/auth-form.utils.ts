@@ -73,8 +73,32 @@ export function validateAuthForm(
 
 export function formatAuthError(error: unknown): string {
   if (error instanceof Error && error.message.trim()) {
-    return error.message;
+    const message = error.message.trim();
+
+    const apiMessageMatch = message.match(/^API\s\d+:\s(.+)$/);
+    if (apiMessageMatch) {
+      const payloadText = apiMessageMatch[1];
+
+      try {
+        const payload = JSON.parse(payloadText) as Record<string, unknown>;
+        const readableMessage = Object.values(payload).find(
+          (value): value is string => typeof value === "string" && value.trim().length > 0,
+        );
+
+        if (readableMessage) {
+          return readableMessage;
+        }
+      } catch {
+        return payloadText;
+      }
+    }
+
+    if (message.toLowerCase().includes("network")) {
+      return "Nao foi possivel conectar ao servidor. Verifique sua conexao e tente novamente.";
+    }
+
+    return message;
   }
 
-  return "Could not authenticate. Please try again.";
+  return "Nao foi possivel autenticar. Tente novamente.";
 }

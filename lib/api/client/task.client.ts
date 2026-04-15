@@ -27,6 +27,17 @@ export const taskApi = {
     );
   },
 
+  getByGroup(
+    groupId: string,
+    page: number,
+    limit: number,
+  ): Promise<PaginatedTaskResponse> {
+    return httpGet<PaginatedTaskResponse>(
+      `/api/task/group/${toPathSegment(groupId)}`,
+      withRequiredPagination({ page, limit }),
+    );
+  },
+
   create(payload: CreateTaskRequest): Promise<SimpleMessageResponse> {
     return httpPost<SimpleMessageResponse, CreateTaskRequest>(
       "/api/task/create",

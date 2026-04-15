@@ -1,5 +1,6 @@
 import { clearAuthTokenCookie, httpPost, setAuthTokenCookie } from "../http";
 import type { AuthResponse, CreateUserRequest, LoginRequest } from "../types";
+import { clearSessionUser, persistSessionUser } from "@/lib/auth/session";
 
 type LoginOptions = {
   staySignedIn?: boolean;
@@ -13,11 +14,19 @@ export const authApi = {
   ): Promise<AuthResponse> {
     const data = await httpPost<AuthResponse, LoginRequest>("/login", payload);
 
+    if (!data?.token || !data?.user) {
+      throw new Error("Nao foi possivel entrar. Verifique suas credenciais.");
+    }
+
     if (data.token) {
       setAuthTokenCookie(data.token, {
         persistent: options?.staySignedIn ?? false,
         days: options?.rememberDays ?? 30,
       });
+    }
+
+    if (data.user) {
+      persistSessionUser(data.user);
     }
 
     return data;
@@ -29,8 +38,16 @@ export const authApi = {
       payload,
     );
 
+    if (!data?.token || !data?.user) {
+      throw new Error("Nao foi possivel criar sua conta. Tente novamente.");
+    }
+
     if (data.token) {
       setAuthTokenCookie(data.token);
+    }
+
+    if (data.user) {
+      persistSessionUser(data.user);
     }
 
     return data;
@@ -38,5 +55,6 @@ export const authApi = {
 
   logout() {
     clearAuthTokenCookie();
+    clearSessionUser();
   },
 };
