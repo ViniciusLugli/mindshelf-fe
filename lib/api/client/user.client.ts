@@ -1,6 +1,5 @@
 import { httpDelete, httpGet, httpPatch } from "../http";
 import type {
-  GetUserByIdOrEmailQuery,
   PaginatedUserResponse,
   SimpleMessageResponse,
   UpdateUserRequest,
@@ -9,19 +8,23 @@ import type {
 import { toPathSegment, withRequiredPagination } from "./shared.client";
 
 export const userApi = {
-  getByIdOrEmail(params: GetUserByIdOrEmailQuery): Promise<UserResponse> {
-    return httpGet<UserResponse>("/api/user/", { params });
+  getAuthenticated(): Promise<UserResponse> {
+    return httpGet<UserResponse>("/api/users/me");
+  },
+
+  getById(id: string): Promise<UserResponse> {
+    return httpGet<UserResponse>(`/api/users/${toPathSegment(id)}`);
   },
 
   deleteAuthenticated(): Promise<void> {
-    return httpDelete<void>("/api/user/delete");
+    return httpDelete<void>("/api/users/me");
   },
 
   updateAuthenticated(
     payload: UpdateUserRequest,
   ): Promise<SimpleMessageResponse> {
     return httpPatch<SimpleMessageResponse, UpdateUserRequest>(
-      "/api/user/update",
+      "/api/users/me",
       payload,
     );
   },
@@ -32,8 +35,13 @@ export const userApi = {
     limit: number,
   ): Promise<PaginatedUserResponse> {
     return httpGet<PaginatedUserResponse>(
-      `/api/user/${toPathSegment(name)}`,
-      withRequiredPagination({ page, limit }),
+      "/api/users",
+      {
+        params: {
+          ...withRequiredPagination({ page, limit }).params,
+          name,
+        },
+      },
     );
   },
 };

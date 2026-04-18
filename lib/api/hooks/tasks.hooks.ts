@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { isUuidLike } from "@/lib/utils/route-params";
 import { groupApi, taskApi } from "../client";
 import { queryKeys } from "../query-keys";
 import type {
@@ -19,7 +20,7 @@ export function useTasksQuery(
     queryKey: queryKeys.tasks.list(search, page, limit),
     queryFn: () =>
       search.trim()
-        ? taskApi.getByTitle(search.trim(), page, limit)
+        ? taskApi.getPaginated(page, limit, { title: search.trim() })
         : taskApi.getPaginated(page, limit),
     enabled,
   });
@@ -35,11 +36,11 @@ export function useTaskWorkspaceQuery(taskId: string) {
       ]);
 
       return {
-        task: { ...task, id: task.id ?? taskId },
+        task,
         groups: groups.data,
       };
     },
-    enabled: Boolean(taskId),
+    enabled: isUuidLike(taskId),
   });
 }
 

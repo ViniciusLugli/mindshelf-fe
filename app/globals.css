@@ -13,6 +13,68 @@ body {
   font-family: "DM Sans", sans-serif;
 }
 
+.font-editorial {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.font-ui-mono {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.08em;
+}
+
+.home-reading-desk {
+  background-image:
+    radial-gradient(circle at top left, rgba(231, 111, 81, 0.14), transparent 24%),
+    radial-gradient(circle at 84% 10%, rgba(42, 157, 143, 0.14), transparent 22%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-base-200) 54%, transparent) 0%,
+      transparent 34%
+    );
+}
+
+.home-paper {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-base-100) 96%, transparent) 0%,
+      color-mix(in srgb, var(--color-base-100) 88%, var(--color-base-200) 12%) 100%
+    );
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+}
+
+.home-shelf-rail {
+  background-image:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-base-100) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-base-200) 34%, transparent) 100%
+    ),
+    repeating-linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-base-content) 5%, transparent) 0,
+      color-mix(in srgb, var(--color-base-content) 5%, transparent) 1px,
+      transparent 1px,
+      transparent 42px
+    );
+}
+
+.home-rise {
+  animation: home-rise 0.65s ease-out both;
+}
+
+@keyframes home-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .ProseMirror {
   min-height: 360px;
   line-height: 1.75;

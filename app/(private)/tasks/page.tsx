@@ -49,13 +49,13 @@ export default function TasksPage() {
         ) : tasks.length ? (
           tasks.map((task) => (
             <TaskCard
-              key={task.id ?? `${task.group_id}-${task.title}`}
+              key={task.id}
               id={task.id}
               title={task.title}
               notes={stripHtml(task.notes)}
               groupName={task.group_name}
               groupColor={task.group_color}
-              href={task.id ? `/tasks/${task.id}` : undefined}
+              href={`/tasks/${task.id}`}
             />
           ))
         ) : (

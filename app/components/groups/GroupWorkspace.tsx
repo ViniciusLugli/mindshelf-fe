@@ -211,13 +211,13 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
             {filteredTasks.length ? (
               filteredTasks.map((task) => (
                 <TaskCard
-                  key={task.id ?? `${task.group_id}-${task.title}`}
+                  key={task.id}
                   id={task.id}
                   title={task.title}
                   notes={stripHtml(task.notes)}
                   groupName={task.group_name}
                   groupColor={task.group_color}
-                  href={task.id ? `/tasks/${task.id}` : undefined}
+                  href={`/tasks/${task.id}`}
                 />
               ))
             ) : (

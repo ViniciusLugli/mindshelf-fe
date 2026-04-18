@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { isUuidLike } from "@/lib/utils/route-params";
 import { groupApi, taskApi } from "../client";
 import { queryKeys } from "../query-keys";
 import type { CreateGroupRequest, UpdateGroupRequest } from "../types";
@@ -21,7 +22,7 @@ export function useGroupWorkspaceQuery(groupId: string) {
     queryFn: async () => {
       const [group, tasks] = await Promise.all([
         groupApi.getById(groupId),
-        taskApi.getByGroup(groupId, 1, 50),
+        taskApi.getPaginated(1, 50, { groupId }),
       ]);
 
       return {
@@ -29,7 +30,7 @@ export function useGroupWorkspaceQuery(groupId: string) {
         tasks: tasks.data,
       };
     },
-    enabled: Boolean(groupId),
+    enabled: isUuidLike(groupId),
   });
 }
 

@@ -1,3 +1,4 @@
+import { normalizeRouteParam } from "@/lib/utils/route-params";
 import { buildBackendUrl } from "@/lib/api/config";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -37,7 +38,11 @@ function buildBackendPath(basePath: string, segments: string[] = []) {
   }
 
   const normalizedBasePath = basePath.replace(/\/+$/, "");
-  return `${normalizedBasePath}/${segments.join("/")}`;
+  const normalizedSegments = segments
+    .map((segment) => normalizeRouteParam(segment))
+    .filter(Boolean);
+
+  return `${normalizedBasePath}/${normalizedSegments.join("/")}`;
 }
 
 async function buildRequestBody(request: NextRequest) {

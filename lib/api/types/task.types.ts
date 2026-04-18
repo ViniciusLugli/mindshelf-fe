@@ -1,7 +1,7 @@
 import type { PaginatedResponse } from "./common.types";
 
 export type TaskResponse = {
-  id?: string;
+  id: string;
   title: string;
   notes: string;
   group_id: string;
@@ -21,7 +21,6 @@ export type UpdateTaskRequest = {
   id: string;
   title?: string;
   notes?: string;
-  group_id?: string;
 };
 
 export type DeleteTaskRequest = {

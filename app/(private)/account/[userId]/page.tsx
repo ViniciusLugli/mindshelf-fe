@@ -5,13 +5,14 @@ import UserAvatar from "@/app/components/UI/UserAvatar";
 import { useRealtime } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { useUserProfileQuery } from "@/lib/api";
+import { normalizeRouteParam } from "@/lib/utils/route-params";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 export default function AccountProfilePage() {
-  const params = useParams<{ userId: string }>();
-  const userId = params.userId;
+  const params = useParams<{ userId?: string | string[] }>();
+  const userId = normalizeRouteParam(params.userId);
   const { currentUser } = useSession();
   const { friends, pendingInvites, outgoingInviteIds } = useRealtime();
   const profileQuery = useUserProfileQuery(userId);
@@ -40,6 +41,16 @@ export default function AccountProfilePage() {
       <section className="px-5 py-10">
         <div className="rounded-[2rem] border border-base-300/70 bg-base-100/90 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
           Carregando perfil...
+        </div>
+      </section>
+    );
+  }
+
+  if (!userId) {
+    return (
+      <section className="px-5 py-10">
+        <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
+          O identificador do perfil e invalido.
         </div>
       </section>
     );

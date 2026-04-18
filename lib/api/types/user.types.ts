@@ -20,8 +20,3 @@ export type UpdateUserRequest = {
   name?: string;
   password?: string;
 };
-
-export type GetUserByIdOrEmailQuery = {
-  id?: string;
-  email?: string;
-};

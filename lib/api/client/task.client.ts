@@ -3,27 +3,33 @@ import type {
   CreateTaskRequest,
   DeleteTaskRequest,
   PaginatedTaskResponse,
-  SimpleMessageResponse,
   TaskResponse,
   UpdateTaskRequest,
 } from "../types";
-import {
-  toPathSegment,
-  withOptionalPagination,
-  withRequiredPagination,
-} from "./shared.client";
+import { toPathSegment, withRequiredPagination } from "./shared.client";
 
 export const taskApi = {
   getById(id: string): Promise<TaskResponse> {
-    return httpGet<TaskResponse>("/api/task/", {
-      params: { id },
-    });
+    return httpGet<TaskResponse>(`/api/tasks/${toPathSegment(id)}`);
   },
 
-  getPaginated(page?: number, limit?: number): Promise<PaginatedTaskResponse> {
+  getPaginated(
+    page: number,
+    limit: number,
+    filters?: {
+      title?: string;
+      groupId?: string;
+    },
+  ): Promise<PaginatedTaskResponse> {
     return httpGet<PaginatedTaskResponse>(
-      "/api/task/all",
-      withOptionalPagination({ page, limit }),
+      "/api/tasks",
+      {
+        params: {
+          ...withRequiredPagination({ page, limit }).params,
+          ...(filters?.title ? { title: filters.title } : {}),
+          ...(filters?.groupId ? { group_id: filters.groupId } : {}),
+        },
+      },
     );
   },
 
@@ -32,26 +38,23 @@ export const taskApi = {
     page: number,
     limit: number,
   ): Promise<PaginatedTaskResponse> {
-    return httpGet<PaginatedTaskResponse>(
-      `/api/task/group/${toPathSegment(groupId)}`,
-      withRequiredPagination({ page, limit }),
-    );
+    return taskApi.getPaginated(page, limit, { groupId });
   },
 
-  create(payload: CreateTaskRequest): Promise<SimpleMessageResponse> {
-    return httpPost<SimpleMessageResponse, CreateTaskRequest>(
-      "/api/task/create",
+  create(payload: CreateTaskRequest): Promise<TaskResponse> {
+    return httpPost<TaskResponse, CreateTaskRequest>(
+      "/api/tasks",
       payload,
     );
   },
 
   delete(payload: DeleteTaskRequest): Promise<void> {
-    return httpDelete<void, DeleteTaskRequest>("/api/task/delete", payload);
+    return httpDelete<void>(`/api/tasks/${toPathSegment(payload.id)}`);
   },
 
-  update(payload: UpdateTaskRequest): Promise<SimpleMessageResponse> {
-    return httpPatch<SimpleMessageResponse, UpdateTaskRequest>(
-      "/api/task/update",
+  update(payload: UpdateTaskRequest): Promise<Record<string, string>> {
+    return httpPatch<Record<string, string>, UpdateTaskRequest>(
+      `/api/tasks/${toPathSegment(payload.id)}`,
       payload,
     );
   },
@@ -61,9 +64,6 @@ export const taskApi = {
     page: number,
     limit: number,
   ): Promise<PaginatedTaskResponse> {
-    return httpGet<PaginatedTaskResponse>(
-      `/api/task/${toPathSegment(title)}`,
-      withRequiredPagination({ page, limit }),
-    );
+    return taskApi.getPaginated(page, limit, { title });
   },
 };

@@ -16,7 +16,7 @@ export function useUserSearchQuery(search: string, page: number, limit: number) 
 export function useUserProfileQuery(userId: string) {
   return useQuery({
     queryKey: queryKeys.users.detail(userId),
-    queryFn: () => userApi.getByIdOrEmail({ id: userId }),
+    queryFn: () => userApi.getById(userId),
     enabled: Boolean(userId),
   });
 }

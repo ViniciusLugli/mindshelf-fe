@@ -62,14 +62,14 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
           title: title.trim(),
           notes,
         });
-        await deleteTaskMutation.mutateAsync({ id: task.id ?? taskId });
+        await deleteTaskMutation.mutateAsync({ id: task.id });
         router.push(`/groups/${selectedGroupId}`);
         router.refresh();
         return;
       }
 
       await updateTaskMutation.mutateAsync({
-        id: task.id ?? taskId,
+        id: task.id,
         title: title.trim(),
         notes,
       });
@@ -92,7 +92,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
 
     setFeedback(null);
     try {
-      await deleteTaskMutation.mutateAsync({ id: task.id ?? taskId });
+      await deleteTaskMutation.mutateAsync({ id: task.id });
       router.push(`/groups/${task.group_id}`);
       router.refresh();
     } catch (error) {

@@ -446,11 +446,11 @@ export default function ChatWorkspace({
                 ) : shareableTasks.length ? (
                   shareableTasks.map((task) => (
                     <button
-                      key={task.id ?? `${task.group_id}-${task.title}`}
+                      key={task.id}
                       type="button"
                       className="text-left"
-                      onClick={() => task.id && handleShareTask(task.id)}
-                      disabled={!task.id || isSubmitting}
+                      onClick={() => handleShareTask(task.id)}
+                      disabled={isSubmitting}
                     >
                       <TaskCard
                         id={task.id}

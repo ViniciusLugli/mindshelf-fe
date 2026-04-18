@@ -1,13 +1,16 @@
 "use client";
 
+import UserAvatar from "@/app/components/UI/UserAvatar";
+import { useSession } from "@/app/providers/SessionProvider";
 import Logo from "../Logo";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavMenu from "./NavMenu";
 import { navbarLinks } from "./navbar.links";
 import Link from "next/link";
-import { AccountCircle } from "@mui/icons-material";
 
 export default function Navbar() {
+  const { currentUser } = useSession();
+
   return (
     <div className="navbar min-h-16 bg-neutral text-neutral-content px-3 py-2 sm:min-h-20 sm:px-4 lg:min-h-23 lg:px-8">
       <div className="navbar-start">
@@ -45,9 +48,13 @@ export default function Navbar() {
       <div className="navbar-end">
         <Link
           href="/account"
-          className="btn btn-ghost h-auto min-h-0 px-2 text-sm text-inherit hover:bg-transparent sm:px-3 sm:text-base lg:text-lg"
+          className="h-auto min-h-0 text-sm text-inherit hover:bg-transparent sm:text-base lg:text-lg"
         >
-          <AccountCircle />
+          <UserAvatar
+            name={currentUser?.name || "Usuario"}
+            avatarUrl={currentUser?.avatar_url || undefined}
+            size="sm"
+          />
         </Link>
       </div>
     </div>
