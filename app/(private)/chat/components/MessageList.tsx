@@ -23,7 +23,7 @@ export default function MessageList({
           />
         ))
       ) : (
-        <div className="flex h-full min-h-64 items-center justify-center rounded-[1.5rem] border border-dashed border-base-300/70 bg-base-100/50 text-sm text-base-content/45">
+        <div className="flex h-full min-h-64 items-center justify-center rounded-3xl border border-dashed border-base-300/70 bg-base-100/50 text-sm text-base-content/45">
           Comece a conversa com {friendName}.
         </div>
       )}

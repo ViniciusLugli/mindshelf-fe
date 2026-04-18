@@ -59,7 +59,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
   if (isLoading) {
     return (
       <section className="px-5 py-8">
-        <div className="rounded-[2rem] border border-base-300/70 bg-base-100/95 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
+        <div className="rounded-4xl border border-base-300/70 bg-base-100/95 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
           Carregando task...
         </div>
       </section>
@@ -69,7 +69,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
   if (!task) {
     return (
       <section className="px-5 py-8">
-        <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
+        <div className="rounded-4xl border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
           {feedback ??
             (taskWorkspaceQuery.error instanceof Error
               ? taskWorkspaceQuery.error.message

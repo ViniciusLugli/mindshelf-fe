@@ -23,14 +23,24 @@ export default function TaskDeleteModal({
       onClose={onClose}
     >
       <div className="space-y-5">
-        <div className="rounded-[1.5rem] border border-error/20 bg-error/8 px-4 py-4 text-sm text-error">
-          A task &quot;{taskTitle}&quot; sera apagada e nao podera ser recuperada.
+        <div className="rounded-3xl border border-error/20 bg-error/8 px-4 py-4 text-sm text-error">
+          A task &quot;{taskTitle}&quot; sera apagada e nao podera ser
+          recuperada.
         </div>
         <div className="flex justify-end gap-3">
-          <button type="button" className="btn btn-ghost rounded-full" onClick={onClose}>
+          <button
+            type="button"
+            className="btn btn-ghost rounded-full"
+            onClick={onClose}
+          >
             Cancelar
           </button>
-          <button type="button" className="btn btn-error rounded-full" onClick={onDelete} disabled={isSaving}>
+          <button
+            type="button"
+            className="btn btn-error rounded-full"
+            onClick={onDelete}
+            disabled={isSaving}
+          >
             {isSaving ? "Apagando..." : "Confirmar exclusao"}
           </button>
         </div>

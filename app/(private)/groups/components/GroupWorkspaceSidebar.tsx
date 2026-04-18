@@ -17,13 +17,20 @@ export default function GroupWorkspaceSidebar({
           {taskCount} tasks no grupo
         </h2>
       </div>
-      <div className="rounded-[1.5rem] border border-base-300/60 bg-base-200/35 p-4 text-sm text-base-content/60">
-        Agora voce pode ajustar o nome e a cor do grupo para refletir melhor o contexto do espaco.
+      <div className="rounded-3xl border border-base-300/60 bg-base-200/35 p-4 text-sm text-base-content/60">
+        Agora voce pode ajustar o nome e a cor do grupo para refletir melhor o
+        contexto do espaco.
       </div>
-      <Link href="/groups" className="btn btn-ghost w-full justify-start rounded-full">
+      <Link
+        href="/groups"
+        className="btn btn-ghost w-full justify-start rounded-full"
+      >
         Voltar para grupos
       </Link>
-      <Link href="/tasks" className="btn btn-ghost w-full justify-start rounded-full">
+      <Link
+        href="/tasks"
+        className="btn btn-ghost w-full justify-start rounded-full"
+      >
         Buscar tasks
       </Link>
     </aside>

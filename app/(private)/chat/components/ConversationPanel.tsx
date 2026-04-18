@@ -31,7 +31,7 @@ export default function ConversationPanel({
 }: ConversationPanelProps) {
   if (!friend) {
     return (
-      <div className="flex min-h-[640px] items-center justify-center px-6 text-center">
+      <div className="flex min-h-160 items-center justify-center px-6 text-center">
         <div className="max-w-md space-y-3">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
             Nenhuma conversa selecionada
@@ -52,7 +52,7 @@ export default function ConversationPanel({
         onShareTask={onOpenShareModal}
       />
 
-      <div className="flex min-h-[540px] flex-col">
+      <div className="flex min-h-135 flex-col">
         <MessageList
           messages={messages}
           currentUserId={currentUserId}

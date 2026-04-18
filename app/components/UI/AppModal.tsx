@@ -26,7 +26,7 @@ export default function AppModal({
         onClick={onClose}
       />
 
-      <div className="relative z-10 w-full max-w-2xl rounded-[2rem] border border-base-300/70 bg-base-100 shadow-2xl">
+      <div className="relative z-10 w-full max-w-2xl rounded-4xl border border-base-300/70 bg-base-100 shadow-2xl">
         <div className="space-y-2 border-b border-base-300/60 px-6 py-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
             MindShelf

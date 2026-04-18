@@ -23,7 +23,7 @@ export default function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
             <Link
               key={friend.id}
               href={`/chat/${friend.id}`}
-              className="flex items-center gap-3 rounded-[1.5rem] border border-base-300/60 bg-base-100/85 px-3 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lg hover:shadow-base-content/5"
+              className="flex items-center gap-3 rounded-3xl border border-base-300/60 bg-base-100/85 px-3 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lg hover:shadow-base-content/5"
             >
               <UserAvatar
                 name={friend.name}

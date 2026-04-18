@@ -22,7 +22,7 @@ export default function GroupWorkspaceHeader({
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-3">
             <div
-              className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] text-2xl font-bold text-white shadow-lg"
+              className="flex h-16 w-16 items-center justify-center rounded-3xl text-2xl font-bold text-white shadow-lg"
               style={{ backgroundColor: group.color }}
             >
               {group.name.charAt(0).toUpperCase()}
@@ -31,9 +31,12 @@ export default function GroupWorkspaceHeader({
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
                 Grupo
               </p>
-              <h1 className="mt-2 text-4xl font-bold text-base-content">{group.name}</h1>
+              <h1 className="mt-2 text-4xl font-bold text-base-content">
+                {group.name}
+              </h1>
               <p className="mt-2 text-sm text-base-content/55">
-                Explore as tasks do grupo, crie novas ideias e ajuste a identidade principal do espaco.
+                Explore as tasks do grupo, crie novas ideias e ajuste a
+                identidade principal do espaco.
               </p>
             </div>
           </div>

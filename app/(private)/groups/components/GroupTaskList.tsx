@@ -57,7 +57,7 @@ export default function GroupTaskList({
             />
           ))
         ) : (
-          <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-16 text-center text-sm text-base-content/45">
+          <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-16 text-center text-sm text-base-content/45">
             Nenhuma task corresponde a busca.
           </div>
         )}

@@ -37,12 +37,12 @@ export default function MessageComposer({
           value={draft}
           onChange={(event) => onDraftChange(event.target.value)}
           placeholder={`Escreva uma mensagem para ${friendName}`}
-          className="textarea textarea-bordered min-h-24 flex-1 rounded-[1.5rem] border-base-300/70 bg-base-100 px-4 py-3"
+          className="textarea textarea-bordered min-h-24 flex-1 rounded-3xl border-base-300/70 bg-base-100 px-4 py-3"
         />
         <button
           type="submit"
           disabled={isSubmitting || !draft.trim()}
-          className="btn btn-primary min-h-24 rounded-[1.5rem] px-6"
+          className="btn btn-primary min-h-24 rounded-3xl px-6"
         >
           {isSubmitting ? "Enviando..." : "Enviar"}
         </button>

@@ -38,7 +38,7 @@ export default function ShareTaskModal({
         className="absolute inset-0"
         onClick={onClose}
       />
-      <div className="relative z-10 w-full max-w-3xl rounded-[2rem] border border-base-300/70 bg-base-100 shadow-2xl">
+      <div className="relative z-10 w-full max-w-3xl rounded-4xl border border-base-300/70 bg-base-100 shadow-2xl">
         <div className="space-y-2 border-b border-base-300/60 px-6 py-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
             Compartilhar task
@@ -57,7 +57,7 @@ export default function ShareTaskModal({
 
           <div className="grid gap-4 md:grid-cols-2">
             {isLoadingTasks ? (
-              <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+              <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
                 Carregando tasks...
               </div>
             ) : tasks.length ? (
@@ -79,7 +79,7 @@ export default function ShareTaskModal({
                 </button>
               ))
             ) : (
-              <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+              <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
                 Nenhuma task encontrada.
               </div>
             )}
