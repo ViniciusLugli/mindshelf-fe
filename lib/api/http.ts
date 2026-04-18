@@ -98,10 +98,12 @@ async function requestApi<TResponse, TBody = unknown>({
   withCredentials = true,
   ...config
 }: ApiRequestConfig<TBody>): Promise<TResponse> {
+  const resolvedUrl = normalizeApiPath(config.url);
+
   try {
     const response = await axios.request<TResponse, AxiosResponse<TResponse>, TBody>({
       ...config,
-      url: normalizeApiPath(config.url),
+      url: resolvedUrl,
       withCredentials,
       headers: createRequestHeaders(headers),
     });
