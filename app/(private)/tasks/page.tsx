@@ -1,7 +1,7 @@
 "use client";
 
 import SearchField from "@/app/components/UI/SearchField";
-import TaskCard from "@/app/components/tasks/TaskCard";
+import TaskCard from "@/app/(private)/tasks/components/TaskCard";
 import { useDebouncedValue } from "@/app/hooks/useDebouncedValue";
 import { useTasksQuery } from "@/lib/api";
 import { stripHtml } from "@/lib/utils/text";
@@ -13,7 +13,11 @@ export default function TasksPage() {
   const { data, isLoading, error } = useTasksQuery(debouncedSearch, 1, 24);
   const tasks = data?.data ?? [];
   const feedback =
-    error instanceof Error ? error.message : error ? "Nao foi possivel carregar as tasks." : null;
+    error instanceof Error
+      ? error.message
+      : error
+        ? "Nao foi possivel carregar as tasks."
+        : null;
 
   return (
     <section className="space-y-6 px-5 py-6">
@@ -21,9 +25,12 @@ export default function TasksPage() {
         <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
           Tasks
         </p>
-        <h1 className="text-3xl font-bold text-base-content">Busque suas tasks</h1>
+        <h1 className="text-3xl font-bold text-base-content">
+          Busque suas tasks
+        </h1>
         <p className="max-w-2xl text-sm leading-relaxed text-base-content/55">
-          Encontre rapidamente o que precisa editar, revisar ou compartilhar com seus amigos.
+          Encontre rapidamente o que precisa editar, revisar ou compartilhar com
+          seus amigos.
         </p>
       </div>
 

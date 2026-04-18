@@ -7,11 +7,13 @@ import { ThemeSelector } from "@/app/components/shared/ThemeSelector";
 import RelationshipActions from "@/app/components/social/RelationshipActions";
 import { useRealtime } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { useUpdateCurrentUserMutation, useUserSearchQuery } from "@/lib/api";
+import { authApi, useUpdateCurrentUserMutation, useUserSearchQuery } from "@/lib/api";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 export default function AccountPage() {
+  const router = useRouter();
   const { currentUser, setCurrentUser } = useSession();
   const { friends, pendingInvites, outgoingInviteIds } = useRealtime();
   const [form, setForm] = useState<{
@@ -70,6 +72,13 @@ export default function AccountPage() {
   };
 
   const highlightedFriends = useMemo(() => friends.slice(0, 4), [friends]);
+
+  const handleLogout = () => {
+    authApi.logout();
+    setCurrentUser(null);
+    router.push("/login");
+    router.refresh();
+  };
 
   return (
     <section className="space-y-8 px-5 py-6">
@@ -142,6 +151,24 @@ export default function AccountPage() {
                 </div>
               )}
             </div>
+          </div>
+
+          <div className="mt-6 rounded-[1.75rem] border border-error/20 bg-error/8 p-5">
+            <div className="space-y-2">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-error/70">
+                Sessao
+              </p>
+              <p className="text-sm text-base-content/60">
+                Encerre a sessao neste dispositivo quando terminar de usar sua conta.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn btn-outline btn-error mt-4 w-full rounded-full"
+              onClick={handleLogout}
+            >
+              Sair da conta
+            </button>
           </div>
         </div>
 

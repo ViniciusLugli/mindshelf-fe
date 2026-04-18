@@ -1,6 +1,6 @@
 "use client";
 
-import TaskWorkspace from "@/app/components/tasks/TaskWorkspace";
+import TaskWorkspace from "@/app/(private)/tasks/components/TaskWorkspace";
 import { isUuidLike, normalizeRouteParam } from "@/lib/utils/route-params";
 import { useParams } from "next/navigation";
 

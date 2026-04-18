@@ -16,4 +16,5 @@ export type CreateGroupRequest = {
 export type UpdateGroupRequest = {
   id: string;
   name: string;
+  color?: string;
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import GroupWorkspace from "@/app/components/groups/GroupWorkspace";
+import GroupWorkspace from "@/app/(private)/groups/components/GroupWorkspace";
 import { isUuidLike, normalizeRouteParam } from "@/lib/utils/route-params";
 import { useParams } from "next/navigation";
 

@@ -1,4 +1,4 @@
-import ChatWorkspace from "@/app/components/chat/ChatWorkspace";
+import ChatWorkspace from "@/app/(private)/chat/components/ChatWorkspace";
 
 export default function ChatPage() {
   return <ChatWorkspace />;
