@@ -14,7 +14,7 @@ definitions:
           - node --version
           - npm ci
           - npm run lint
-          - npm run test -- --runInBand
+          - npm run test
           - npm run build
         artifacts:
           - .next/**
