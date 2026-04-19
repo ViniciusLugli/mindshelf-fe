@@ -59,17 +59,7 @@ definitions:
           - image-info.env
 
 pipelines:
-  pull-requests:
-    "**":
-      - step: *test_next
-
   branches:
-    develop:
-      - step: *test_next
-      - step:
-          <<: *docker_publish_next
-          deployment: staging
-
     main:
       - step: *test_next
       - step:
