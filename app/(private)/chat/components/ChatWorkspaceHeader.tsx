@@ -1,5 +1,3 @@
-import { Wifi, WifiOff } from "@mui/icons-material";
-
 export default function ChatWorkspaceHeader() {
   return (
     <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">

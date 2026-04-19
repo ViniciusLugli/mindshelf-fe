@@ -18,7 +18,7 @@ import type { MessageResponse } from "@/lib/api";
 import { queryKeys } from "@/lib/api/query-keys";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useConversationEntries } from "../hooks/useConversationEntries";
 
 export default function ChatWorkspace({
@@ -29,7 +29,7 @@ export default function ChatWorkspace({
   const router = useRouter();
   const queryClient = useQueryClient();
   const { currentUser } = useSession();
-  const { chats, friends, connectionStatus } = useRealtimeSocial();
+  const { chats, friends } = useRealtimeSocial();
   const {
     messagesByUserId,
     setActiveConversationId,
@@ -80,13 +80,12 @@ export default function ChatWorkspace({
     markMessagesRead,
   });
 
-  useEffect(() => {
-    if (!importModalOpen) {
-      setSelectedImportGroupId("");
-      setImportError(null);
-      setImportMessage(null);
-    }
-  }, [importModalOpen]);
+  const handleCloseImportModal = () => {
+    setImportModalOpen(false);
+    setSelectedImportGroupId("");
+    setImportError(null);
+    setImportMessage(null);
+  };
 
   const handleSendMessage = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -181,7 +180,7 @@ export default function ChatWorkspace({
         queryKey: queryKeys.groups.workspace(selectedImportGroupId),
       });
 
-      setImportModalOpen(false);
+      handleCloseImportModal();
       router.push(`/tasks/${importedTask.id}`);
     } catch (error) {
       setImportError(
@@ -244,7 +243,7 @@ export default function ChatWorkspace({
         isImporting={isImportingSharedTask}
         errorMessage={importError}
         onGroupChange={setSelectedImportGroupId}
-        onClose={() => setImportModalOpen(false)}
+        onClose={handleCloseImportModal}
         onConfirm={() => void handleImportSharedTask()}
       />
     </section>

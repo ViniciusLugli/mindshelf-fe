@@ -2,7 +2,6 @@ import { memo } from "react";
 import {
   AddCircleOutlineRounded,
   ForumRounded,
-  GroupRounded,
   MenuBookRounded,
   TableRows,
 } from "@mui/icons-material";
