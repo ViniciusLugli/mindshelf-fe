@@ -14,7 +14,7 @@ const avatarOrigins = [
   process.env.NEXT_PUBLIC_API_ORIGIN,
   "http://localhost:8080",
   "http://127.0.0.1:8080",
-].filter(Boolean);
+].filter((origin): origin is string => Boolean(origin));
 
 const remotePatterns = Array.from(new Set(avatarOrigins))
   .map((origin) => {

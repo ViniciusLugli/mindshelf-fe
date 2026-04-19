@@ -16,7 +16,10 @@ type CookieOptions = {
   persistent?: boolean;
 };
 
-type ApiRequestConfig<TBody = unknown> = Omit<AxiosRequestConfig<TBody>, "url"> & {
+type ApiRequestConfig<TBody = unknown> = Omit<
+  AxiosRequestConfig<TBody>,
+  "url"
+> & {
   url: string;
 };
 
@@ -59,7 +62,11 @@ function isHtmlResponse(
   headers?: AxiosResponseHeaders | Record<string, unknown>,
 ) {
   const contentType = headers?.["content-type"];
-  return typeof payload === "string" && contentType?.includes("text/html");
+  return (
+    typeof payload === "string" &&
+    typeof contentType === "string" &&
+    contentType.includes("text/html")
+  );
 }
 
 function formatApiError(error: unknown): never {
@@ -71,7 +78,10 @@ function formatApiError(error: unknown): never {
       status &&
       isHtmlResponse(
         payload,
-        error.response?.headers as AxiosResponseHeaders | Record<string, unknown> | undefined,
+        error.response?.headers as
+          | AxiosResponseHeaders
+          | Record<string, unknown>
+          | undefined,
       )
     ) {
       throw new Error(
@@ -101,7 +111,11 @@ async function requestApi<TResponse, TBody = unknown>({
   const resolvedUrl = normalizeApiPath(config.url);
 
   try {
-    const response = await axios.request<TResponse, AxiosResponse<TResponse>, TBody>({
+    const response = await axios.request<
+      TResponse,
+      AxiosResponse<TResponse>,
+      TBody
+    >({
       ...config,
       url: resolvedUrl,
       withCredentials,
@@ -161,7 +175,10 @@ export function clearAuthTokenCookie(path = "/") {
   document.cookie = `${AUTH_TOKEN_COOKIE_KEY}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=${path}; SameSite=Lax`;
 }
 
-export function httpGet<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+export function httpGet<T>(
+  url: string,
+  config?: AxiosRequestConfig,
+): Promise<T> {
   return requestApi<T>({
     ...(config ?? {}),
     method: "GET",
