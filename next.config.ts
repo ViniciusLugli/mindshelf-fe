@@ -38,6 +38,7 @@ const remotePatterns = Array.from(new Set(avatarOrigins))
   );
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactCompiler: true,
   allowedDevOrigins,
   images: {
