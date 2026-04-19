@@ -1,0 +1,77 @@
+image: node:20
+
+options:
+  docker: true
+  size: 2x
+
+definitions:
+  caches:
+    npm: ~/.npm
+
+  steps:
+    - step: &test_next
+        name: Testes - Next.js
+        caches:
+          - npm
+        script:
+          - node --version
+          - npm ci
+          - npm run lint
+          - npm run test -- --runInBand
+          - npm run build
+        artifacts:
+          - .next/**
+          - public/**
+          - package.json
+          - package-lock.json
+          - next.config.*
+          - Dockerfile
+
+    - step: &docker_publish_next
+        name: Build e Push Docker - Next.js
+        oidc: true
+        services:
+          - docker
+        script:
+          - export AWS_REGION=${AWS_REGION}
+          - export AWS_ROLE_ARN=${AWS_ROLE_ARN}
+          - export AWS_WEB_IDENTITY_TOKEN_FILE=$(pwd)/web-identity-token
+          - echo "$BITBUCKET_STEP_OIDC_TOKEN" > "$AWS_WEB_IDENTITY_TOKEN_FILE"
+
+          - apt-get update && apt-get install -y unzip curl
+          - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          - unzip -q awscliv2.zip
+          - ./aws/install
+
+          - export IMAGE_TAG=${BITBUCKET_BRANCH//\//-}-${BITBUCKET_COMMIT:0:7}
+          - export IMAGE_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+          - export IMAGE_URI_LATEST=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest
+
+          - aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AWS --password-stdin "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+
+          - docker build -t "${IMAGE_URI}" -t "${IMAGE_URI_LATEST}" .
+          - docker push "${IMAGE_URI}"
+          - docker push "${IMAGE_URI_LATEST}"
+
+          - echo "IMAGE_TAG=${IMAGE_TAG}" > image-info.env
+          - echo "IMAGE_URI=${IMAGE_URI}" >> image-info.env
+        artifacts:
+          - image-info.env
+
+pipelines:
+  pull-requests:
+    "**":
+      - step: *test_next
+
+  branches:
+    develop:
+      - step: *test_next
+      - step:
+          <<: *docker_publish_next
+          deployment: staging
+
+    main:
+      - step: *test_next
+      - step:
+          <<: *docker_publish_next
+          deployment: production
