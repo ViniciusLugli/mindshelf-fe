@@ -4,7 +4,6 @@ import RichTextEditor from "@/app/(private)/tasks/components/RichTextEditor";
 import TaskDeleteModal from "@/app/(private)/tasks/components/TaskDeleteModal";
 import TaskSettingsModal from "@/app/(private)/tasks/components/TaskSettingsModal";
 import TaskWorkspaceHeader from "@/app/(private)/tasks/components/TaskWorkspaceHeader";
-import TaskWorkspaceSummary from "@/app/(private)/tasks/components/TaskWorkspaceSummary";
 import {
   useCreateTaskMutation,
   useDeleteTaskMutation,
@@ -103,8 +102,6 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
         onChange={setNotesDraft}
         placeholder="Escreva como se estivesse no Word: titulos, listas, destaques e links."
       />
-
-      <TaskWorkspaceSummary notes={notes} groupId={task.group_id} />
 
       <TaskSettingsModal
         open={configOpen}

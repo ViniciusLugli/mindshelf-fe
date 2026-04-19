@@ -1,27 +1,33 @@
 "use client";
 
 import CreateTaskModal from "@/app/(private)/groups/components/CreateTaskModal";
+import DeleteGroupModal from "@/app/(private)/groups/components/DeleteGroupModal";
 import EditGroupModal from "@/app/(private)/groups/components/EditGroupModal";
 import GroupTaskList from "@/app/(private)/groups/components/GroupTaskList";
 import GroupWorkspaceHeader from "@/app/(private)/groups/components/GroupWorkspaceHeader";
 import GroupWorkspaceSidebar from "@/app/(private)/groups/components/GroupWorkspaceSidebar";
 import {
   useCreateTaskMutation,
+  useDeleteGroupMutation,
   useGroupWorkspaceQuery,
   useUpdateGroupMutation,
 } from "@/lib/api";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { normalizeHexColor } from "../utils/groupColor";
 import { useGroupTaskFilter } from "../hooks/useGroupTaskFilter";
 
 export default function GroupWorkspace({ groupId }: { groupId: string }) {
+  const router = useRouter();
   const groupWorkspaceQuery = useGroupWorkspaceQuery(groupId);
   const createTaskMutation = useCreateTaskMutation();
   const updateGroupMutation = useUpdateGroupMutation();
+  const deleteGroupMutation = useDeleteGroupMutation();
   const [search, setSearch] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
   const [taskModalOpen, setTaskModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
+  const [deleteGroupModalOpen, setDeleteGroupModalOpen] = useState(false);
   const [taskTitle, setTaskTitle] = useState("");
   const [groupNameDraft, setGroupNameDraft] = useState<string | null>(null);
   const [groupColorDraft, setGroupColorDraft] = useState<string | null>(null);
@@ -29,7 +35,9 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
   const tasks = groupWorkspaceQuery.data?.tasks;
   const isLoading = groupWorkspaceQuery.isLoading;
   const isSubmitting =
-    createTaskMutation.isPending || updateGroupMutation.isPending;
+    createTaskMutation.isPending ||
+    updateGroupMutation.isPending ||
+    deleteGroupMutation.isPending;
   const taskList = useMemo(() => tasks ?? [], [tasks]);
   const groupName = groupNameDraft ?? group?.name ?? "";
   const groupColor = groupColorDraft ?? group?.color ?? "#E76F51";
@@ -92,6 +100,26 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
     }
   };
 
+  const handleDeleteGroup = async () => {
+    if (!group) {
+      return;
+    }
+
+    setFeedback(null);
+    try {
+      await deleteGroupMutation.mutateAsync(group.id);
+      setDeleteGroupModalOpen(false);
+      router.push("/groups");
+      router.refresh();
+    } catch (error) {
+      setFeedback(
+        error instanceof Error
+          ? error.message
+          : "Nao foi possivel apagar o grupo.",
+      );
+    }
+  };
+
   if (isLoading) {
     return (
       <section className="px-5 py-8">
@@ -119,6 +147,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
     <section className="space-y-6 px-5 py-6">
       <GroupWorkspaceHeader
         group={group}
+        onDeleteGroup={() => setDeleteGroupModalOpen(true)}
         onConfigureGroup={() => {
           setGroupNameDraft(group.name);
           setGroupColorDraft(group.color);
@@ -156,6 +185,14 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
         onGroupColorChange={setGroupColorDraft}
         onClose={() => setGroupModalOpen(false)}
         onSubmit={handleUpdateGroup}
+      />
+
+      <DeleteGroupModal
+        open={deleteGroupModalOpen}
+        groupName={group.name}
+        isSaving={deleteGroupMutation.isPending}
+        onClose={() => setDeleteGroupModalOpen(false)}
+        onDelete={() => void handleDeleteGroup()}
       />
     </section>
   );

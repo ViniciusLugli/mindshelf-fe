@@ -3,13 +3,19 @@
 import ChatWorkspaceHeader from "@/app/(private)/chat/components/ChatWorkspaceHeader";
 import ConversationList from "@/app/(private)/chat/components/ConversationList";
 import ConversationPanel from "@/app/(private)/chat/components/ConversationPanel";
+import ImportSharedTaskModal from "@/app/(private)/chat/components/ImportSharedTaskModal";
 import ShareTaskModal from "@/app/(private)/chat/components/ShareTaskModal";
 import { useConversationLifecycle } from "@/app/(private)/chat/hooks/useConversationLifecycle";
 import { useSelectedConversation } from "@/app/(private)/chat/hooks/useSelectedConversation";
 import { useShareableTasks } from "@/app/(private)/chat/hooks/useShareableTasks";
 import { useRealtime } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { useState } from "react";
+import { sharedTaskApi, useGroupsQuery } from "@/lib/api";
+import type { MessageResponse } from "@/lib/api";
+import { queryKeys } from "@/lib/api/query-keys";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useConversationEntries } from "../hooks/useConversationEntries";
 
 export default function ChatWorkspace({
@@ -17,6 +23,8 @@ export default function ChatWorkspace({
 }: {
   initialFriendId?: string | null;
 }) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const { currentUser } = useSession();
   const {
     chats,
@@ -28,6 +36,7 @@ export default function ChatWorkspace({
     markMessagesRead,
     sendMessage,
     shareTask,
+    setImportedSharedTask,
   } = useRealtime();
 
   const [search, setSearch] = useState("");
@@ -36,10 +45,17 @@ export default function ChatWorkspace({
   const [taskSearch, setTaskSearch] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [importModalOpen, setImportModalOpen] = useState(false);
+  const [importMessage, setImportMessage] = useState<MessageResponse | null>(null);
+  const [selectedImportGroupId, setSelectedImportGroupId] = useState("");
+  const [isImportingSharedTask, setIsImportingSharedTask] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
   const { shareableTasks, isLoadingTasks } = useShareableTasks(
     taskSearch,
     sharingOpen,
   );
+  const importGroupsQuery = useGroupsQuery("", 1, 50, importModalOpen);
+  const importGroups = importGroupsQuery.data?.data ?? [];
   const { conversationEntries, filteredEntries } = useConversationEntries({
     chats,
     friends,
@@ -60,6 +76,14 @@ export default function ChatWorkspace({
     refreshConversation,
     markMessagesRead,
   });
+
+  useEffect(() => {
+    if (!importModalOpen) {
+      setSelectedImportGroupId("");
+      setImportError(null);
+      setImportMessage(null);
+    }
+  }, [importModalOpen]);
 
   const handleSendMessage = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -108,6 +132,63 @@ export default function ChatWorkspace({
     }
   };
 
+  const handleSharedTaskClick = async (message: MessageResponse) => {
+    const importedTaskId = message.shared_task?.imported_task_id;
+
+    if (importedTaskId) {
+      router.push(`/tasks/${importedTaskId}`);
+      return;
+    }
+
+    if (!selectedFriendId || message.sender_id === currentUser?.id) {
+      return;
+    }
+
+    setImportError(null);
+    setSelectedImportGroupId("");
+    setImportMessage(message);
+    setImportModalOpen(true);
+  };
+
+  const handleImportSharedTask = async () => {
+    if (!importMessage || !selectedFriendId || !selectedImportGroupId) {
+      return;
+    }
+
+    setIsImportingSharedTask(true);
+    setImportError(null);
+
+    try {
+      const importedTask = await sharedTaskApi.importSharedTask({
+        message_id: importMessage.id,
+        group_id: selectedImportGroupId,
+      });
+
+      setImportedSharedTask({
+        friendId: selectedFriendId,
+        messageId: importMessage.id,
+        importedTaskId: importedTask.id,
+      });
+
+      await queryClient.invalidateQueries({ queryKey: queryKeys.tasks.all });
+      await queryClient.invalidateQueries({ queryKey: queryKeys.home.activity });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.groups.workspace(selectedImportGroupId),
+      });
+
+      setImportModalOpen(false);
+      router.push(`/tasks/${importedTask.id}`);
+    } catch (error) {
+      setImportError(
+        error instanceof Error
+          ? error.message
+          : "Nao foi possivel importar a task compartilhada.",
+      );
+    } finally {
+      setIsImportingSharedTask(false);
+    }
+  };
+
   return (
     <section className="space-y-6 px-5 py-6">
       <ChatWorkspaceHeader connectionStatus={connectionStatus} />
@@ -132,6 +213,7 @@ export default function ChatWorkspace({
             onDraftChange={setDraft}
             onSendMessage={handleSendMessage}
             onOpenShareModal={() => setSharingOpen(true)}
+            onSharedTaskClick={handleSharedTaskClick}
           />
         </div>
       </div>
@@ -146,6 +228,19 @@ export default function ChatWorkspace({
         onTaskSearchChange={setTaskSearch}
         onShareTask={handleShareTask}
         onClose={() => setSharingOpen(false)}
+      />
+
+      <ImportSharedTaskModal
+        open={importModalOpen}
+        message={importMessage}
+        groups={importGroups}
+        selectedGroupId={selectedImportGroupId}
+        isLoadingGroups={importGroupsQuery.isLoading}
+        isImporting={isImportingSharedTask}
+        errorMessage={importError}
+        onGroupChange={setSelectedImportGroupId}
+        onClose={() => setImportModalOpen(false)}
+        onConfirm={() => void handleImportSharedTask()}
       />
     </section>
   );

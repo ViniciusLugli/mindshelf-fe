@@ -25,6 +25,7 @@ export type ShareTaskRequest = {
 export type SharedTaskSnapshotResponse = {
   group_color?: string;
   group_name?: string;
+  imported_task_id?: string;
   notes?: string;
   source_task_id?: string;
   title?: string;

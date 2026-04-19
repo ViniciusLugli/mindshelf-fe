@@ -5,12 +5,14 @@ type MessageListProps = {
   messages: MessageResponse[];
   currentUserId?: string;
   friendName: string;
+  onSharedTaskClick: (message: MessageResponse) => void;
 };
 
 export default function MessageList({
   messages,
   currentUserId,
   friendName,
+  onSharedTaskClick,
 }: MessageListProps) {
   return (
     <div className="flex-1 space-y-4 bg-base-200/30 px-5 py-5">
@@ -20,6 +22,7 @@ export default function MessageList({
             key={message.id}
             isMine={message.sender_id === currentUserId}
             message={message}
+            onSharedTaskClick={onSharedTaskClick}
           />
         ))
       ) : (

@@ -65,11 +65,24 @@ export function useUpdateTaskMutation() {
   return useMutation({
     mutationFn: (payload: UpdateTaskRequest) => taskApi.update(payload),
     onSuccess: async (_response, variables) => {
+      const cachedTaskWorkspace = queryClient.getQueryData<{
+        task?: {
+          group_id?: string;
+        };
+      }>(queryKeys.tasks.workspace(variables.id));
+      const groupId = cachedTaskWorkspace?.task?.group_id;
+
       await queryClient.invalidateQueries({ queryKey: queryKeys.tasks.all });
       await queryClient.invalidateQueries({ queryKey: queryKeys.home.activity });
       await queryClient.invalidateQueries({
         queryKey: queryKeys.tasks.workspace(variables.id),
       });
+
+      if (groupId) {
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.groups.workspace(groupId),
+        });
+      }
     },
   });
 }

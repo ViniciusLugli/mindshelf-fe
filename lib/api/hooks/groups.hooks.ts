@@ -6,13 +6,19 @@ import { groupApi, taskApi } from "../client";
 import { queryKeys } from "../query-keys";
 import type { CreateGroupRequest, UpdateGroupRequest } from "../types";
 
-export function useGroupsQuery(search: string, page: number, limit: number) {
+export function useGroupsQuery(
+  search: string,
+  page: number,
+  limit: number,
+  enabled = true,
+) {
   return useQuery({
     queryKey: queryKeys.groups.list(search, page, limit),
     queryFn: () =>
       search.trim()
         ? groupApi.getByName(search.trim(), page, limit)
         : groupApi.getPaginated(page, limit),
+    enabled,
   });
 }
 
@@ -41,7 +47,9 @@ export function useCreateGroupMutation() {
     mutationFn: (payload: CreateGroupRequest) => groupApi.create(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: queryKeys.groups.all });
-      await queryClient.invalidateQueries({ queryKey: queryKeys.home.activity });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.home.activity,
+      });
     },
   });
 }
@@ -53,9 +61,28 @@ export function useUpdateGroupMutation() {
     mutationFn: (payload: UpdateGroupRequest) => groupApi.update(payload),
     onSuccess: async (_response, variables) => {
       await queryClient.invalidateQueries({ queryKey: queryKeys.groups.all });
-      await queryClient.invalidateQueries({ queryKey: queryKeys.home.activity });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.home.activity,
+      });
       await queryClient.invalidateQueries({
         queryKey: queryKeys.groups.workspace(variables.id),
+      });
+    },
+  });
+}
+
+export function useDeleteGroupMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (groupId: string) => groupApi.delete(groupId),
+    onSuccess: async (_response, groupId) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.groups.all });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.home.activity,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.groups.workspace(groupId),
       });
     },
   });

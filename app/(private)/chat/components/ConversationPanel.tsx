@@ -15,6 +15,7 @@ type ConversationPanelProps = {
   onDraftChange: (value: string) => void;
   onSendMessage: (event: React.FormEvent<HTMLFormElement>) => void;
   onOpenShareModal: () => void;
+  onSharedTaskClick: (message: MessageResponse) => void;
 };
 
 export default function ConversationPanel({
@@ -28,6 +29,7 @@ export default function ConversationPanel({
   onDraftChange,
   onSendMessage,
   onOpenShareModal,
+  onSharedTaskClick,
 }: ConversationPanelProps) {
   if (!friend) {
     return (
@@ -57,6 +59,7 @@ export default function ConversationPanel({
           messages={messages}
           currentUserId={currentUserId}
           friendName={friend.name}
+          onSharedTaskClick={onSharedTaskClick}
         />
         <MessageComposer
           draft={draft}

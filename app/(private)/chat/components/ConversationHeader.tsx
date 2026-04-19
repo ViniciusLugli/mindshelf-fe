@@ -17,10 +17,15 @@ export default function ConversationHeader({
   return (
     <div className="flex flex-col gap-4 border-b border-base-300/60 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-4">
-        <UserAvatar name={friend.name} avatarUrl={friend.avatar_url} size="lg" />
+        <UserAvatar
+          name={friend.name}
+          avatarUrl={friend.avatar_url}
+          size="lg"
+        />
         <div>
-          <p className="text-xl font-semibold text-base-content">{friend.name}</p>
-          <p className="text-sm text-base-content/50">{friend.email}</p>
+          <p className="text-xl font-semibold text-base-content">
+            {friend.name}
+          </p>
           <p className="mt-1 text-xs uppercase tracking-[0.22em] text-base-content/30">
             {messageCount} mensagens carregadas
           </p>
@@ -28,10 +33,17 @@ export default function ConversationHeader({
       </div>
 
       <div className="flex gap-3">
-        <Link href={`/account/${friend.id}`} className="btn btn-ghost rounded-full">
+        <Link
+          href={`/account/${friend.id}`}
+          className="btn btn-ghost rounded-full"
+        >
           Ver perfil
         </Link>
-        <button type="button" className="btn btn-primary rounded-full" onClick={onShareTask}>
+        <button
+          type="button"
+          className="btn btn-primary rounded-full"
+          onClick={onShareTask}
+        >
           <Share fontSize="small" />
           Compartilhar task
         </button>

@@ -17,6 +17,11 @@ export type CreateTaskRequest = {
   notes?: string;
 };
 
+export type ImportSharedTaskRequest = {
+  message_id: string;
+  group_id: string;
+};
+
 export type UpdateTaskRequest = {
   id: string;
   title?: string;

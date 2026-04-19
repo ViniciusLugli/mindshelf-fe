@@ -30,8 +30,10 @@ export default function EditGroupModal({
       onClose={onClose}
     >
       <form className="space-y-5" onSubmit={onSubmit}>
-        <label className="form-control gap-2">
-          <span className="text-sm font-medium text-base-content/70">Nome do grupo</span>
+        <label className="form-control gap-2 flex flex-col">
+          <span className="text-sm font-medium text-base-content/70">
+            Nome do grupo
+          </span>
           <input
             className="input input-bordered rounded-2xl border-base-300/70"
             value={groupName}
@@ -39,8 +41,10 @@ export default function EditGroupModal({
           />
         </label>
 
-        <label className="form-control gap-2">
-          <span className="text-sm font-medium text-base-content/70">Cor do grupo</span>
+        <label className="form-control gap-2 flex flex-col">
+          <span className="text-sm font-medium text-base-content/70">
+            Cor do grupo
+          </span>
           <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/35 p-4">
             <div className="flex items-center gap-3 rounded-2xl border border-base-300/60 bg-base-100/80 px-4 py-3 text-sm text-base-content/60">
               <span
@@ -53,17 +57,26 @@ export default function EditGroupModal({
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <ColorPicker value={groupColor} onChange={onGroupColorChange} />
               <span className="text-xs text-base-content/45">
-                Escolha uma cor em hexadecimal para atualizar o destaque do grupo.
+                Escolha uma cor em hexadecimal para atualizar o destaque do
+                grupo.
               </span>
             </div>
           </div>
         </label>
 
-        <div className="flex justify-end gap-3">
-          <button type="button" className="btn btn-ghost rounded-full" onClick={onClose}>
+        <div className="flex justify-end gap-3 mt-3">
+          <button
+            type="button"
+            className="btn btn-ghost rounded-full"
+            onClick={onClose}
+          >
             Cancelar
           </button>
-          <button type="submit" className="btn btn-primary rounded-full" disabled={isSubmitting}>
+          <button
+            type="submit"
+            className="btn btn-primary rounded-full"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Salvando..." : "Salvar grupo"}
           </button>
         </div>

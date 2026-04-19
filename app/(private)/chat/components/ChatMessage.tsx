@@ -6,9 +6,18 @@ import { stripHtml } from "@/lib/utils/text";
 type ChatMessageProps = {
   isMine: boolean;
   message: MessageResponse;
+  onSharedTaskClick?: (message: MessageResponse) => void;
 };
 
-export default function ChatMessage({ isMine, message }: ChatMessageProps) {
+export default function ChatMessage({
+  isMine,
+  message,
+  onSharedTaskClick,
+}: ChatMessageProps) {
+  const canOpenSharedTask = Boolean(
+    message.shared_task?.imported_task_id || (!isMine && onSharedTaskClick),
+  );
+
   return (
     <div className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
       <div
@@ -27,17 +36,36 @@ export default function ChatMessage({ isMine, message }: ChatMessageProps) {
             >
               Task compartilhada
             </p>
-            <TaskCard
-              title={message.shared_task.title || "Task compartilhada"}
-              notes={stripHtml(message.shared_task.notes)}
-              groupName={message.shared_task.group_name || "Grupo"}
-              groupColor={message.shared_task.group_color || "#E76F51"}
-              href={
-                message.shared_task.source_task_id
-                  ? `/tasks/${message.shared_task.source_task_id}`
-                  : undefined
-              }
-            />
+            <button
+              type="button"
+              className={`block w-full text-left ${canOpenSharedTask ? "cursor-pointer" : "cursor-default"}`}
+              onClick={() => {
+                if (!canOpenSharedTask || !onSharedTaskClick) {
+                  return;
+                }
+
+                onSharedTaskClick(message);
+              }}
+              disabled={!canOpenSharedTask}
+            >
+              <TaskCard
+                title={message.shared_task.title || "Task compartilhada"}
+                notes={stripHtml(message.shared_task.notes)}
+                groupName={message.shared_task.group_name || "Grupo"}
+                groupColor={message.shared_task.group_color || "#E76F51"}
+              />
+            </button>
+            <p
+              className={`text-xs ${
+                isMine ? "text-primary-content/70" : "text-base-content/45"
+              }`}
+            >
+              {message.shared_task.imported_task_id
+                ? "Abrir sua copia salva dessa task."
+                : isMine
+                  ? "Snapshot enviado para o destinatario importar no proprio grupo."
+                  : "Escolha um grupo seu para importar essa task compartilhada."}
+            </p>
             {message.content ? (
               <p
                 className={`text-sm leading-relaxed ${

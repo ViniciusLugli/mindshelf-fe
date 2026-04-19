@@ -60,6 +60,11 @@ type RealtimeContextValue = {
   markMessagesRead: (
     payload: MarkMessagesReadRequest,
   ) => Promise<MarkMessagesReadResponse | void>;
+  setImportedSharedTask: (payload: {
+    friendId: string;
+    messageId: string;
+    importedTaskId: string;
+  }) => void;
 };
 
 const RealtimeContext = createContext<RealtimeContextValue | null>(null);
@@ -143,6 +148,24 @@ function markConversationMessagesRead(
         read_at: readAt ?? new Date().toISOString(),
       };
     }),
+  };
+}
+
+function withImportedSharedTask(
+  message: MessageResponse,
+  messageId: string,
+  importedTaskId: string,
+) {
+  if (message.id !== messageId || !message.shared_task) {
+    return message;
+  }
+
+  return {
+    ...message,
+    shared_task: {
+      ...message.shared_task,
+      imported_task_id: importedTaskId,
+    },
   };
 }
 
@@ -377,6 +400,51 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
       );
     },
     [sendRequest],
+  );
+
+  const setImportedSharedTask = useCallback(
+    ({
+      friendId,
+      messageId,
+      importedTaskId,
+    }: {
+      friendId: string;
+      messageId: string;
+      importedTaskId: string;
+    }) => {
+      setMessagesByUserId((current) => {
+        const conversation = current[friendId];
+
+        if (!conversation) {
+          return current;
+        }
+
+        return {
+          ...current,
+          [friendId]: conversation.map((message) =>
+            withImportedSharedTask(message, messageId, importedTaskId),
+          ),
+        };
+      });
+
+      setChats((current) =>
+        current.map((chat) => {
+          if (chat.friend.id !== friendId || !chat.last_message) {
+            return chat;
+          }
+
+          return {
+            ...chat,
+            last_message: withImportedSharedTask(
+              chat.last_message,
+              messageId,
+              importedTaskId,
+            ),
+          };
+        }),
+      );
+    },
+    [],
   );
 
   const connect = useCallback(() => {
@@ -625,6 +693,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
     sendMessage,
     shareTask,
     markMessagesRead,
+    setImportedSharedTask,
   };
 
   return (

@@ -4,12 +4,14 @@ type GroupWorkspaceHeaderProps = {
   group: GroupResponse;
   onConfigureGroup: () => void;
   onCreateTask: () => void;
+  onDeleteGroup: () => void;
 };
 
 export default function GroupWorkspaceHeader({
   group,
   onConfigureGroup,
   onCreateTask,
+  onDeleteGroup,
 }: GroupWorkspaceHeaderProps) {
   return (
     <div
@@ -42,6 +44,13 @@ export default function GroupWorkspaceHeader({
           </div>
 
           <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              className="btn btn-ghost rounded-full text-error"
+              onClick={onDeleteGroup}
+            >
+              Apagar grupo
+            </button>
             <button
               type="button"
               className="btn btn-ghost rounded-full"
