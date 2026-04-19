@@ -1,6 +1,6 @@
 "use client";
 
-import { useRealtime } from "@/app/providers/RealtimeProvider";
+import { useRealtimeRelationshipActions } from "@/app/providers/RealtimeProvider";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ export default function RelationshipActions({
     acceptFriendRequest,
     rejectFriendRequest,
     removeFriend,
-  } = useRealtime();
+  } = useRealtimeRelationshipActions();
   const [isBusy, setIsBusy] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
 

@@ -1,10 +1,12 @@
+import { memo } from "react";
+
 type HomeRailMetricProps = {
   label: string;
   value: string;
   description: string;
 };
 
-export default function HomeRailMetric({
+function HomeRailMetric({
   label,
   value,
   description,
@@ -20,3 +22,5 @@ export default function HomeRailMetric({
     </div>
   );
 }
+
+export default memo(HomeRailMetric);

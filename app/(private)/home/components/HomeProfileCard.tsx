@@ -1,3 +1,4 @@
+import { memo } from "react";
 import UserAvatar from "@/app/components/UI/UserAvatar";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ type HomeProfileCardProps = {
   className?: string;
 };
 
-export default function HomeProfileCard({
+function HomeProfileCard({
   name,
   email,
   avatarUrl,
@@ -54,3 +55,5 @@ export default function HomeProfileCard({
     </section>
   );
 }
+
+export default memo(HomeProfileCard);

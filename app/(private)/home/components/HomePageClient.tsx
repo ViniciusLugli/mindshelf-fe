@@ -5,22 +5,20 @@ import HomeGroupsPanel from "@/app/(private)/home/components/HomeGroupsPanel";
 import HomeHero from "@/app/(private)/home/components/HomeHero";
 import HomeResponseSection from "@/app/(private)/home/components/HomeResponseSection";
 import HomeTasksPanel from "@/app/(private)/home/components/HomeTasksPanel";
-import { useRealtime } from "@/app/providers/RealtimeProvider";
+import {
+  useRealtimeRelationshipActions,
+  useRealtimeSocial,
+} from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { useHomeActivityQuery } from "@/lib/api";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { mapChatsToConversationItems } from "../utils/home.mappers";
 
 export default function HomePageClient() {
   const { currentUser } = useSession();
-  const {
-    chats,
-    friends,
-    pendingInvites,
-    connectionStatus,
-    acceptFriendRequest,
-    rejectFriendRequest,
-  } = useRealtime();
+  const { chats, friends, pendingInvites } = useRealtimeSocial();
+  const { acceptFriendRequest, rejectFriendRequest } =
+    useRealtimeRelationshipActions();
   const [feedback, setFeedback] = useState<string | null>(null);
   const [busyInviteId, setBusyInviteId] = useState<string | null>(null);
   const homeActivityQuery = useHomeActivityQuery();
@@ -44,35 +42,34 @@ export default function HomePageClient() {
     [chats],
   );
 
-  async function handleInviteAction(
-    userId: string,
-    action: "accept" | "reject",
-  ) {
-    setBusyInviteId(userId);
-    setFeedback(null);
+  const handleInviteAction = useCallback(
+    async (userId: string, action: "accept" | "reject") => {
+      setBusyInviteId(userId);
+      setFeedback(null);
 
-    try {
-      if (action === "accept") {
-        await acceptFriendRequest({ friend_id: userId });
-      } else {
-        await rejectFriendRequest({ friend_id: userId });
+      try {
+        if (action === "accept") {
+          await acceptFriendRequest({ friend_id: userId });
+        } else {
+          await rejectFriendRequest({ friend_id: userId });
+        }
+      } catch (error) {
+        setFeedback(
+          error instanceof Error
+            ? error.message
+            : "Nao foi possivel responder ao pedido de amizade.",
+        );
+      } finally {
+        setBusyInviteId(null);
       }
-    } catch (error) {
-      setFeedback(
-        error instanceof Error
-          ? error.message
-          : "Nao foi possivel responder ao pedido de amizade.",
-      );
-    } finally {
-      setBusyInviteId(null);
-    }
-  }
+    },
+    [acceptFriendRequest, rejectFriendRequest],
+  );
 
   return (
     <section className="home-reading-desk px-4 py-5 sm:px-5 sm:py-6">
       <div className="w-full space-y-6">
         <HomeHero
-          connectionStatus={connectionStatus}
           primaryName={primaryName}
           unreadCount={unreadCount}
           pendingInviteCount={pendingInvites.length}
@@ -94,9 +91,7 @@ export default function HomePageClient() {
             conversations={conversationItems}
             invites={pendingInvites}
             busyInviteId={busyInviteId}
-            onInviteAction={(userId, action) =>
-              void handleInviteAction(userId, action)
-            }
+            onInviteAction={handleInviteAction}
           />
 
           <section className="grid gap-6 xl:grid-cols-[minmax(0,1.22fr)_minmax(0,0.9fr)_minmax(0,0.9fr)]">

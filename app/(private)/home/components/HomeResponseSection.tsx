@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Link from "next/link";
 import HomeDeskHeading from "./HomeDeskHeading";
 import HomeEmptyState from "./HomeEmptyState";
@@ -13,7 +14,7 @@ type HomeResponseSectionProps = {
   onInviteAction: (userId: string, action: "accept" | "reject") => void;
 };
 
-export default function HomeResponseSection({
+function HomeResponseSection({
   unreadCount,
   conversations,
   invites,
@@ -94,3 +95,5 @@ export default function HomeResponseSection({
     </section>
   );
 }
+
+export default memo(HomeResponseSection);

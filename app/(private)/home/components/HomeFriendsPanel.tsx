@@ -1,3 +1,4 @@
+import { memo } from "react";
 import UserAvatar from "@/app/components/UI/UserAvatar";
 import Link from "next/link";
 import HomeDeskHeading from "./HomeDeskHeading";
@@ -8,7 +9,7 @@ type HomeFriendsPanelProps = {
   friends: HomeFriend[];
 };
 
-export default function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
+function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
   return (
     <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6 xl:h-full">
       <HomeDeskHeading
@@ -48,3 +49,5 @@ export default function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
     </section>
   );
 }
+
+export default memo(HomeFriendsPanel);

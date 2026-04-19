@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Link from "next/link";
 import type { GroupResponse } from "@/lib/api";
 import HomeDeskHeading from "./HomeDeskHeading";
@@ -9,7 +10,7 @@ type HomeGroupsPanelProps = {
   groups: GroupResponse[];
 };
 
-export default function HomeGroupsPanel({ isLoading, groups }: HomeGroupsPanelProps) {
+function HomeGroupsPanel({ isLoading, groups }: HomeGroupsPanelProps) {
   return (
     <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6 xl:h-full">
       <HomeDeskHeading
@@ -35,3 +36,5 @@ export default function HomeGroupsPanel({ isLoading, groups }: HomeGroupsPanelPr
     </section>
   );
 }
+
+export default memo(HomeGroupsPanel);

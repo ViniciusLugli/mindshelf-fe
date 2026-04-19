@@ -2,7 +2,7 @@
 
 import RelationshipActions from "@/app/components/social/RelationshipActions";
 import UserAvatar from "@/app/components/UI/UserAvatar";
-import { useRealtime } from "@/app/providers/RealtimeProvider";
+import { useRealtimeSocial } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { useUserProfileQuery } from "@/lib/api";
 import { normalizeRouteParam } from "@/lib/utils/route-params";
@@ -14,7 +14,7 @@ export default function AccountProfilePage() {
   const params = useParams<{ userId?: string | string[] }>();
   const userId = normalizeRouteParam(params.userId);
   const { currentUser } = useSession();
-  const { friends, pendingInvites, outgoingInviteIds } = useRealtime();
+  const { friends, pendingInvites, outgoingInviteIds } = useRealtimeSocial();
   const profileQuery = useUserProfileQuery(userId);
   const profile = profileQuery.data ?? null;
   const isLoading = profileQuery.isLoading;

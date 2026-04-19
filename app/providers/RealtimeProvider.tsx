@@ -24,6 +24,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -37,24 +38,30 @@ type PendingRequest = {
   reject: (error: Error) => void;
 };
 
-type RealtimeContextValue = {
+type RealtimeSocialContextValue = {
   chats: ChatResponse[];
   friends: UserResponse[];
   pendingInvites: ReceivedFriendRequestResponse[];
-  messagesByUserId: Record<string, MessageResponse[]>;
   connectionStatus: ConnectionStatus;
   lastError: string | null;
   outgoingInviteIds: string[];
-  activeConversationId: string | null;
-  setActiveConversationId: (friendId: string | null) => void;
   refreshChats: () => Promise<ChatResponse[] | void>;
   refreshFriends: () => Promise<UserResponse[] | void>;
   refreshPendingInvites: () => Promise<ReceivedFriendRequestResponse[] | void>;
-  refreshConversation: (friendId: string) => Promise<MessageResponse[] | void>;
+};
+
+type RealtimeRelationshipActionsContextValue = {
   sendFriendRequest: (payload: FriendRequest) => Promise<StatusMessageResponse | void>;
   acceptFriendRequest: (payload: FriendRequest) => Promise<StatusMessageResponse | void>;
   rejectFriendRequest: (payload: FriendRequest) => Promise<StatusMessageResponse | void>;
   removeFriend: (payload: FriendRequest) => Promise<StatusMessageResponse | void>;
+};
+
+type RealtimeConversationContextValue = {
+  messagesByUserId: Record<string, MessageResponse[]>;
+  activeConversationId: string | null;
+  setActiveConversationId: (friendId: string | null) => void;
+  refreshConversation: (friendId: string) => Promise<MessageResponse[] | void>;
   sendMessage: (payload: SendChatRequest) => Promise<MessageResponse | void>;
   shareTask: (payload: ShareTaskRequest) => Promise<MessageResponse | void>;
   markMessagesRead: (
@@ -67,7 +74,11 @@ type RealtimeContextValue = {
   }) => void;
 };
 
-const RealtimeContext = createContext<RealtimeContextValue | null>(null);
+const RealtimeSocialContext = createContext<RealtimeSocialContextValue | null>(null);
+const RealtimeRelationshipActionsContext =
+  createContext<RealtimeRelationshipActionsContextValue | null>(null);
+const RealtimeConversationContext =
+  createContext<RealtimeConversationContextValue | null>(null);
 
 function sortChats(chats: ChatResponse[]) {
   return [...chats].sort((left, right) => {
@@ -672,41 +683,112 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
     };
   }, [connect, currentUser]);
 
-  const value: RealtimeContextValue = {
-    chats,
-    friends,
-    pendingInvites,
-    outgoingInviteIds,
-    messagesByUserId,
-    connectionStatus,
-    lastError,
-    activeConversationId,
-    setActiveConversationId,
-    refreshChats,
-    refreshFriends,
-    refreshPendingInvites,
-    refreshConversation,
-    sendFriendRequest,
-    acceptFriendRequest,
-    rejectFriendRequest,
-    removeFriend,
-    sendMessage,
-    shareTask,
-    markMessagesRead,
-    setImportedSharedTask,
-  };
+  const socialValue = useMemo<RealtimeSocialContextValue>(
+    () => ({
+      chats,
+      friends,
+      pendingInvites,
+      outgoingInviteIds,
+      connectionStatus,
+      lastError,
+      refreshChats,
+      refreshFriends,
+      refreshPendingInvites,
+    }),
+    [
+      chats,
+      friends,
+      pendingInvites,
+      outgoingInviteIds,
+      connectionStatus,
+      lastError,
+      refreshChats,
+      refreshFriends,
+      refreshPendingInvites,
+    ],
+  );
+
+  const relationshipActionsValue = useMemo<RealtimeRelationshipActionsContextValue>(
+    () => ({
+      sendFriendRequest,
+      acceptFriendRequest,
+      rejectFriendRequest,
+      removeFriend,
+    }),
+    [sendFriendRequest, acceptFriendRequest, rejectFriendRequest, removeFriend],
+  );
+
+  const conversationValue = useMemo<RealtimeConversationContextValue>(
+    () => ({
+      messagesByUserId,
+      activeConversationId,
+      setActiveConversationId,
+      refreshConversation,
+      sendMessage,
+      shareTask,
+      markMessagesRead,
+      setImportedSharedTask,
+    }),
+    [
+      messagesByUserId,
+      activeConversationId,
+      refreshConversation,
+      sendMessage,
+      shareTask,
+      markMessagesRead,
+      setImportedSharedTask,
+    ],
+  );
 
   return (
-    <RealtimeContext.Provider value={value}>{children}</RealtimeContext.Provider>
+    <RealtimeSocialContext.Provider value={socialValue}>
+      <RealtimeRelationshipActionsContext.Provider value={relationshipActionsValue}>
+        <RealtimeConversationContext.Provider value={conversationValue}>
+          {children}
+        </RealtimeConversationContext.Provider>
+      </RealtimeRelationshipActionsContext.Provider>
+    </RealtimeSocialContext.Provider>
   );
 }
 
-export function useRealtime() {
-  const context = useContext(RealtimeContext);
+export function useRealtimeSocial() {
+  const context = useContext(RealtimeSocialContext);
 
   if (!context) {
-    throw new Error("useRealtime must be used inside RealtimeProvider");
+    throw new Error("useRealtimeSocial must be used inside RealtimeProvider");
   }
 
   return context;
+}
+
+export function useRealtimeRelationshipActions() {
+  const context = useContext(RealtimeRelationshipActionsContext);
+
+  if (!context) {
+    throw new Error(
+      "useRealtimeRelationshipActions must be used inside RealtimeProvider",
+    );
+  }
+
+  return context;
+}
+
+export function useRealtimeConversation() {
+  const context = useContext(RealtimeConversationContext);
+
+  if (!context) {
+    throw new Error(
+      "useRealtimeConversation must be used inside RealtimeProvider",
+    );
+  }
+
+  return context;
+}
+
+export function useRealtime() {
+  return {
+    ...useRealtimeSocial(),
+    ...useRealtimeRelationshipActions(),
+    ...useRealtimeConversation(),
+  };
 }

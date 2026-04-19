@@ -5,7 +5,7 @@ import UserAvatar from "@/app/components/UI/UserAvatar";
 import { useDebouncedValue } from "@/app/hooks/useDebouncedValue";
 import { ThemeSelector } from "@/app/components/shared/ThemeSelector";
 import RelationshipActions from "@/app/components/social/RelationshipActions";
-import { useRealtime } from "@/app/providers/RealtimeProvider";
+import { useRealtimeSocial } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { authApi, useUpdateCurrentUserMutation, useUserSearchQuery } from "@/lib/api";
 import Link from "next/link";
@@ -15,7 +15,7 @@ import { useMemo, useState } from "react";
 export default function AccountPage() {
   const router = useRouter();
   const { currentUser, setCurrentUser } = useSession();
-  const { friends, pendingInvites, outgoingInviteIds } = useRealtime();
+  const { friends, pendingInvites, outgoingInviteIds } = useRealtimeSocial();
   const [form, setForm] = useState<{
     name: string;
     email: string;

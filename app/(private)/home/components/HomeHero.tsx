@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   AddCircleOutlineRounded,
   ForumRounded,
@@ -10,7 +11,6 @@ import HomeRailMetric from "./HomeRailMetric";
 import HomeProfileCard from "./HomeProfileCard";
 
 type HomeHeroProps = {
-  connectionStatus: "disconnected" | "connecting" | "connected";
   primaryName: string;
   unreadCount: number;
   pendingInviteCount: number;
@@ -20,8 +20,7 @@ type HomeHeroProps = {
   profileAvatarUrl?: string | null;
 };
 
-export default function HomeHero({
-  connectionStatus,
+function HomeHero({
   primaryName,
   unreadCount,
   pendingInviteCount,
@@ -37,11 +36,6 @@ export default function HomeHero({
           <div className="flex flex-wrap items-center gap-2.5">
             <span className="font-ui-mono rounded-full border border-base-300/70 bg-base-100/75 px-3 py-1.5 text-[11px] uppercase text-base-content/55">
               Mesa de retomada
-            </span>
-            <span className="rounded-full border border-base-300/70 bg-base-100/75 px-3 py-1.5 text-sm text-base-content/60">
-              {connectionStatus === "connected"
-                ? "Tempo real ativo"
-                : "Reconectando"}
             </span>
           </div>
 
@@ -122,3 +116,5 @@ export default function HomeHero({
     </header>
   );
 }
+
+export default memo(HomeHero);

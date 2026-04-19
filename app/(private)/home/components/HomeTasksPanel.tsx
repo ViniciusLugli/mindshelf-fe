@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Link from "next/link";
 import type { TaskResponse } from "@/lib/api";
 import HomeDeskHeading from "./HomeDeskHeading";
@@ -9,7 +10,7 @@ type HomeTasksPanelProps = {
   tasks: TaskResponse[];
 };
 
-export default function HomeTasksPanel({ isLoading, tasks }: HomeTasksPanelProps) {
+function HomeTasksPanel({ isLoading, tasks }: HomeTasksPanelProps) {
   return (
     <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6 xl:row-span-2">
       <HomeDeskHeading
@@ -35,3 +36,5 @@ export default function HomeTasksPanel({ isLoading, tasks }: HomeTasksPanelProps
     </section>
   );
 }
+
+export default memo(HomeTasksPanel);

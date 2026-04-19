@@ -8,7 +8,10 @@ import ShareTaskModal from "@/app/(private)/chat/components/ShareTaskModal";
 import { useConversationLifecycle } from "@/app/(private)/chat/hooks/useConversationLifecycle";
 import { useSelectedConversation } from "@/app/(private)/chat/hooks/useSelectedConversation";
 import { useShareableTasks } from "@/app/(private)/chat/hooks/useShareableTasks";
-import { useRealtime } from "@/app/providers/RealtimeProvider";
+import {
+  useRealtimeConversation,
+  useRealtimeSocial,
+} from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { sharedTaskApi, useGroupsQuery } from "@/lib/api";
 import type { MessageResponse } from "@/lib/api";
@@ -26,18 +29,16 @@ export default function ChatWorkspace({
   const router = useRouter();
   const queryClient = useQueryClient();
   const { currentUser } = useSession();
+  const { chats, friends, connectionStatus } = useRealtimeSocial();
   const {
-    chats,
-    friends,
     messagesByUserId,
-    connectionStatus,
     setActiveConversationId,
     refreshConversation,
     markMessagesRead,
     sendMessage,
     shareTask,
     setImportedSharedTask,
-  } = useRealtime();
+  } = useRealtimeConversation();
 
   const [search, setSearch] = useState("");
   const [draft, setDraft] = useState("");
@@ -46,7 +47,9 @@ export default function ChatWorkspace({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [importModalOpen, setImportModalOpen] = useState(false);
-  const [importMessage, setImportMessage] = useState<MessageResponse | null>(null);
+  const [importMessage, setImportMessage] = useState<MessageResponse | null>(
+    null,
+  );
   const [selectedImportGroupId, setSelectedImportGroupId] = useState("");
   const [isImportingSharedTask, setIsImportingSharedTask] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
@@ -171,7 +174,9 @@ export default function ChatWorkspace({
       });
 
       await queryClient.invalidateQueries({ queryKey: queryKeys.tasks.all });
-      await queryClient.invalidateQueries({ queryKey: queryKeys.home.activity });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.home.activity,
+      });
       await queryClient.invalidateQueries({
         queryKey: queryKeys.groups.workspace(selectedImportGroupId),
       });
@@ -191,7 +196,7 @@ export default function ChatWorkspace({
 
   return (
     <section className="space-y-6 px-5 py-6">
-      <ChatWorkspaceHeader connectionStatus={connectionStatus} />
+      <ChatWorkspaceHeader />
 
       <div className="grid gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
         <ConversationList
