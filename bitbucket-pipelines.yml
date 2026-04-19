@@ -1,13 +1,10 @@
 image: node:20
-
 options:
   docker: true
   size: 2x
-
 definitions:
   caches:
     npm: ~/.npm
-
   steps:
     - step: &test_next
         name: Testes - Next.js
@@ -37,26 +34,73 @@ definitions:
           - export AWS_ROLE_ARN=${AWS_ROLE_ARN}
           - export AWS_WEB_IDENTITY_TOKEN_FILE=$(pwd)/web-identity-token
           - echo "$BITBUCKET_STEP_OIDC_TOKEN" > "$AWS_WEB_IDENTITY_TOKEN_FILE"
-
           - apt-get update && apt-get install -y unzip curl
           - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           - unzip -q awscliv2.zip
           - ./aws/install
-
           - export IMAGE_TAG=${BITBUCKET_BRANCH//\//-}-${BITBUCKET_COMMIT:0:7}
           - export IMAGE_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
           - export IMAGE_URI_LATEST=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest
-
           - aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AWS --password-stdin "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-
           - docker build -t "${IMAGE_URI}" -t "${IMAGE_URI_LATEST}" .
           - docker push "${IMAGE_URI}"
           - docker push "${IMAGE_URI_LATEST}"
-
           - echo "IMAGE_TAG=${IMAGE_TAG}" > image-info.env
           - echo "IMAGE_URI=${IMAGE_URI}" >> image-info.env
         artifacts:
           - image-info.env
+
+    - step: &deploy_ecs_next
+        name: Deploy ECS - Next.js
+        oidc: true
+        image: python:3.12-slim
+        script:
+          - apt-get update && apt-get install -y unzip curl
+          - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          - unzip -q awscliv2.zip
+          - ./aws/install
+          - export AWS_REGION=${AWS_REGION}
+          - source image-info.env
+
+          - |
+            TASK_DEF=$(aws ecs describe-task-definition \
+              --task-definition ${ECS_TASK_FAMILY_FRONTEND} \
+              --region ${AWS_REGION} \
+              --query 'taskDefinition' \
+              --output json)
+
+          - |
+            NEW_TASK_DEF=$(echo $TASK_DEF | python3 -c "
+            import json, sys
+            td = json.load(sys.stdin)
+            td['containerDefinitions'][0]['image'] = '$IMAGE_URI'
+            for key in ['taskDefinitionArn','revision','status','requiresAttributes','compatibilities','registeredAt','registeredBy']:
+                td.pop(key, None)
+            print(json.dumps(td))
+            ")
+
+          - |
+            NEW_ARN=$(aws ecs register-task-definition \
+              --cli-input-json "$NEW_TASK_DEF" \
+              --region ${AWS_REGION} \
+              --query 'taskDefinition.taskDefinitionArn' \
+              --output text)
+
+          - |
+            aws ecs update-service \
+              --cluster ${ECS_CLUSTER} \
+              --service ${ECS_SERVICE_FRONTEND} \
+              --task-definition $NEW_ARN \
+              --force-new-deployment \
+              --region ${AWS_REGION}
+
+          - |
+            aws ecs wait services-stable \
+              --cluster ${ECS_CLUSTER} \
+              --services ${ECS_SERVICE_FRONTEND} \
+              --region ${AWS_REGION}
+
+          - echo "✅ Frontend deployado com sucesso! Image: ${IMAGE_URI}"
 
 pipelines:
   branches:
@@ -64,4 +108,7 @@ pipelines:
       - step: *test_next
       - step:
           <<: *docker_publish_next
+          deployment: production
+      - step:
+          <<: *deploy_ecs_next
           deployment: production
