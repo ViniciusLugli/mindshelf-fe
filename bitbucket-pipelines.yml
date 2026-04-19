@@ -67,7 +67,7 @@ pipelines:
       - step: *test_next
       - step:
           <<: *docker_publish_next
-          deployment: production
+          deployment: staging
       - step:
           <<: *deploy_ecs_next
           deployment: production
