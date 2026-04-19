@@ -5,6 +5,9 @@ options:
 definitions:
   caches:
     npm: ~/.npm
+  services:
+    docker:
+      memory: 6144
   steps:
     - step: &test_next
         name: Testes - Next.js
@@ -26,18 +29,19 @@ definitions:
 
     - step: &docker_publish_next
         name: Build e Push Docker - Next.js
+        size: 2x
         services:
           - docker
         script:
+          - export IMAGE_TAG=${BITBUCKET_BRANCH//\//-}-${BITBUCKET_COMMIT:0:7}
+          - export IMAGE_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+          - export IMAGE_URI_LATEST=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest
+          - docker build -t "${IMAGE_URI}" -t "${IMAGE_URI_LATEST}" .
           - apt-get update && apt-get install -y unzip curl
           - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           - unzip -q awscliv2.zip
           - ./aws/install
-          - export IMAGE_TAG=${BITBUCKET_BRANCH//\//-}-${BITBUCKET_COMMIT:0:7}
-          - export IMAGE_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
-          - export IMAGE_URI_LATEST=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest
           - aws ecr get-login-password --region "${AWS_REGION}" | docker login --username AWS --password-stdin "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-          - docker build -t "${IMAGE_URI}" -t "${IMAGE_URI_LATEST}" .
           - docker push "${IMAGE_URI}"
           - docker push "${IMAGE_URI_LATEST}"
           - echo "IMAGE_TAG=${IMAGE_TAG}" > image-info.env
