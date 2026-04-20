@@ -31,16 +31,16 @@ export default function ShareTaskModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral/35 p-4 backdrop-blur-sm">
+    <div className="app-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
       <button
         type="button"
         aria-label="Close modal"
         className="absolute inset-0"
         onClick={onClose}
       />
-      <div className="relative z-10 w-full max-w-3xl rounded-4xl border border-base-300/70 bg-base-100 shadow-2xl">
-        <div className="space-y-2 border-b border-base-300/60 px-6 py-5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+      <div className="app-modal-surface relative z-10 w-full max-w-3xl rounded-4xl border">
+        <div className="app-border-soft space-y-2 border-b px-6 py-5">
+          <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
             Share note
           </p>
           <h2 className="text-2xl font-semibold text-base-content">
@@ -57,7 +57,7 @@ export default function ShareTaskModal({
 
           <div className="grid gap-4 md:grid-cols-2">
             {isLoadingTasks ? (
-              <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+              <div className="app-empty-state col-span-full rounded-3xl border border-dashed px-4 py-10 text-center text-sm">
                 Loading notes...
               </div>
             ) : tasks.length ? (
@@ -79,7 +79,7 @@ export default function ShareTaskModal({
                 </button>
               ))
             ) : (
-              <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+              <div className="app-empty-state col-span-full rounded-3xl border border-dashed px-4 py-10 text-center text-sm">
                 No notes found.
               </div>
             )}

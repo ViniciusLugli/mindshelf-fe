@@ -18,7 +18,7 @@ export default function AppModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral/35 p-4 backdrop-blur-sm">
+    <div className="app-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
       <button
         type="button"
         aria-label="Close modal"
@@ -26,16 +26,14 @@ export default function AppModal({
         onClick={onClose}
       />
 
-      <div className="relative z-10 w-full max-w-2xl rounded-4xl border border-base-300/70 bg-base-100 shadow-2xl">
-        <div className="space-y-2 border-b border-base-300/60 px-6 py-5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+      <div className="app-modal-surface relative z-10 w-full max-w-2xl rounded-4xl border">
+        <div className="app-border-soft space-y-2 border-b px-6 py-5">
+          <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
             MindShelf
           </p>
           <h2 className="text-2xl font-semibold text-base-content">{title}</h2>
           {description ? (
-            <p className="text-sm leading-relaxed text-base-content/55">
-              {description}
-            </p>
+            <p className="app-subtle text-sm leading-relaxed">{description}</p>
           ) : null}
         </div>
 

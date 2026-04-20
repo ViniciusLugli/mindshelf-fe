@@ -209,7 +209,7 @@ export default function ChatWorkspace({
           selectedFriendId={selectedFriendId}
         />
 
-        <div className="h-full overflow-hidden rounded-4xl border border-base-300/70 bg-base-100/95 shadow-sm">
+        <div className="app-surface-1 h-full overflow-hidden rounded-4xl border">
           <ConversationPanel
             friend={selectedFriend}
             entry={selectedEntry}

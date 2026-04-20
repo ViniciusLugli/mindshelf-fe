@@ -37,7 +37,7 @@ export default function ConversationPanel({
     return (
       <div className="flex h-full min-h-0 items-center justify-center px-6 text-center">
         <div className="space-y-3">
-          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+          <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
             No conversation selected
           </p>
           <h2 className="text-3xl font-semibold text-base-content">

@@ -24,14 +24,14 @@ export default function ChatMessage({
         className={`max-w-[82%] rounded-[1.6rem] px-4 py-3 shadow-sm ${
           isMine
             ? "bg-primary text-primary-content"
-            : "border border-base-300/70 bg-base-100 text-base-content"
+            : "app-surface-2 border text-base-content"
         }`}
       >
         {message.type === "shared_task" && message.shared_task ? (
           <div className="space-y-3">
             <p
               className={`text-[11px] font-bold uppercase tracking-[0.22em] ${
-                isMine ? "text-primary-content/70" : "text-base-content/35"
+                isMine ? "text-primary-content/70" : "app-faint"
               }`}
             >
               Shared note
@@ -57,7 +57,7 @@ export default function ChatMessage({
             </button>
             <p
               className={`text-xs ${
-                isMine ? "text-primary-content/70" : "text-base-content/45"
+                isMine ? "text-primary-content/70" : "app-faint"
               }`}
             >
               {message.shared_task.imported_task_id
@@ -69,7 +69,7 @@ export default function ChatMessage({
             {message.content ? (
               <p
                 className={`text-sm leading-relaxed ${
-                  isMine ? "text-primary-content/85" : "text-base-content/70"
+                  isMine ? "text-primary-content/85" : "app-muted"
                 }`}
               >
                 {message.content}
@@ -82,7 +82,7 @@ export default function ChatMessage({
 
         <div
           className={`mt-3 flex items-center justify-end gap-2 text-[11px] ${
-            isMine ? "text-primary-content/70" : "text-base-content/40"
+            isMine ? "text-primary-content/70" : "app-faint"
           }`}
         >
           <span>{formatTime(message.created_at)}</span>

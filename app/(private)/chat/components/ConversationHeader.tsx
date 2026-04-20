@@ -12,7 +12,7 @@ export default function ConversationHeader({
   messageCount,
 }: ConversationHeaderProps) {
   return (
-    <div className="flex flex-col gap-4 border-b border-base-300/60 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+    <div className="app-border-soft flex flex-col gap-4 border-b px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-4">
         <UserAvatar
           name={friend.name}
@@ -23,7 +23,7 @@ export default function ConversationHeader({
           <p className="text-xl font-semibold text-base-content">
             {friend.name}
           </p>
-          <p className="mt-1 text-xs uppercase tracking-[0.22em] text-base-content/30">
+          <p className="app-faint mt-1 text-xs uppercase tracking-[0.22em]">
             {messageCount} messages loaded
           </p>
         </div>

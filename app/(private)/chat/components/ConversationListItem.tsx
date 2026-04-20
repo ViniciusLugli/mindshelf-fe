@@ -17,8 +17,8 @@ export default function ConversationListItem({
       href={`/chat/${entry.friend.id}`}
       className={`flex items-center gap-3 rounded-3xl border px-3 py-3 transition-all ${
         isSelected
-          ? "border-primary/30 bg-primary/8"
-          : "border-base-300/60 bg-base-100 hover:border-base-300"
+          ? "border-primary/35 bg-primary/14"
+          : "app-surface-2 hover:border-primary/20"
       }`}
     >
       <UserAvatar
@@ -32,7 +32,7 @@ export default function ConversationListItem({
             <p className="font-semibold text-base-content">
               {entry.friend.name}
             </p>
-            <p className="text-xs text-base-content/40">{entry.friend.email}</p>
+            <p className="app-faint text-xs">{entry.friend.email}</p>
           </div>
           {entry.unreadCount > 0 ? (
             <span className="badge badge-error border-0 text-white">
@@ -40,7 +40,7 @@ export default function ConversationListItem({
             </span>
           ) : null}
         </div>
-        <p className="mt-2 text-sm text-base-content/55">
+        <p className="app-subtle mt-2 text-sm">
           {truncateText(entry.lastMessage || "No messages yet.", 46)}
         </p>
       </div>

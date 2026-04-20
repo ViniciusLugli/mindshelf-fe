@@ -14,7 +14,7 @@ export default function HomeInviteCard({
   onAction,
 }: HomeInviteCardProps) {
   return (
-    <article className="rounded-[1.75rem] border border-base-300/60 bg-base-100/92 p-4 shadow-sm">
+    <article className="app-surface-2 rounded-[1.75rem] border p-4">
       <div className="flex items-center gap-3">
         <UserAvatar
           name={invite.requester.name}
@@ -26,13 +26,13 @@ export default function HomeInviteCard({
           <p className="truncate font-semibold text-base-content">
             {invite.requester.name}
           </p>
-          <p className="truncate text-sm text-base-content/48">
+          <p className="app-faint truncate text-sm">
             {invite.requester.email}
           </p>
         </div>
       </div>
 
-      <p className="mt-4 font-ui-mono text-[11px] uppercase text-base-content/35">
+      <p className="app-faint mt-4 font-ui-mono text-[11px] uppercase">
         Received {formatDateTime(invite.created_at)}
       </p>
 

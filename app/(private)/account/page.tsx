@@ -87,8 +87,8 @@ export default function AccountPage() {
   return (
     <section className="space-y-8 px-5 py-6">
       <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
-        <div className="rounded-4xl border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
-          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+        <div className="app-surface-1 rounded-4xl border p-6">
+          <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
             My account
           </p>
 
@@ -102,19 +102,19 @@ export default function AccountPage() {
               <h1 className="text-3xl font-bold text-base-content">
                 {currentUser?.name || "Your account"}
               </h1>
-              <p className="mt-1 text-sm text-base-content/55">
+              <p className="app-subtle mt-1 text-sm">
                 {currentUser?.email || "Loading account details..."}
               </p>
             </div>
           </div>
 
-          <div className="mt-8 space-y-4 rounded-[1.75rem] border border-base-300/60 bg-base-200/35 p-5">
+          <div className="app-surface-2 mt-8 space-y-4 rounded-[1.75rem] border p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-lg font-semibold text-base-content">
                   Pending invites
                 </p>
-                <p className="text-sm text-base-content/55">
+                <p className="app-subtle text-sm">
                   See who wants to connect with you.
                 </p>
               </div>
@@ -132,9 +132,7 @@ export default function AccountPage() {
 
           <div className="mt-6 space-y-3">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="text-lg font-semibold text-base-content">
-                Amigos
-              </h2>
+              <h2 className="text-lg font-semibold text-base-content">Friends</h2>
               <Link href="/chat" className="text-sm font-medium text-primary">
                 Open chat
               </Link>
@@ -145,7 +143,7 @@ export default function AccountPage() {
                   <Link
                     key={friend.id}
                     href={`/account/${friend.id}`}
-                    className="flex items-center gap-3 rounded-[1.3rem] border border-base-300/60 bg-base-100 px-3 py-3 transition-colors hover:border-primary/30"
+                    className="app-surface-2 flex items-center gap-3 rounded-[1.3rem] border px-3 py-3 transition-colors hover:border-primary/35"
                   >
                     <UserAvatar
                       name={friend.name}
@@ -156,26 +154,26 @@ export default function AccountPage() {
                       <p className="font-semibold text-base-content">
                         {friend.name}
                       </p>
-                      <p className="text-xs text-base-content/45">
+                      <p className="app-faint text-xs">
                         {friend.email}
                       </p>
                     </div>
                   </Link>
                 ))
               ) : (
-                <div className="rounded-[1.3rem] border border-dashed border-base-300/70 px-4 py-6 text-sm text-base-content/45">
+                <div className="app-empty-state rounded-[1.3rem] border border-dashed px-4 py-6 text-sm">
                   Your friends will show up here.
                 </div>
               )}
             </div>
           </div>
 
-          <div className="mt-6 rounded-[1.75rem] border border-error/20 bg-error/8 p-5">
+          <div className="app-state-error mt-6 rounded-[1.75rem] border p-5">
             <div className="space-y-2">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-error/70">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-current/80">
                 Session
               </p>
-              <p className="text-sm text-base-content/60">
+              <p className="app-subtle text-sm">
                 Sign out of this device when you&apos;re done using your
                 account.
               </p>
@@ -192,18 +190,18 @@ export default function AccountPage() {
 
         <div className="space-y-6">
           <form
-            className="rounded-4xl border border-base-300/70 bg-base-100/95 p-6 shadow-sm"
+            className="app-surface-1 rounded-4xl border p-6"
             onSubmit={handleSave}
           >
-            <div className="space-y-5 rounded-[1.75rem] border border-base-300/60 bg-[radial-gradient(circle_at_top_left,rgba(231,111,81,0.08),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.42),transparent)] p-5 sm:p-6">
+            <div className="app-elevated-gradient app-border-soft space-y-5 rounded-[1.75rem] border p-5 sm:p-6">
               <div className="space-y-2">
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+                <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
                   Settings
                 </p>
                 <h2 className="text-2xl font-semibold text-base-content">
                   Update your details
                 </h2>
-                <p className="text-sm text-base-content/55">
+                <p className="app-subtle text-sm">
                   You can update your name, email, and password here.
                 </p>
               </div>
@@ -213,13 +211,13 @@ export default function AccountPage() {
                   <div className="space-y-2 md:col-span-1">
                     <label
                       htmlFor="account-name"
-                      className="block text-sm font-medium text-base-content/70"
+                      className="app-muted block text-sm font-medium"
                     >
                       Name
                     </label>
                     <input
                       id="account-name"
-                      className="input input-bordered h-13 w-full rounded-2xl border-base-300/70 bg-base-100 px-4"
+                      className="app-field-shell app-placeholder input input-bordered h-13 w-full rounded-2xl px-4"
                       value={resolvedForm.name}
                       onChange={(event) =>
                         setForm((current) => ({
@@ -233,14 +231,14 @@ export default function AccountPage() {
                   <div className="space-y-2 md:col-span-1">
                     <label
                       htmlFor="account-email"
-                      className="block text-sm font-medium text-base-content/70"
+                      className="app-muted block text-sm font-medium"
                     >
                       Email
                     </label>
                     <input
                       id="account-email"
                       type="email"
-                      className="input input-bordered h-13 w-full rounded-2xl border-base-300/70 bg-base-100 px-4"
+                      className="app-field-shell app-placeholder input input-bordered h-13 w-full rounded-2xl px-4"
                       value={resolvedForm.email}
                       onChange={(event) =>
                         setForm((current) => ({
@@ -254,7 +252,7 @@ export default function AccountPage() {
                   <div className="space-y-2 md:col-span-2">
                     <label
                       htmlFor="account-password"
-                      className="block text-sm font-medium text-base-content/70"
+                      className="app-muted block text-sm font-medium"
                     >
                       New password
                     </label>
@@ -262,7 +260,7 @@ export default function AccountPage() {
                       id="account-password"
                       type="password"
                       placeholder="Only fill this in if you want to change it"
-                      className="input input-bordered h-13 w-full rounded-2xl border-base-300/70 bg-base-100 px-4"
+                      className="app-field-shell app-placeholder input input-bordered h-13 w-full rounded-2xl px-4"
                       value={resolvedForm.password}
                       onChange={(event) =>
                         setForm((current) => ({
@@ -274,12 +272,12 @@ export default function AccountPage() {
                   </div>
                 </div>
 
-                <div className="rounded-3xl border border-base-300/60 bg-base-100/80 p-4 shadow-sm">
+                <div className="app-surface-2 rounded-3xl border p-4">
                   <div className="mb-3 space-y-1">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                    <p className="app-faint text-[11px] font-bold uppercase tracking-[0.22em]">
                       Appearance
                     </p>
-                    <p className="text-sm text-base-content/55">
+                    <p className="app-subtle text-sm">
                       Choose how the interface looks for you.
                     </p>
                   </div>
@@ -289,7 +287,7 @@ export default function AccountPage() {
             </div>
 
             {feedback ? (
-              <div className="mt-5 rounded-2xl border border-primary/15 bg-primary/8 px-4 py-3 text-sm text-base-content/75">
+              <div className="app-state-info mt-5 rounded-2xl border px-4 py-3 text-sm">
                 {feedback}
               </div>
             ) : null}
@@ -304,9 +302,9 @@ export default function AccountPage() {
             </div>
           </form>
 
-          <div className="rounded-4xl border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
+          <div className="app-surface-1 rounded-4xl border p-6">
             <div className="space-y-2">
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+              <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
                 Find people
               </p>
               <h2 className="text-2xl font-semibold text-base-content">
@@ -324,7 +322,7 @@ export default function AccountPage() {
 
             <div className="mt-5 grid gap-4 lg:grid-cols-2">
               {isSearching ? (
-                <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+                <div className="app-empty-state col-span-full rounded-3xl border border-dashed px-4 py-10 text-center text-sm">
                   Searching users...
                 </div>
               ) : results.length ? (
@@ -340,7 +338,7 @@ export default function AccountPage() {
                   return (
                     <article
                       key={user.id}
-                      className="space-y-4 rounded-[1.7rem] border border-base-300/70 bg-base-100 p-5 shadow-sm"
+                      className="app-surface-2 space-y-4 rounded-[1.7rem] border p-5"
                     >
                       <div className="flex items-center gap-4">
                         <UserAvatar
@@ -355,7 +353,7 @@ export default function AccountPage() {
                           >
                             {user.name}
                           </Link>
-                          <p className="text-sm text-base-content/50">
+                          <p className="app-faint text-sm">
                             {user.email}
                           </p>
                         </div>
@@ -372,11 +370,11 @@ export default function AccountPage() {
                   );
                 })
               ) : search.trim() ? (
-                <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+                <div className="app-empty-state col-span-full rounded-3xl border border-dashed px-4 py-10 text-center text-sm">
                   No users found.
                 </div>
               ) : (
-                <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+                <div className="app-empty-state col-span-full rounded-3xl border border-dashed px-4 py-10 text-center text-sm">
                   Type a name to start searching.
                 </div>
               )}

@@ -21,14 +21,14 @@ export function ThemeSelector({ className = "" }: ThemeSelectorProps) {
 
   return (
     <label
-      className={`group relative flex min-h-14 w-full items-center gap-3 overflow-hidden rounded-[1.35rem] border border-base-300/70 bg-linear-to-br from-base-100 to-base-200/45 px-4 shadow-sm transition-colors hover:border-primary/30 ${className}`}
+      className={`app-field-shell group relative flex min-h-14 w-full items-center gap-3 overflow-hidden rounded-[1.35rem] border bg-linear-to-br from-base-100/55 to-transparent px-4 transition-colors hover:border-primary/35 ${className}`}
     >
       <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
         <PaletteOutlined fontSize="small" />
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-base-content/35">
+        <p className="app-faint text-[11px] font-bold uppercase tracking-[0.24em]">
           Theme
         </p>
         <p className="truncate text-sm font-medium text-base-content">
@@ -36,7 +36,7 @@ export function ThemeSelector({ className = "" }: ThemeSelectorProps) {
         </p>
       </div>
 
-      <KeyboardArrowDown className="text-base-content/35 transition-transform group-focus-within:rotate-180" />
+      <KeyboardArrowDown className="app-faint transition-transform group-focus-within:rotate-180" />
 
       <select
         aria-label="Select theme"

@@ -10,15 +10,15 @@ export default function PendingInvitesPage() {
   const { pendingInvites } = useRealtimeSocial();
 
   return (
-    <section className="space-y-6 px-5 py-6">
+    <section className="space-y-6 px-5 py-6 mx-40 h-dvh">
       <div className="space-y-2">
-        <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+        <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
           Pending invites
         </p>
         <h1 className="text-3xl font-bold text-base-content">
           Received friend requests
         </h1>
-        <p className="max-w-2xl text-sm leading-relaxed text-base-content/55">
+        <p className="app-subtle max-w-2xl text-sm leading-relaxed">
           Review new requests and decide who joins your network.
         </p>
       </div>
@@ -28,7 +28,7 @@ export default function PendingInvitesPage() {
           pendingInvites.map((invite) => (
             <article
               key={invite.requester.id}
-              className="space-y-4 rounded-[1.75rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm"
+              className="app-surface-1 space-y-4 rounded-[1.75rem] border p-5"
             >
               <div className="flex items-center gap-4">
                 <UserAvatar
@@ -43,10 +43,10 @@ export default function PendingInvitesPage() {
                   >
                     {invite.requester.name}
                   </Link>
-                  <p className="text-sm text-base-content/50">{invite.requester.email}</p>
-                   <p className="mt-1 text-xs uppercase tracking-[0.22em] text-base-content/30">
-                     Received {formatDateTime(invite.created_at)}
-                   </p>
+                  <p className="app-faint text-sm">{invite.requester.email}</p>
+                  <p className="app-faint mt-1 text-xs uppercase tracking-[0.22em]">
+                    Received {formatDateTime(invite.created_at)}
+                  </p>
                 </div>
               </div>
 
@@ -57,7 +57,7 @@ export default function PendingInvitesPage() {
             </article>
           ))
         ) : (
-          <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-5 py-18 text-center text-sm text-base-content/45">
+          <div className="app-empty-state col-span-full rounded-[1.75rem] border border-dashed px-5 py-18 text-center text-sm">
             No pending invites right now.
           </div>
         )}

@@ -41,7 +41,7 @@ export default function HomeOnboardingModal({
           {steps.map((step, index) => (
             <article
               key={step.title}
-              className="rounded-3xl border border-base-300/70 bg-base-100/90 p-4"
+              className="app-surface-2 rounded-3xl border p-4"
             >
               <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-primary">
                 Step {index + 1}
@@ -49,7 +49,7 @@ export default function HomeOnboardingModal({
               <h3 className="mt-3 text-lg font-semibold text-base-content">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-base-content/58">
+              <p className="app-subtle mt-2 text-sm leading-relaxed">
                 {step.description}
               </p>
             </article>

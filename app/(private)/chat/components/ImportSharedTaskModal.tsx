@@ -48,16 +48,16 @@ export default function ImportSharedTaskModal({
           />
 
           <label className="form-control gap-2">
-            <span className="text-sm font-medium text-base-content/70">
+            <span className="app-muted text-sm font-medium">
               Save to group
             </span>
             {isLoadingGroups ? (
-              <div className="rounded-3xl border border-dashed border-base-300/70 px-4 py-4 text-sm text-base-content/45">
+              <div className="app-empty-state rounded-3xl border border-dashed px-4 py-4 text-sm">
                 Loading your groups...
               </div>
             ) : groups.length ? (
               <select
-                className="select select-bordered rounded-2xl border-base-300/70"
+                className="app-field-shell select select-bordered rounded-2xl"
                 value={selectedGroupId}
                 onChange={(event) => onGroupChange(event.target.value)}
                 disabled={isImporting}
@@ -70,7 +70,7 @@ export default function ImportSharedTaskModal({
                 ))}
               </select>
             ) : (
-              <div className="space-y-3 rounded-3xl border border-dashed border-base-300/70 px-4 py-4 text-sm text-base-content/55">
+              <div className="app-empty-state space-y-3 rounded-3xl border border-dashed px-4 py-4 text-sm">
                 <p>You need at least one group before importing this note.</p>
                 <Link href="/groups/new" className="btn btn-primary rounded-full">
                   Create group
@@ -80,7 +80,7 @@ export default function ImportSharedTaskModal({
           </label>
 
           {errorMessage ? (
-            <div className="rounded-2xl border border-error/20 bg-error/8 px-4 py-3 text-sm text-error">
+            <div className="app-state-error rounded-2xl border px-4 py-3 text-sm">
               {errorMessage}
             </div>
           ) : null}

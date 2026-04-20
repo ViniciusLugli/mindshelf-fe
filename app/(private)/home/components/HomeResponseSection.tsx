@@ -22,7 +22,7 @@ function HomeResponseSection({
   onInviteAction,
 }: HomeResponseSectionProps) {
   return (
-    <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6">
+    <section className="home-paper home-rise app-border-soft rounded-[2.25rem] border p-5 sm:p-6">
       <HomeDeskHeading
         eyebrow="Needs your reply"
         title="Invites and conversations"
@@ -36,17 +36,17 @@ function HomeResponseSection({
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1.12fr)_320px]">
         <div className="space-y-3">
-          <div className="rounded-[1.6rem] border border-base-300/60 bg-base-100/75 px-4 py-4">
+          <div className="app-surface-2 rounded-[1.6rem] border px-4 py-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="font-ui-mono text-[11px] uppercase text-base-content/38">
+                <p className="app-faint font-ui-mono text-[11px] uppercase">
                   Recent conversations
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-base-content/58">
+                <p className="app-subtle mt-2 text-sm leading-relaxed">
                   Open the threads that are active now, with unread messages highlighted first.
                 </p>
               </div>
-              <span className="font-ui-mono rounded-full border border-base-300/70 bg-base-100 px-3 py-1.5 text-[11px] uppercase text-base-content/48">
+              <span className="app-chip-subtle font-ui-mono rounded-full border px-3 py-1.5 text-[11px] uppercase">
                 {unreadCount} unread
               </span>
             </div>
@@ -62,14 +62,14 @@ function HomeResponseSection({
         </div>
 
         <div className="space-y-3">
-          <div className="rounded-[1.75rem] border border-base-300/60 bg-base-200/30 p-4">
-            <p className="font-ui-mono text-[11px] uppercase text-base-content/38">
+          <div className="app-surface-2 rounded-[1.75rem] border p-4">
+            <p className="app-faint font-ui-mono text-[11px] uppercase">
               Pending invites
             </p>
             <p className="mt-3 font-editorial text-3xl leading-none text-base-content">
               {invites.length}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-base-content/58">
+            <p className="app-subtle mt-2 text-sm leading-relaxed">
               New connections that can unlock more conversations and shared work.
             </p>
           </div>

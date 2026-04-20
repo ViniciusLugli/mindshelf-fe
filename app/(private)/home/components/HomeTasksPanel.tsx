@@ -12,7 +12,7 @@ type HomeTasksPanelProps = {
 
 function HomeTasksPanel({ isLoading, tasks }: HomeTasksPanelProps) {
   return (
-    <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6 xl:row-span-2">
+    <section className="home-paper home-rise app-border-soft rounded-[2.25rem] border p-5 sm:p-6 xl:row-span-2">
       <HomeDeskHeading
         eyebrow="Keep writing"
         title="Recent notes"

@@ -41,11 +41,11 @@ const productFlow = [
 export default function LandingPage() {
   return (
     <div className="bg-base-100 text-base-content">
-      <section className="relative overflow-hidden border-b border-base-300/60">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_18%,rgba(231,111,81,0.16),transparent_28%),radial-gradient(circle_at_84%_16%,rgba(42,157,143,0.12),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.3),transparent)]" />
+      <section className="app-border-soft relative overflow-hidden border-b">
+        <div className="landing-aurora pointer-events-none absolute inset-0" />
 
         <div className="relative mx-auto max-w-7xl px-6 py-6 lg:px-10 lg:py-8">
-          <header className="flex flex-col gap-4 border-b border-base-300/60 pb-6 sm:flex-row sm:items-center sm:justify-between">
+          <header className="app-border-soft flex flex-col gap-4 border-b pb-6 sm:flex-row sm:items-center sm:justify-between">
             <Link href="/" className="w-fit">
               <Logo size="sm" tone="light" />
             </Link>
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
           <div className="grid gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end lg:py-16">
             <div className="space-y-6">
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+              <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
                 A social workspace for focused knowledge
               </p>
               <h1
@@ -74,7 +74,7 @@ export default function LandingPage() {
               >
                 Keep notes, groups, and conversations in one calm flow.
               </h1>
-              <p className="max-w-2xl text-base leading-relaxed text-base-content/60 sm:text-lg">
+              <p className="app-subtle max-w-2xl text-base leading-relaxed sm:text-lg">
                 MindShelf helps you organize the work around an idea without
                 jumping between disconnected tools.
               </p>
@@ -95,32 +95,32 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <aside className="rounded-4xl border border-base-300/70 bg-base-100/92 p-5 shadow-sm">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+            <aside className="app-surface-1 rounded-4xl border p-5">
+              <p className="app-faint text-[11px] font-bold uppercase tracking-[0.22em]">
                 Best for
               </p>
 
               <div className="mt-5 space-y-3">
-                <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
+                <div className="app-surface-2 rounded-[1.4rem] border p-4">
                   <p className="font-semibold text-base-content">Small teams</p>
-                  <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+                  <p className="app-subtle mt-2 text-sm leading-relaxed">
                     Plan, discuss, and share progress without losing the thread.
                   </p>
                 </div>
-                <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
+                <div className="app-surface-2 rounded-[1.4rem] border p-4">
                   <p className="font-semibold text-base-content">
                     Research work
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+                  <p className="app-subtle mt-2 text-sm leading-relaxed">
                     Save findings, shape notes, and keep useful references
                     nearby.
                   </p>
                 </div>
-                <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
+                <div className="app-surface-2 rounded-[1.4rem] border p-4">
                   <p className="font-semibold text-base-content">
                     Personal projects
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+                  <p className="app-subtle mt-2 text-sm leading-relaxed">
                     Move from a loose thought to a structured plan with less
                     friction.
                   </p>
@@ -130,31 +130,31 @@ export default function LandingPage() {
           </div>
 
           <div className="grid gap-4 pb-12 lg:grid-cols-[0.9fr_1.2fr_0.95fr] lg:pb-16">
-            <article className="rounded-4xl border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+            <article className="app-surface-1 rounded-4xl border p-5">
+              <p className="app-faint text-[11px] font-bold uppercase tracking-[0.22em]">
                 Active group
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-base-content">
                 Product Design
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-base-content/55">
+              <p className="app-subtle mt-2 text-sm leading-relaxed">
                 A dedicated space for discovery, backlog, and decisions.
               </p>
 
               <div className="mt-5 space-y-3">
-                <div className="rounded-[1.3rem] border border-base-300/60 bg-base-200/25 px-4 py-3 text-sm text-base-content/60">
+                <div className="app-surface-2 app-subtle rounded-[1.3rem] border px-4 py-3 text-sm">
                   Refine the new squad onboarding
                 </div>
-                <div className="rounded-[1.3rem] border border-base-300/60 bg-base-200/25 px-4 py-3 text-sm text-base-content/60">
+                <div className="app-surface-2 app-subtle rounded-[1.3rem] border px-4 py-3 text-sm">
                   Summarize interview learnings
                 </div>
               </div>
             </article>
 
-            <article className="rounded-4xl border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
+            <article className="app-surface-1 rounded-4xl border p-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                  <p className="app-faint text-[11px] font-bold uppercase tracking-[0.22em]">
                     Open note
                   </p>
                   <h2 className="mt-3 text-2xl font-semibold text-base-content">
@@ -163,19 +163,19 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="mt-5 rounded-3xl border border-base-300/60 bg-base-200/30 p-4 text-sm leading-relaxed text-base-content/58">
+              <div className="app-surface-2 app-subtle mt-5 rounded-3xl border p-4 text-sm leading-relaxed">
                 Notes work like living documents: context, decisions, next
                 steps, and references stay together.
               </div>
             </article>
 
-            <article className="rounded-4xl border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+            <article className="app-surface-1 rounded-4xl border p-5">
+              <p className="app-faint text-[11px] font-bold uppercase tracking-[0.22em]">
                 Recent chat
               </p>
 
               <div className="mt-5 space-y-3">
-                <div className="rounded-[1.3rem] border border-base-300/60 bg-base-200/25 px-4 py-3 text-sm leading-relaxed text-base-content/60">
+                <div className="app-surface-2 app-subtle rounded-[1.3rem] border px-4 py-3 text-sm leading-relaxed">
                   <span className="font-semibold text-base-content">Ana</span>:
                   share the note in chat so we can review it together.
                 </div>
@@ -185,7 +185,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <p className="mt-5 text-sm leading-relaxed text-base-content/55">
+              <p className="app-subtle mt-5 text-sm leading-relaxed">
                 Chat supports the work instead of splitting it.
               </p>
             </article>
@@ -195,7 +195,7 @@ export default function LandingPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-10">
         <div className="max-w-3xl space-y-3">
-          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+          <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
             Why it feels simpler
           </p>
           <h2
@@ -210,12 +210,12 @@ export default function LandingPage() {
           {featureBlocks.map((item) => (
             <article
               key={item.title}
-              className="rounded-[1.9rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm"
+              className="app-surface-1 rounded-[1.9rem] border p-6"
             >
               <h3 className="text-2xl font-semibold text-base-content">
                 {item.title}
               </h3>
-              <p className="mt-4 text-sm leading-relaxed text-base-content/58 sm:text-base">
+              <p className="app-subtle mt-4 text-sm leading-relaxed sm:text-base">
                 {item.description}
               </p>
             </article>
@@ -223,10 +223,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-y border-base-300/60 bg-base-200/20">
+      <section className="app-border-soft border-y bg-base-200/20">
         <div className="mx-auto max-w-7xl px-6 py-18 lg:px-10">
           <div className="max-w-3xl space-y-3">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+            <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
               How it works
             </p>
             <h2
@@ -241,13 +241,13 @@ export default function LandingPage() {
             {productFlow.map((item) => (
               <article
                 key={item.step}
-                className="rounded-[1.9rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm"
+                className="app-surface-1 rounded-[1.9rem] border p-6"
               >
                 <p className="text-sm font-bold text-primary">{item.step}</p>
                 <h3 className="mt-4 text-2xl font-semibold text-base-content">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-base-content/58 sm:text-base">
+                <p className="app-subtle mt-3 text-sm leading-relaxed sm:text-base">
                   {item.description}
                 </p>
               </article>
@@ -260,7 +260,7 @@ export default function LandingPage() {
         <div className="overflow-hidden rounded-[2.4rem] border border-base-300/70 bg-neutral text-neutral-content shadow-2xl shadow-base-content/10">
           <div className="grid gap-8 px-6 py-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-10">
             <div className="space-y-4">
-              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-content/35">
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-neutral-content/50">
                 Ready to begin
               </p>
               <h2
@@ -270,7 +270,7 @@ export default function LandingPage() {
                 If your work mixes writing, context, and conversation, MindShelf
                 gives it one home.
               </h2>
-              <p className="max-w-2xl text-base leading-relaxed text-neutral-content/60">
+              <p className="max-w-2xl text-base leading-relaxed text-neutral-content/72">
                 Start with a group, create your first note, and bring the right
                 people into the chat when you need them.
               </p>

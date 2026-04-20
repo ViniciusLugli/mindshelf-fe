@@ -15,7 +15,7 @@ export default function MessageList({
   onSharedTaskClick,
 }: MessageListProps) {
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto bg-base-200/30 px-5 py-5">
+    <div className="app-surface-3 flex-1 min-h-0 overflow-y-auto px-5 py-5">
       {messages.length ? (
         <div className="space-y-4">
           {messages.map((message) => (
@@ -28,7 +28,7 @@ export default function MessageList({
           ))}
         </div>
       ) : (
-        <div className="flex h-full min-h-64 items-center justify-center rounded-3xl border border-dashed border-base-300/70 bg-base-100/50 text-sm text-base-content/45">
+        <div className="app-empty-state flex h-full min-h-64 items-center justify-center rounded-3xl border border-dashed text-sm">
             Start the conversation with {friendName}.
         </div>
       )}

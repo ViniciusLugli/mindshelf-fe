@@ -27,8 +27,8 @@ export default function MessageComposer({
   onOpenShareModal,
 }: MessageComposerProps) {
   return (
-    <div className="border-t border-base-300/60 px-5 py-4">
-      <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.22em] text-base-content/35">
+    <div className="app-border-soft border-t px-5 py-4">
+      <div className="app-faint mb-3 flex items-center justify-between text-xs uppercase tracking-[0.22em]">
         <span>{unreadCount ? `${unreadCount} unread` : "All caught up"}</span>
         <span>
           {lastMessageAt
@@ -54,7 +54,7 @@ export default function MessageComposer({
           value={draft}
           onChange={(event) => onDraftChange(event.target.value)}
           placeholder={`Write a message to ${friendName}`}
-          className="textarea textarea-bordered min-h-24 flex-1 rounded-3xl border-base-300/70 bg-base-100 px-4 py-3"
+          className="app-field-shell app-placeholder textarea textarea-bordered min-h-24 flex-1 rounded-3xl px-4 py-3"
         />
         <button
           type="submit"
@@ -66,7 +66,7 @@ export default function MessageComposer({
       </form>
 
       {feedback ? (
-        <div className="mt-3 rounded-2xl border border-error/20 bg-error/8 px-4 py-3 text-sm text-error">
+        <div className="app-state-error mt-3 rounded-2xl border px-4 py-3 text-sm">
           {feedback}
         </div>
       ) : null}

@@ -18,7 +18,7 @@ export default function TaskCard({
   href,
 }: TaskCardProps) {
   const content = (
-    <article className="group/task h-full rounded-[1.75rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-base-content/10">
+    <article className="app-surface-1 group/task h-full rounded-[1.75rem] border p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl hover:shadow-base-content/10">
       <div className="flex items-start justify-between gap-4">
         <div
           className="badge badge-outline border px-3 py-3 text-[11px] font-bold uppercase tracking-[0.22em]"
@@ -31,7 +31,7 @@ export default function TaskCard({
           {groupName}
         </div>
 
-        <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/30">
+        <span className="app-faint text-[11px] font-bold uppercase tracking-[0.22em]">
           Note
         </span>
       </div>
@@ -40,7 +40,7 @@ export default function TaskCard({
         <h3 className="text-xl font-semibold leading-tight text-base-content transition-colors group-hover/task:text-primary">
           {title}
         </h3>
-        <p className="text-sm leading-relaxed text-base-content/55">
+        <p className="app-subtle text-sm leading-relaxed">
           {truncateText(notes || "Open the note to start writing.", 140)}
         </p>
       </div>

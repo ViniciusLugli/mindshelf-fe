@@ -22,13 +22,13 @@ export default function TasksPage() {
   return (
     <section className="space-y-6 px-5 py-6 mx-40 h-dvh">
       <div className="space-y-2">
-        <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
+        <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
           Notes
         </p>
         <h1 className="text-3xl font-bold text-base-content">
           Find your notes
         </h1>
-        <p className="max-w-2xl text-sm leading-relaxed text-base-content/55">
+        <p className="app-subtle max-w-2xl text-sm leading-relaxed">
           Search for something to edit, review, or share.
         </p>
       </div>
@@ -42,14 +42,14 @@ export default function TasksPage() {
       </div>
 
       {feedback ? (
-        <div className="rounded-2xl border border-error/20 bg-error/8 px-4 py-3 text-sm text-error">
+        <div className="app-state-error rounded-2xl border px-4 py-3 text-sm">
           {feedback}
         </div>
       ) : null}
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {isLoading ? (
-          <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-4 py-18 text-center text-sm text-base-content/45">
+          <div className="app-empty-state col-span-full rounded-[1.75rem] border border-dashed px-4 py-18 text-center text-sm">
             Loading notes...
           </div>
         ) : tasks.length ? (
@@ -65,7 +65,7 @@ export default function TasksPage() {
             />
           ))
         ) : (
-          <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-4 py-18 text-center text-sm text-base-content/45">
+          <div className="app-empty-state col-span-full rounded-[1.75rem] border border-dashed px-4 py-18 text-center text-sm">
             No notes found.
           </div>
         )}

@@ -16,7 +16,7 @@ export default function ConversationList({
   selectedFriendId,
 }: ConversationListProps) {
   return (
-    <aside className="flex h-full min-h-0 flex-col gap-4 overflow-hidden rounded-4xl border border-base-300/70 bg-base-100/90 p-4 shadow-sm">
+    <aside className="app-surface-1 flex h-full min-h-0 flex-col gap-4 overflow-hidden rounded-4xl border p-4">
       <SearchField
         value={search}
         onChange={onSearchChange}
@@ -33,7 +33,7 @@ export default function ConversationList({
             />
           ))
         ) : (
-          <div className="rounded-3xl border border-dashed border-base-300/70 px-4 py-8 text-center text-sm text-base-content/50">
+          <div className="app-empty-state rounded-3xl border border-dashed px-4 py-8 text-center text-sm">
             No conversations found.
           </div>
         )}

@@ -13,6 +13,184 @@ body {
   font-family: "DM Sans", sans-serif;
 }
 
+:root,
+[data-theme] {
+  --app-surface-1: color-mix(
+    in srgb,
+    var(--color-base-100) 96%,
+    var(--color-base-200) 4%
+  );
+  --app-surface-2: color-mix(
+    in srgb,
+    var(--color-base-100) 88%,
+    var(--color-base-200) 12%
+  );
+  --app-surface-3: color-mix(
+    in srgb,
+    var(--color-base-100) 74%,
+    var(--color-base-200) 26%
+  );
+  --app-border-soft: color-mix(in srgb, var(--color-base-content) 10%, transparent);
+  --app-border-strong: color-mix(in srgb, var(--color-base-content) 18%, transparent);
+  --app-text-muted: color-mix(in srgb, var(--color-base-content) 78%, transparent);
+  --app-text-subtle: color-mix(in srgb, var(--color-base-content) 66%, transparent);
+  --app-text-faint: color-mix(in srgb, var(--color-base-content) 52%, transparent);
+  --app-overlay: color-mix(in srgb, var(--color-neutral) 28%, transparent);
+  --app-shadow-soft: 0 18px 46px rgba(15, 23, 42, 0.08);
+  --app-shadow-strong: 0 26px 70px rgba(15, 23, 42, 0.14);
+  --app-accent-warm: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  --app-accent-cool: color-mix(in srgb, var(--color-secondary) 18%, transparent);
+  --app-state-info-bg: color-mix(in srgb, var(--color-primary) 10%, var(--app-surface-1) 90%);
+  --app-state-info-border: color-mix(in srgb, var(--color-primary) 28%, transparent);
+  --app-state-error-bg: color-mix(in srgb, var(--color-error) 12%, var(--app-surface-1) 88%);
+  --app-state-error-border: color-mix(in srgb, var(--color-error) 32%, transparent);
+}
+
+[data-theme="dim"],
+[data-theme="night"] {
+  --app-surface-1: color-mix(
+    in srgb,
+    var(--color-base-100) 99%,
+    var(--color-base-200) 1%
+  );
+  --app-surface-2: color-mix(
+    in srgb,
+    var(--color-base-100) 90%,
+    var(--color-base-200) 10%
+  );
+  --app-surface-3: color-mix(
+    in srgb,
+    var(--color-base-100) 76%,
+    var(--color-base-200) 24%
+  );
+  --app-border-soft: color-mix(in srgb, var(--color-base-content) 16%, transparent);
+  --app-border-strong: color-mix(in srgb, var(--color-base-content) 26%, transparent);
+  --app-text-muted: color-mix(in srgb, var(--color-base-content) 86%, transparent);
+  --app-text-subtle: color-mix(in srgb, var(--color-base-content) 74%, transparent);
+  --app-text-faint: color-mix(in srgb, var(--color-base-content) 60%, transparent);
+  --app-overlay: color-mix(in srgb, var(--color-neutral) 58%, transparent);
+  --app-shadow-soft: 0 22px 50px rgba(0, 0, 0, 0.34);
+  --app-shadow-strong: 0 30px 84px rgba(0, 0, 0, 0.5);
+  --app-accent-warm: color-mix(in srgb, var(--color-primary) 28%, transparent);
+  --app-accent-cool: color-mix(in srgb, var(--color-secondary) 24%, transparent);
+  --app-state-info-bg: color-mix(in srgb, var(--color-primary) 18%, var(--app-surface-1) 82%);
+  --app-state-info-border: color-mix(in srgb, var(--color-primary) 42%, transparent);
+  --app-state-error-bg: color-mix(in srgb, var(--color-error) 20%, var(--app-surface-1) 80%);
+  --app-state-error-border: color-mix(in srgb, var(--color-error) 45%, transparent);
+}
+
+.app-surface-1 {
+  background: var(--app-surface-1);
+  border-color: var(--app-border-soft);
+  box-shadow: var(--app-shadow-soft);
+}
+
+.app-surface-2 {
+  background: var(--app-surface-2);
+  border-color: var(--app-border-soft);
+}
+
+.app-surface-3 {
+  background: var(--app-surface-3);
+  border-color: var(--app-border-strong);
+}
+
+.app-border-soft {
+  border-color: var(--app-border-soft);
+}
+
+.app-border-strong {
+  border-color: var(--app-border-strong);
+}
+
+.app-muted {
+  color: var(--app-text-muted);
+}
+
+.app-subtle {
+  color: var(--app-text-subtle);
+}
+
+.app-faint {
+  color: var(--app-text-faint);
+}
+
+.app-empty-state {
+  background: color-mix(in srgb, var(--app-surface-2) 88%, transparent);
+  border-color: var(--app-border-strong);
+  color: var(--app-text-subtle);
+}
+
+.app-field-shell {
+  background: var(--app-surface-2);
+  border-color: var(--app-border-strong);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-base-100) 35%, transparent);
+}
+
+.app-placeholder::placeholder {
+  color: var(--app-text-subtle);
+}
+
+.app-modal-backdrop {
+  background: var(--app-overlay);
+}
+
+.app-modal-surface {
+  background: var(--app-surface-1);
+  border-color: var(--app-border-strong);
+  box-shadow: var(--app-shadow-strong);
+}
+
+.app-state-info {
+  background: var(--app-state-info-bg);
+  border-color: var(--app-state-info-border);
+  color: var(--app-text-muted);
+}
+
+.app-state-error {
+  background: var(--app-state-error-bg);
+  border-color: var(--app-state-error-border);
+  color: color-mix(in srgb, var(--color-error) 72%, var(--color-base-content) 28%);
+}
+
+.app-chip-subtle {
+  background: color-mix(in srgb, var(--app-surface-2) 94%, transparent);
+  border-color: var(--app-border-strong);
+  color: var(--app-text-muted);
+}
+
+.landing-aurora {
+  background-image:
+    radial-gradient(circle at 10% 18%, var(--app-accent-warm), transparent 28%),
+    radial-gradient(circle at 84% 16%, var(--app-accent-cool), transparent 24%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--app-surface-1) 32%, transparent),
+      transparent
+    );
+}
+
+.app-profile-banner {
+  background-image:
+    radial-gradient(circle at top left, var(--app-accent-warm), transparent 38%),
+    radial-gradient(circle at bottom right, var(--app-accent-cool), transparent 36%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-base-100) 12%, transparent),
+      transparent
+    );
+}
+
+.app-elevated-gradient {
+  background:
+    radial-gradient(circle at top left, var(--app-accent-warm), transparent 42%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--app-surface-1) 92%, transparent) 0%,
+      color-mix(in srgb, var(--app-surface-2) 96%, transparent) 100%
+    );
+}
+
 .font-editorial {
   font-family: "Cormorant Garamond", serif;
 }
@@ -24,11 +202,11 @@ body {
 
 .home-reading-desk {
   background-image:
-    radial-gradient(circle at top left, rgba(231, 111, 81, 0.14), transparent 24%),
-    radial-gradient(circle at 84% 10%, rgba(42, 157, 143, 0.14), transparent 22%),
+    radial-gradient(circle at top left, var(--app-accent-warm), transparent 24%),
+    radial-gradient(circle at 84% 10%, var(--app-accent-cool), transparent 22%),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--color-base-200) 54%, transparent) 0%,
+      color-mix(in srgb, var(--app-surface-2) 54%, transparent) 0%,
       transparent 34%
     );
 }
@@ -37,23 +215,23 @@ body {
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--color-base-100) 96%, transparent) 0%,
-      color-mix(in srgb, var(--color-base-100) 88%, var(--color-base-200) 12%) 100%
+      color-mix(in srgb, var(--app-surface-1) 96%, transparent) 0%,
+      color-mix(in srgb, var(--app-surface-2) 86%, var(--color-base-200) 14%) 100%
     );
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--app-shadow-soft);
 }
 
 .home-shelf-rail {
   background-image:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--color-base-100) 88%, transparent) 0%,
-      color-mix(in srgb, var(--color-base-200) 34%, transparent) 100%
+      color-mix(in srgb, var(--app-surface-1) 92%, transparent) 0%,
+      color-mix(in srgb, var(--app-surface-3) 62%, transparent) 100%
     ),
     repeating-linear-gradient(
       180deg,
-      color-mix(in srgb, var(--color-base-content) 5%, transparent) 0,
-      color-mix(in srgb, var(--color-base-content) 5%, transparent) 1px,
+      color-mix(in srgb, var(--color-base-content) 8%, transparent) 0,
+      color-mix(in srgb, var(--color-base-content) 8%, transparent) 1px,
       transparent 1px,
       transparent 42px
     );

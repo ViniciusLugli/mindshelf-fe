@@ -1,6 +1,6 @@
 function HomeHeroSkeleton() {
   return (
-    <header className="home-paper overflow-hidden rounded-[2.5rem] border border-base-300/70 p-5 shadow-sm sm:p-6 lg:p-8">
+    <header className="home-paper app-border-soft overflow-hidden rounded-[2.5rem] border p-5 sm:p-6 lg:p-8">
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] xl:gap-8">
         <div className="space-y-6">
           <div className="h-7 w-24 animate-pulse rounded-full bg-base-200/80" />
@@ -19,7 +19,7 @@ function HomeHeroSkeleton() {
         </div>
 
         <aside className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.92fr)] xl:items-stretch">
-          <div className="rounded-4xl border border-base-300/70 bg-base-100/72 p-4 sm:p-5">
+          <div className="app-surface-2 rounded-4xl border p-4 sm:p-5">
             <div className="h-13 animate-pulse rounded-2xl bg-base-200/70" />
             <div className="mt-4 space-y-3">
               <div className="h-16 animate-pulse rounded-2xl bg-base-200/70" />
@@ -28,7 +28,7 @@ function HomeHeroSkeleton() {
             </div>
           </div>
 
-          <div className="rounded-[2.25rem] border border-base-300/70 bg-base-100 p-5 shadow-sm">
+          <div className="app-surface-1 rounded-[2.25rem] border p-5">
             <div className="h-28 animate-pulse rounded-2xl bg-base-200/75" />
             <div className="mt-4 h-16 animate-pulse rounded-2xl bg-base-200/75" />
             <div className="mt-4 h-24 animate-pulse rounded-2xl bg-base-200/70" />

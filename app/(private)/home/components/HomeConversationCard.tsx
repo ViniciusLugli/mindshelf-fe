@@ -13,7 +13,7 @@ export default function HomeConversationCard({
   return (
     <Link
       href={`/chat/${item.friendId}`}
-      className="block rounded-[1.75rem] border border-base-300/65 bg-base-100/88 px-4 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-base-content/5 sm:px-5"
+      className="app-surface-2 block rounded-[1.75rem] border px-4 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-lg hover:shadow-base-content/8 sm:px-5"
     >
       <div className="flex items-start gap-4">
         <UserAvatar
@@ -28,7 +28,7 @@ export default function HomeConversationCard({
               <p className="truncate text-base font-semibold text-base-content">
                 {item.friendName}
               </p>
-              <p className="truncate text-sm text-base-content/45">
+              <p className="app-faint truncate text-sm">
                 {item.friendEmail}
               </p>
             </div>
@@ -39,13 +39,13 @@ export default function HomeConversationCard({
                   {item.unreadCount} new
                 </span>
               ) : null}
-              <span className="font-ui-mono text-[11px] uppercase text-base-content/38">
+              <span className="app-faint font-ui-mono text-[11px] uppercase">
                 {formatDateTime(item.createdAt)}
               </span>
             </div>
           </div>
 
-          <p className="mt-3 text-sm leading-relaxed text-base-content/60">
+          <p className="app-subtle mt-3 text-sm leading-relaxed">
             {item.preview}
           </p>
         </div>
