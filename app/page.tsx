@@ -33,7 +33,8 @@ const productFlow = [
   {
     step: "03",
     title: "Share it in chat",
-    description: "Keep discussion attached to the work, not scattered around it.",
+    description:
+      "Keep discussion attached to the work, not scattered around it.",
   },
 ] as const;
 
@@ -53,7 +54,10 @@ export default function LandingPage() {
               <Link href="/login" className="btn btn-ghost rounded-full px-6">
                 Sign in
               </Link>
-              <Link href="/register" className="btn btn-primary rounded-full px-6">
+              <Link
+                href="/register"
+                className="btn btn-primary rounded-full px-6"
+              >
                 Create account
               </Link>
             </div>
@@ -76,16 +80,22 @@ export default function LandingPage() {
               </p>
 
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Link href="/register" className="btn btn-primary btn-lg rounded-full px-8">
+                <Link
+                  href="/register"
+                  className="btn btn-primary btn-lg rounded-full px-8"
+                >
                   Start free
                 </Link>
-                <Link href="/login" className="btn btn-outline btn-lg rounded-full px-8">
+                <Link
+                  href="/login"
+                  className="btn btn-outline btn-lg rounded-full px-8"
+                >
                   I already have an account
                 </Link>
               </div>
             </div>
 
-            <aside className="rounded-[2rem] border border-base-300/70 bg-base-100/92 p-5 shadow-sm">
+            <aside className="rounded-4xl border border-base-300/70 bg-base-100/92 p-5 shadow-sm">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
                 Best for
               </p>
@@ -98,15 +108,21 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
-                  <p className="font-semibold text-base-content">Research work</p>
+                  <p className="font-semibold text-base-content">
+                    Research work
+                  </p>
                   <p className="mt-2 text-sm leading-relaxed text-base-content/55">
-                    Save findings, shape notes, and keep useful references nearby.
+                    Save findings, shape notes, and keep useful references
+                    nearby.
                   </p>
                 </div>
                 <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/30 p-4">
-                  <p className="font-semibold text-base-content">Personal projects</p>
+                  <p className="font-semibold text-base-content">
+                    Personal projects
+                  </p>
                   <p className="mt-2 text-sm leading-relaxed text-base-content/55">
-                    Move from a loose thought to a structured plan with less friction.
+                    Move from a loose thought to a structured plan with less
+                    friction.
                   </p>
                 </div>
               </div>
@@ -114,7 +130,7 @@ export default function LandingPage() {
           </div>
 
           <div className="grid gap-4 pb-12 lg:grid-cols-[0.9fr_1.2fr_0.95fr] lg:pb-16">
-            <article className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
+            <article className="rounded-4xl border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
                 Active group
               </p>
@@ -135,7 +151,7 @@ export default function LandingPage() {
               </div>
             </article>
 
-            <article className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
+            <article className="rounded-4xl border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
@@ -145,35 +161,27 @@ export default function LandingPage() {
                     Refine the new squad onboarding
                   </h2>
                 </div>
-                <span className="badge rounded-full border-0 bg-primary/10 px-4 py-3 text-primary">
-                  rich text
-                </span>
               </div>
 
-              <div className="mt-5 rounded-[1.5rem] border border-base-300/60 bg-base-200/30 p-4 text-sm leading-relaxed text-base-content/58">
-                Notes work like living documents: context, decisions, next steps,
-                and references stay together.
-              </div>
-
-              <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-base-content/35">
-                <span className="rounded-full bg-base-200 px-3 py-2">Headings</span>
-                <span className="rounded-full bg-base-200 px-3 py-2">Lists</span>
-                <span className="rounded-full bg-base-200 px-3 py-2">Links</span>
-                <span className="rounded-full bg-base-200 px-3 py-2">Long-form writing</span>
+              <div className="mt-5 rounded-3xl border border-base-300/60 bg-base-200/30 p-4 text-sm leading-relaxed text-base-content/58">
+                Notes work like living documents: context, decisions, next
+                steps, and references stay together.
               </div>
             </article>
 
-            <article className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
+            <article className="rounded-4xl border border-base-300/70 bg-base-100/95 p-5 shadow-sm">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
                 Recent chat
               </p>
 
               <div className="mt-5 space-y-3">
                 <div className="rounded-[1.3rem] border border-base-300/60 bg-base-200/25 px-4 py-3 text-sm leading-relaxed text-base-content/60">
-                  <span className="font-semibold text-base-content">Ana</span>: share the note in chat so we can review it together.
+                  <span className="font-semibold text-base-content">Ana</span>:
+                  share the note in chat so we can review it together.
                 </div>
                 <div className="ml-auto max-w-[88%] rounded-[1.3rem] bg-primary px-4 py-3 text-sm leading-relaxed text-primary-content shadow-sm">
-                  The receiver gets the full context fast and can reply without asking for a recap.
+                  The receiver gets the full context fast and can reply without
+                  asking for a recap.
                 </div>
               </div>
 
@@ -259,15 +267,20 @@ export default function LandingPage() {
                 className="max-w-3xl text-4xl font-bold leading-tight text-neutral-content sm:text-5xl"
                 style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
               >
-                If your work mixes writing, context, and conversation, MindShelf gives it one home.
+                If your work mixes writing, context, and conversation, MindShelf
+                gives it one home.
               </h2>
               <p className="max-w-2xl text-base leading-relaxed text-neutral-content/60">
-                Start with a group, create your first note, and bring the right people into the chat when you need them.
+                Start with a group, create your first note, and bring the right
+                people into the chat when you need them.
               </p>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Link href="/register" className="btn btn-primary btn-lg rounded-full px-8">
+              <Link
+                href="/register"
+                className="btn btn-primary btn-lg rounded-full px-8"
+              >
                 Create account
               </Link>
               <Link

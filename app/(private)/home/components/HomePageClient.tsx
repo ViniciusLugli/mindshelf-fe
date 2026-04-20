@@ -77,17 +77,25 @@ export default function HomePageClient() {
   );
 
   const handleCompleteOnboarding = useCallback(async () => {
+    if (!currentUser) {
+      setFeedback("Could not find your account details.");
+      return;
+    }
+
+    const trimmedEmail = currentUser.email.trim();
+    const trimmedName = currentUser.name.trim();
+
     try {
       await updateCurrentUserMutation.mutateAsync({
+        email: trimmedEmail,
+        name: trimmedName,
         onboarding_completed: true,
       });
 
-      if (currentUser) {
-        setCurrentUser({
-          ...currentUser,
-          onboarding_completed: true,
-        });
-      }
+      setCurrentUser({
+        ...currentUser,
+        onboarding_completed: true,
+      });
 
       setDismissedOnboardingUserId(null);
     } catch (error) {
