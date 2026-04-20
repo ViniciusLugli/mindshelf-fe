@@ -2,7 +2,7 @@
 
 import HomeFriendsPanel from "@/app/(private)/home/components/HomeFriendsPanel";
 import HomeGroupsPanel from "@/app/(private)/home/components/HomeGroupsPanel";
-import HomeHero from "@/app/(private)/home/components/HomeHero";
+import HomeHeroSkeleton from "@/app/(private)/home/components/HomeHeroSkeleton";
 import HomeOnboardingModal from "@/app/(private)/home/components/HomeOnboardingModal";
 import HomeResponseSection from "@/app/(private)/home/components/HomeResponseSection";
 import HomeTasksPanel from "@/app/(private)/home/components/HomeTasksPanel";
@@ -12,8 +12,16 @@ import {
 } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { useHomeActivityQuery, useUpdateCurrentUserMutation } from "@/lib/api";
-import { useCallback, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
+import { useCallback, useDeferredValue, useMemo, useState } from "react";
 import { mapChatsToConversationItems } from "../utils/home.mappers";
+
+const HomeHero = dynamic(
+  () => import("@/app/(private)/home/components/HomeHero"),
+  {
+    loading: () => <HomeHeroSkeleton />,
+  },
+);
 
 export default function HomePageClient() {
   const { currentUser, setCurrentUser } = useSession();
@@ -46,6 +54,11 @@ export default function HomePageClient() {
     () => mapChatsToConversationItems(chats),
     [chats],
   );
+  const pendingInviteCount = pendingInvites.length;
+  const resumptionsCount = homeData.tasks.length + homeData.groups.length;
+  const deferredUnreadCount = useDeferredValue(unreadCount);
+  const deferredPendingInviteCount = useDeferredValue(pendingInviteCount);
+  const deferredResumptionsCount = useDeferredValue(resumptionsCount);
   const isOnboardingOpen = Boolean(
     currentUser &&
     !currentUser.onboarding_completed &&
@@ -119,9 +132,9 @@ export default function HomePageClient() {
 
         <HomeHero
           primaryName={primaryName}
-          unreadCount={unreadCount}
-          pendingInviteCount={pendingInvites.length}
-          resumptionsCount={homeData.tasks.length + homeData.groups.length}
+          unreadCount={deferredUnreadCount}
+          pendingInviteCount={deferredPendingInviteCount}
+          resumptionsCount={deferredResumptionsCount}
           profileName={currentUser?.name}
           profileEmail={currentUser?.email}
           profileAvatarUrl={currentUser?.avatar_url}

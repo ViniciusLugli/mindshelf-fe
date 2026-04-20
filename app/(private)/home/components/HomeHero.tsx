@@ -1,10 +1,8 @@
 import { memo } from "react";
-import {
-  AddCircleOutlineRounded,
-  ForumRounded,
-  MenuBookRounded,
-  TableRows,
-} from "@mui/icons-material";
+import AddCircleOutlineRounded from "@mui/icons-material/AddCircleOutlineRounded";
+import ForumRounded from "@mui/icons-material/ForumRounded";
+import MenuBookRounded from "@mui/icons-material/MenuBookRounded";
+import TableRows from "@mui/icons-material/TableRows";
 import Link from "next/link";
 import HomeRailMetric from "./HomeRailMetric";
 import HomeProfileCard from "./HomeProfileCard";
@@ -33,9 +31,9 @@ function HomeHero({
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] xl:gap-8">
         <div className="space-y-6">
           <div className="flex flex-wrap items-center gap-2.5">
-              <span className="font-ui-mono rounded-full border border-base-300/70 bg-base-100/75 px-3 py-1.5 text-[11px] uppercase text-base-content/55">
+            <span className="font-ui-mono rounded-full border border-base-300/70 bg-base-100/75 px-3 py-1.5 text-[11px] uppercase text-base-content/55">
               Today
-              </span>
+            </span>
           </div>
 
           <div className="max-w-3xl space-y-3">

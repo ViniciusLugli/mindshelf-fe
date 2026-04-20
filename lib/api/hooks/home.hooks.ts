@@ -7,6 +7,8 @@ import { queryKeys } from "../query-keys";
 export function useHomeActivityQuery() {
   return useQuery({
     queryKey: queryKeys.home.activity,
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const [groups, tasks] = await Promise.all([
         groupApi.getPaginated(1, 4),
