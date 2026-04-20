@@ -12,7 +12,7 @@ import {
 } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { useHomeActivityQuery, useUpdateCurrentUserMutation } from "@/lib/api";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { mapChatsToConversationItems } from "../utils/home.mappers";
 
 export default function HomePageClient() {
@@ -23,13 +23,15 @@ export default function HomePageClient() {
   const updateCurrentUserMutation = useUpdateCurrentUserMutation();
   const [feedback, setFeedback] = useState<string | null>(null);
   const [busyInviteId, setBusyInviteId] = useState<string | null>(null);
-  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  const [dismissedOnboardingUserId, setDismissedOnboardingUserId] = useState<
+    string | null
+  >(null);
   const homeActivityQuery = useHomeActivityQuery();
   const homeData = homeActivityQuery.data ?? { groups: [], tasks: [] };
   const isLoading = homeActivityQuery.isLoading;
   const queryFeedback =
-      homeActivityQuery.error instanceof Error
-        ? homeActivityQuery.error.message
+    homeActivityQuery.error instanceof Error
+      ? homeActivityQuery.error.message
       : homeActivityQuery.error
         ? "Could not load your latest activity."
         : null;
@@ -44,12 +46,11 @@ export default function HomePageClient() {
     () => mapChatsToConversationItems(chats),
     [chats],
   );
-
-  useEffect(() => {
-    if (currentUser && !currentUser.onboarding_completed) {
-      setIsOnboardingOpen(true);
-    }
-  }, [currentUser]);
+  const isOnboardingOpen = Boolean(
+    currentUser &&
+    !currentUser.onboarding_completed &&
+    dismissedOnboardingUserId !== currentUser.id,
+  );
 
   const handleInviteAction = useCallback(
     async (userId: string, action: "accept" | "reject") => {
@@ -77,7 +78,9 @@ export default function HomePageClient() {
 
   const handleCompleteOnboarding = useCallback(async () => {
     try {
-      await updateCurrentUserMutation.mutateAsync({ onboarding_completed: true });
+      await updateCurrentUserMutation.mutateAsync({
+        onboarding_completed: true,
+      });
 
       if (currentUser) {
         setCurrentUser({
@@ -86,7 +89,7 @@ export default function HomePageClient() {
         });
       }
 
-      setIsOnboardingOpen(false);
+      setDismissedOnboardingUserId(null);
     } catch (error) {
       setFeedback(
         error instanceof Error
@@ -102,7 +105,7 @@ export default function HomePageClient() {
         <HomeOnboardingModal
           open={isOnboardingOpen}
           isSaving={updateCurrentUserMutation.isPending}
-          onClose={() => setIsOnboardingOpen(false)}
+          onClose={() => setDismissedOnboardingUserId(currentUser?.id ?? null)}
           onComplete={() => void handleCompleteOnboarding()}
         />
 

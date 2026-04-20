@@ -37,7 +37,8 @@ export default function GroupWorkspaceHeader({
                 {group.name}
               </h1>
               <p className="mt-2 text-sm text-base-content/55">
-                Review the group's notes, create something new, and keep the space organized.
+                Review the group&apos;s notes, create something new, and keep
+                the space organized.
               </p>
             </div>
           </div>

@@ -7,7 +7,11 @@ import { ThemeSelector } from "@/app/components/shared/ThemeSelector";
 import RelationshipActions from "@/app/components/social/RelationshipActions";
 import { useRealtimeSocial } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { authApi, useUpdateCurrentUserMutation, useUserSearchQuery } from "@/lib/api";
+import {
+  authApi,
+  useUpdateCurrentUserMutation,
+  useUserSearchQuery,
+} from "@/lib/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -107,21 +111,30 @@ export default function AccountPage() {
           <div className="mt-8 space-y-4 rounded-[1.75rem] border border-base-300/60 bg-base-200/35 p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-lg font-semibold text-base-content">Pending invites</p>
+                <p className="text-lg font-semibold text-base-content">
+                  Pending invites
+                </p>
                 <p className="text-sm text-base-content/55">
                   See who wants to connect with you.
                 </p>
               </div>
-              <span className="badge badge-primary badge-lg">{pendingCount}</span>
+              <span className="badge badge-primary badge-lg">
+                {pendingCount}
+              </span>
             </div>
-            <Link href="/contacts/pending" className="btn btn-primary w-full rounded-full">
+            <Link
+              href="/contacts/pending"
+              className="btn btn-primary w-full rounded-full"
+            >
               Open invites
             </Link>
           </div>
 
           <div className="mt-6 space-y-3">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="text-lg font-semibold text-base-content">Amigos</h2>
+              <h2 className="text-lg font-semibold text-base-content">
+                Amigos
+              </h2>
               <Link href="/chat" className="text-sm font-medium text-primary">
                 Open chat
               </Link>
@@ -140,8 +153,12 @@ export default function AccountPage() {
                       size="md"
                     />
                     <div>
-                      <p className="font-semibold text-base-content">{friend.name}</p>
-                      <p className="text-xs text-base-content/45">{friend.email}</p>
+                      <p className="font-semibold text-base-content">
+                        {friend.name}
+                      </p>
+                      <p className="text-xs text-base-content/45">
+                        {friend.email}
+                      </p>
                     </div>
                   </Link>
                 ))
@@ -159,7 +176,8 @@ export default function AccountPage() {
                 Session
               </p>
               <p className="text-sm text-base-content/60">
-                Sign out of this device when you're done using your account.
+                Sign out of this device when you&apos;re done using your
+                account.
               </p>
             </div>
             <button
@@ -258,13 +276,13 @@ export default function AccountPage() {
 
                 <div className="rounded-[1.5rem] border border-base-300/60 bg-base-100/80 p-4 shadow-sm">
                   <div className="mb-3 space-y-1">
-                      <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                        Appearance
-                      </p>
-                      <p className="text-sm text-base-content/55">
-                        Choose how the interface looks for you.
-                      </p>
-                    </div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                      Appearance
+                    </p>
+                    <p className="text-sm text-base-content/55">
+                      Choose how the interface looks for you.
+                    </p>
+                  </div>
                   <ThemeSelector />
                 </div>
               </div>
@@ -277,7 +295,10 @@ export default function AccountPage() {
             ) : null}
 
             <div className="mt-6 flex justify-end">
-              <button className="btn btn-primary rounded-full px-6" disabled={isSaving}>
+              <button
+                className="btn btn-primary rounded-full px-6"
+                disabled={isSaving}
+              >
                 {isSaving ? "Saving..." : "Save changes"}
               </button>
             </div>
@@ -308,7 +329,9 @@ export default function AccountPage() {
                 </div>
               ) : results.length ? (
                 results.map((user) => {
-                  const isFriend = friends.some((friend) => friend.id === user.id);
+                  const isFriend = friends.some(
+                    (friend) => friend.id === user.id,
+                  );
                   const hasIncomingInvite = pendingInvites.some(
                     (invite) => invite.requester.id === user.id,
                   );
@@ -332,7 +355,9 @@ export default function AccountPage() {
                           >
                             {user.name}
                           </Link>
-                          <p className="text-sm text-base-content/50">{user.email}</p>
+                          <p className="text-sm text-base-content/50">
+                            {user.email}
+                          </p>
                         </div>
                       </div>
 

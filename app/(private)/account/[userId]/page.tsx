@@ -32,7 +32,9 @@ export default function AccountProfilePage() {
       hasIncomingInvite: pendingInvites.some(
         (invite) => invite.requester.id === profile?.id,
       ),
-      hasOutgoingInvite: profile ? outgoingInviteIds.includes(profile.id) : false,
+      hasOutgoingInvite: profile
+        ? outgoingInviteIds.includes(profile.id)
+        : false,
     };
   }, [currentUser?.id, friends, outgoingInviteIds, pendingInvites, profile]);
 
@@ -74,22 +76,28 @@ export default function AccountProfilePage() {
         <div className="px-6 pb-8">
           <div className="-mt-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-              <UserAvatar name={profile.name} avatarUrl={profile.avatar_url} size="xl" />
+              <UserAvatar
+                name={profile.name}
+                avatarUrl={profile.avatar_url}
+                size="xl"
+              />
               <div className="space-y-2">
                 <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
                   Profile
                 </p>
-                <h1 className="text-4xl font-bold text-base-content">{profile.name}</h1>
+                <h1 className="text-4xl font-bold text-base-content">
+                  {profile.name}
+                </h1>
                 <p className="text-sm text-base-content/55">{profile.email}</p>
               </div>
             </div>
 
             <div className="flex gap-3">
               {relationship.isSelf ? (
-                  <Link href="/account" className="btn btn-primary rounded-full">
-                    Edit my account
-                  </Link>
-                ) : null}
+                <Link href="/account" className="btn btn-primary rounded-full">
+                  Edit my account
+                </Link>
+              ) : null}
             </div>
           </div>
 
@@ -103,7 +111,8 @@ export default function AccountProfilePage() {
                   Connect with {profile.name}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-base-content/55">
-                  Send an invite, respond to requests, or open a direct chat when you're already connected.
+                  Send an invite, respond to requests, or open a direct chat
+                  when you&apos;re already connected.
                 </p>
               </div>
 
@@ -120,13 +129,22 @@ export default function AccountProfilePage() {
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
                 Shortcuts
               </p>
-              <Link href="/account" className="btn btn-ghost w-full rounded-full justify-start">
+              <Link
+                href="/account"
+                className="btn btn-ghost w-full rounded-full justify-start"
+              >
                 Back to my account
               </Link>
-              <Link href="/chat" className="btn btn-ghost w-full rounded-full justify-start">
+              <Link
+                href="/chat"
+                className="btn btn-ghost w-full rounded-full justify-start"
+              >
                 View chat
               </Link>
-              <Link href="/contacts/pending" className="btn btn-ghost w-full rounded-full justify-start">
+              <Link
+                href="/contacts/pending"
+                className="btn btn-ghost w-full rounded-full justify-start"
+              >
                 Pending invites
               </Link>
             </aside>
