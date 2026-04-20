@@ -13,23 +13,23 @@ export default function GroupsPage() {
   const { data, isLoading, error } = useGroupsQuery(debouncedSearch, 1, 24);
   const groups = data?.data ?? [];
   const feedback =
-    error instanceof Error ? error.message : error ? "Nao foi possivel carregar os grupos." : null;
+    error instanceof Error ? error.message : error ? "Could not load your groups." : null;
 
   return (
     <section className="space-y-6 px-5 py-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-            Grupos
+            Groups
           </p>
-          <h1 className="text-3xl font-bold text-base-content">Todos os seus grupos</h1>
+          <h1 className="text-3xl font-bold text-base-content">All your groups</h1>
           <p className="text-sm text-base-content/55">
-            Procure um grupo pelo nome, abra suas tasks e ajuste o espaco quando precisar.
+            Search by name, open your notes, and adjust each space when needed.
           </p>
         </div>
 
         <Link href="/groups/new" className="btn btn-primary rounded-full">
-          Criar grupo
+          Create group
         </Link>
       </div>
 
@@ -37,7 +37,7 @@ export default function GroupsPage() {
         <SearchField
           value={search}
           onChange={setSearch}
-          placeholder="Procure grupos pelo nome"
+          placeholder="Search groups by name"
         />
       </div>
 
@@ -50,7 +50,7 @@ export default function GroupsPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {isLoading ? (
           <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-4 py-18 text-center text-sm text-base-content/45">
-            Carregando grupos...
+            Loading groups...
           </div>
         ) : groups.length ? (
           groups.map((group) => (
@@ -63,7 +63,7 @@ export default function GroupsPage() {
           ))
         ) : (
           <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-4 py-18 text-center text-sm text-base-content/45">
-            Nenhum grupo encontrado.
+            No groups found.
           </div>
         )}
       </div>

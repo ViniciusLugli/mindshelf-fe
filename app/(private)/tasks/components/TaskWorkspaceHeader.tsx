@@ -49,8 +49,7 @@ export default function TaskWorkspaceHeader({
             onChange={(event) => onTitleChange(event.target.value)}
           />
           <p className="text-sm text-base-content/55">
-            Edite a nota completa com um editor rico e ajuste as configuracoes
-            da task quando precisar.
+            Edit your note, move it to another group, or adjust its settings whenever you need to.
           </p>
         </div>
 
@@ -60,14 +59,14 @@ export default function TaskWorkspaceHeader({
             className="btn btn-ghost rounded-full"
             onClick={onOpenSettings}
           >
-            Configurar task
+            Note settings
           </button>
           <button
             type="button"
             className="btn btn-ghost rounded-full text-error"
             onClick={onOpenDelete}
           >
-            Apagar task
+            Delete note
           </button>
           <button
             type="button"
@@ -75,7 +74,7 @@ export default function TaskWorkspaceHeader({
             disabled={!hasChanges || isSaving}
             onClick={onSave}
           >
-            {isSaving ? "Salvando..." : "Salvar nota"}
+            {isSaving ? "Saving..." : "Save note"}
           </button>
         </div>
       </div>

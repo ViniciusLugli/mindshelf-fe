@@ -92,7 +92,7 @@ function sortChats(chats: ChatResponse[]) {
 
 function upsertChat(
   chats: ChatResponse[],
-  friend: UserResponse,
+  friend: ChatResponse["friend"],
   message?: MessageResponse,
   unreadCount?: number,
 ) {
@@ -618,7 +618,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
             break;
         }
       } catch {
-        setLastError("Nao foi possivel interpretar a resposta em tempo real.");
+        setLastError("Could not parse the realtime response.");
       }
     };
 
@@ -628,7 +628,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
 
       if (!event.wasClean && shouldReconnectRef.current) {
         setLastError(
-          `Conexao em tempo real encerrada (${event.code}). Verifique o backend em ${wsUrl}.`,
+          `Realtime connection closed (${event.code}). Check the backend at ${wsUrl}.`,
         );
       }
 
@@ -647,7 +647,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
 
     socket.onerror = () => {
       setLastError(
-        `Falha na conexao em tempo real com ${wsUrl}. Confira o endpoint /api/ws e ALLOWED_ORIGINS no backend.`,
+        `Realtime connection failed at ${wsUrl}. Check the /api/ws endpoint and ALLOWED_ORIGINS in the backend.`,
       );
     };
   }, [

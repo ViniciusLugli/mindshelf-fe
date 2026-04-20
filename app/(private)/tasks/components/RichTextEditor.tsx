@@ -18,7 +18,7 @@ type RichTextEditorProps = {
 
 export default function RichTextEditor({
   value,
-  placeholder = "Comece a escrever...",
+  placeholder = "Start writing...",
   onChange,
 }: RichTextEditorProps) {
   const editor = useEditor({
@@ -62,14 +62,14 @@ export default function RichTextEditor({
   if (!editor) {
     return (
       <div className="rounded-[1.75rem] border border-base-300/70 bg-base-100 p-6 text-sm text-base-content/45">
-        Carregando editor...
+        Loading editor...
       </div>
     );
   }
 
   const setLink = () => {
     const previousUrl = editor.getAttributes("link").href as string | undefined;
-    const url = window.prompt("Digite a URL do link", previousUrl ?? "https://");
+    const url = window.prompt("Enter the link URL", previousUrl ?? "https://");
 
     if (url === null) {
       return;

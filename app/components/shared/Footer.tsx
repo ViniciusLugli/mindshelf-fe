@@ -10,17 +10,16 @@ export default function Footer() {
       <div className="flex w-full max-w-6xl flex-col gap-10">
         <div className="flex w-full flex-col items-start justify-between gap-8 text-left lg:flex-row lg:items-center">
           <div className="max-w-md">
-            <Logo size="sm" />
+            <Logo size="sm" tone="dark" />
             <p className="mt-4 text-sm leading-6 text-neutral-content/70 sm:text-base">
-              Um espaco para organizar ideias, desenvolver tasks e conversar com
-              contexto. Crie grupos, escreva notas vivas e compartilhe com quem
-              faz parte do processo.
+              A calmer workspace for groups, notes, and conversations that stay
+              connected.
             </p>
           </div>
 
           <nav className="grid w-full max-w-xl grid-cols-2 gap-8 sm:grid-cols-3">
             <div>
-              <h2 className="footer-title mb-3 opacity-100">Navegue</h2>
+              <h2 className="footer-title mb-3 opacity-100">Explore</h2>
               <div className="flex flex-col gap-2 text-sm sm:text-base">
                 {navbarLinks.map((item) => (
                   <Link
@@ -35,19 +34,19 @@ export default function Footer() {
             </div>
 
             <div>
-              <h2 className="footer-title mb-3 opacity-100">Conta</h2>
+              <h2 className="footer-title mb-3 opacity-100">Account</h2>
               <div className="flex flex-col gap-2 text-sm sm:text-base">
                 <Link href="/login" className="link link-hover">
-                  Entrar
+                  Sign in
                 </Link>
                 <Link href="/register" className="link link-hover">
-                  Criar conta
+                  Create account
                 </Link>
               </div>
             </div>
 
             <div className="col-span-2 sm:col-span-1">
-              <h2 className="footer-title mb-3 opacity-100">Contato</h2>
+              <h2 className="footer-title mb-3 opacity-100">Contact</h2>
               <div className="flex flex-col gap-2 text-sm sm:text-base">
                 <a
                   href="mailto:viniciusflugli@gmail.com"
@@ -70,8 +69,8 @@ export default function Footer() {
 
         <div className="w-full border-t border-neutral-content/15 pt-5 text-sm text-neutral-content/60">
           <div className="flex flex-col items-center justify-between gap-2 text-center sm:flex-row sm:text-left">
-            <p>Copyright {year} MindShelf. Todos os direitos reservados.</p>
-            <p>Feito para transformar ideias em conhecimento compartilhado.</p>
+            <p>Copyright {year} MindShelf. All rights reserved.</p>
+            <p>Built for work that needs context.</p>
           </div>
         </div>
       </div>

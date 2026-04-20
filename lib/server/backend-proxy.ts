@@ -102,7 +102,7 @@ export async function proxyBackendRequest(
     });
   } catch {
     return NextResponse.json(
-      { message: "Nao foi possivel conectar ao backend." },
+      { message: "Could not connect to the backend." },
       { status: 502 },
     );
   }

@@ -20,7 +20,7 @@ export default function ConversationList({
       <SearchField
         value={search}
         onChange={onSearchChange}
-        placeholder="Procure por um amigo"
+        placeholder="Search for a friend"
       />
 
       <div className="space-y-2">
@@ -34,7 +34,7 @@ export default function ConversationList({
           ))
         ) : (
           <div className="rounded-3xl border border-dashed border-base-300/70 px-4 py-8 text-center text-sm text-base-content/50">
-            Nenhuma conversa encontrada.
+            No conversations found.
           </div>
         )}
       </div>

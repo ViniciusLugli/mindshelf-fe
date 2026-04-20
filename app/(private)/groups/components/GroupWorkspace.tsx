@@ -57,12 +57,12 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
       });
       setTaskTitle("");
       setTaskModalOpen(false);
-      setFeedback("Task criada com sucesso.");
+      setFeedback("Note created successfully.");
     } catch (error) {
       setFeedback(
         error instanceof Error
           ? error.message
-          : "Nao foi possivel criar a task.",
+          : "Could not create the note.",
       );
     }
   };
@@ -76,7 +76,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
     }
 
     if (!normalizedGroupColor) {
-      setFeedback("Escolha uma cor hex valida para o grupo.");
+      setFeedback("Choose a valid hex color for the group.");
       return;
     }
 
@@ -90,12 +90,12 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
       setGroupNameDraft(groupName.trim());
       setGroupColorDraft(normalizedGroupColor);
       setGroupModalOpen(false);
-      setFeedback("Grupo atualizado com sucesso.");
+      setFeedback("Group updated successfully.");
     } catch (error) {
       setFeedback(
         error instanceof Error
           ? error.message
-          : "Nao foi possivel atualizar o grupo.",
+          : "Could not update the group.",
       );
     }
   };
@@ -115,7 +115,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
       setFeedback(
         error instanceof Error
           ? error.message
-          : "Nao foi possivel apagar o grupo.",
+          : "Could not delete the group.",
       );
     }
   };
@@ -124,7 +124,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
     return (
       <section className="px-5 py-8">
         <div className="rounded-4xl border border-base-300/70 bg-base-100/95 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
-          Carregando grupo...
+          Loading group...
         </div>
       </section>
     );
@@ -137,7 +137,7 @@ export default function GroupWorkspace({ groupId }: { groupId: string }) {
           {feedback ??
             (groupWorkspaceQuery.error instanceof Error
               ? groupWorkspaceQuery.error.message
-              : "Grupo nao encontrado.")}
+              : "Group not found.")}
         </div>
       </section>
     );

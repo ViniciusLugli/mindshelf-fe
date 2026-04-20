@@ -13,13 +13,13 @@ export default function PendingInvitesPage() {
     <section className="space-y-6 px-5 py-6">
       <div className="space-y-2">
         <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-          Convites pendentes
+          Pending invites
         </p>
         <h1 className="text-3xl font-bold text-base-content">
-          Pedidos de amizade recebidos
+          Received friend requests
         </h1>
         <p className="max-w-2xl text-sm leading-relaxed text-base-content/55">
-          Aceite rapidamente os convites recebidos ou recuse quem nao faz parte do seu fluxo.
+          Review new requests and decide who joins your network.
         </p>
       </div>
 
@@ -44,9 +44,9 @@ export default function PendingInvitesPage() {
                     {invite.requester.name}
                   </Link>
                   <p className="text-sm text-base-content/50">{invite.requester.email}</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.22em] text-base-content/30">
-                    Recebido em {formatDateTime(invite.created_at)}
-                  </p>
+                   <p className="mt-1 text-xs uppercase tracking-[0.22em] text-base-content/30">
+                     Received {formatDateTime(invite.created_at)}
+                   </p>
                 </div>
               </div>
 
@@ -58,7 +58,7 @@ export default function PendingInvitesPage() {
           ))
         ) : (
           <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-5 py-18 text-center text-sm text-base-content/45">
-            Nenhum convite pendente no momento.
+            No pending invites right now.
           </div>
         )}
       </div>

@@ -18,7 +18,7 @@ export const authApi = {
     );
 
     if (!data?.token || !data?.user) {
-      throw new Error("Nao foi possivel entrar. Verifique suas credenciais.");
+      throw new Error("Could not sign in. Check your credentials and try again.");
     }
 
     if (data.token) {
@@ -42,7 +42,7 @@ export const authApi = {
     );
 
     if (!data?.token || !data?.user) {
-      throw new Error("Nao foi possivel criar sua conta. Tente novamente.");
+      throw new Error("Could not create your account. Please try again.");
     }
 
     if (data.token) {

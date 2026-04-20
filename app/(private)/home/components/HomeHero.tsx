@@ -33,38 +33,36 @@ function HomeHero({
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] xl:gap-8">
         <div className="space-y-6">
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="font-ui-mono rounded-full border border-base-300/70 bg-base-100/75 px-3 py-1.5 text-[11px] uppercase text-base-content/55">
-              Mesa de retomada
-            </span>
+              <span className="font-ui-mono rounded-full border border-base-300/70 bg-base-100/75 px-3 py-1.5 text-[11px] uppercase text-base-content/55">
+              Today
+              </span>
           </div>
 
           <div className="max-w-3xl space-y-3">
             <p className="font-ui-mono text-[11px] uppercase text-base-content/38">
-              Faixa de hoje
+              Focus lane
             </p>
             <h1 className="font-editorial text-5xl leading-[0.9] text-base-content sm:text-6xl lg:text-[4.3rem]">
-              Bom te ver de volta, {primaryName}.
+              Welcome back, {primaryName}.
             </h1>
             <p className="max-w-2xl text-sm leading-relaxed text-base-content/58 sm:text-base">
-              A home funciona como um painel principal: as informações mais
-              urgentes aparecem primeiro, seus conteúdos de trabalho vêm logo em
-              seguida e sua rede fica acessível, sem atrapalhar o que realmente
-              importa.
+              Start with what needs attention, then jump into notes, groups, or
+              conversations without hunting across the app.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
             <Link href="/groups/new" className="btn btn-primary rounded-full">
               <AddCircleOutlineRounded fontSize="small" />
-              Novo grupo
+              New group
             </Link>
             <Link href="/chat" className="btn btn-ghost rounded-full">
               <ForumRounded fontSize="small" />
-              Abrir chat
+              Open chat
             </Link>
             <Link href="/groups" className="btn btn-ghost rounded-full">
               <TableRows fontSize="small" />
-              Ver grupos
+              View groups
             </Link>
           </div>
         </div>
@@ -77,7 +75,7 @@ function HomeHero({
                   Shelf rail
                 </p>
                 <p className="mt-1 text-sm text-base-content/58">
-                  Contagens pequenas, foco grande.
+                  Small counts, quick clarity.
                 </p>
               </div>
               <MenuBookRounded
@@ -88,19 +86,19 @@ function HomeHero({
 
             <div className="divide-y divide-base-300/60 pt-2">
               <HomeRailMetric
-                label="Mensagens"
+                label="Messages"
                 value={`${unreadCount}`}
-                description="esperando resposta sua"
+                description="waiting for you"
               />
               <HomeRailMetric
-                label="Convites"
+                label="Invites"
                 value={`${pendingInviteCount}`}
-                description="podem ser resolvidos daqui"
+                description="ready to review"
               />
               <HomeRailMetric
-                label="Retomadas"
+                label="Catch-ups"
                 value={`${resumptionsCount}`}
-                description="tasks e grupos prontos para abrir"
+                description="notes and groups to reopen"
               />
             </div>
           </div>

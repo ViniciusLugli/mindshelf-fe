@@ -22,20 +22,20 @@ export default function CreateTaskModal({
   return (
     <AppModal
       open={open}
-      title="Criar task"
-      description={`Adicione uma nova task dentro de ${groupName}.`}
+      title="Create note"
+      description={`Add a new note inside ${groupName}.`}
       onClose={onClose}
     >
       <form className="space-y-5" onSubmit={onSubmit}>
         <label className="form-control gap-2 flex flex-col">
-          <span className="text-sm font-medium text-base-content/70">
-            Nome da task
-          </span>
+            <span className="text-sm font-medium text-base-content/70">
+              Note name
+            </span>
           <input
             className="input input-bordered rounded-2xl border-base-300/70"
             value={taskTitle}
             onChange={(event) => onTaskTitleChange(event.target.value)}
-            placeholder="Ex: Refinar backlog de discovery"
+            placeholder="Ex: Refine the discovery backlog"
           />
         </label>
 
@@ -45,14 +45,14 @@ export default function CreateTaskModal({
             className="btn btn-ghost rounded-full"
             onClick={onClose}
           >
-            Cancelar
+            Cancel
           </button>
           <button
             type="submit"
             className="btn btn-primary rounded-full"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Criando..." : "Criar task"}
+            {isSubmitting ? "Creating..." : "Create note"}
           </button>
         </div>
       </form>

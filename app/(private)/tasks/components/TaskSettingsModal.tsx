@@ -27,15 +27,15 @@ export default function TaskSettingsModal({
   return (
     <AppModal
       open={open}
-      title="Configurar task"
-      description="Atualize o nome da task e, se quiser, mova para outro grupo. Ao mover, uma nova task e criada no grupo de destino com o mesmo conteudo."
+      title="Note settings"
+      description="Rename this note or move it to another group. Moving creates a new copy in the destination group with the same content."
       onClose={onClose}
     >
       <div className="space-y-5 flex flex-col">
         <div className="flex gap-3 w-full justify-between lg:items-center">
           <label className="form-control gap-2 flex flex-col w-1/2">
             <span className="text-sm font-medium text-base-content/70">
-              Nome
+              Name
             </span>
             <input
               className="input input-bordered rounded-2xl border-base-300/70"
@@ -46,7 +46,7 @@ export default function TaskSettingsModal({
 
           <label className="form-control gap-2 flex flex-col w-1/2">
             <span className="text-sm font-medium text-base-content/70">
-              Grupo
+              Group
             </span>
             <select
               className="select select-bordered rounded-2xl border-base-300/70"
@@ -68,7 +68,7 @@ export default function TaskSettingsModal({
             className="btn btn-ghost rounded-full"
             onClick={onClose}
           >
-            Fechar
+            Close
           </button>
           <button
             type="button"
@@ -76,7 +76,7 @@ export default function TaskSettingsModal({
             onClick={onSave}
             disabled={isSaving}
           >
-            {isSaving ? "Salvando..." : "Salvar configuracoes"}
+            {isSaving ? "Saving..." : "Save settings"}
           </button>
         </div>
       </div>

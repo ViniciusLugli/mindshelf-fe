@@ -25,11 +25,11 @@ export default function MessageList({
             onSharedTaskClick={onSharedTaskClick}
           />
         ))
-      ) : (
-        <div className="flex h-full min-h-64 items-center justify-center rounded-3xl border border-dashed border-base-300/70 bg-base-100/50 text-sm text-base-content/45">
-          Comece a conversa com {friendName}.
-        </div>
-      )}
-    </div>
+        ) : (
+          <div className="flex h-full min-h-64 items-center justify-center rounded-3xl border border-dashed border-base-300/70 bg-base-100/50 text-sm text-base-content/45">
+            Start the conversation with {friendName}.
+          </div>
+        )}
+      </div>
   );
 }

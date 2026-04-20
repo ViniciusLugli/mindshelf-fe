@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import AuthForm from "@/app/components/auth/AuthForm";
 import AuthLayout from "@/app/components/auth/AuthLayout";
 
@@ -8,7 +10,16 @@ const mockPost = {
   role: "Head of Product - Nimbus",
 };
 
-export default function LoginPage() {
+const AUTH_TOKEN_COOKIE_KEY = "mindshelf_token";
+
+export default async function LoginPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(AUTH_TOKEN_COOKIE_KEY)?.value;
+
+  if (token?.trim()) {
+    redirect("/home");
+  }
+
   return (
     <AuthLayout
       leftPanelContent={
@@ -17,7 +28,7 @@ export default function LoginPage() {
             className="text-[2.6rem] font-bold leading-[1.1] text-neutral-content"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
-            Your ideas are waiting for you.
+            Pick up where you left off.
           </p>
 
           <div className="h-0.5 w-12 bg-primary/70" />

@@ -19,10 +19,10 @@ export default function HomeGroupPreviewCard({ group }: HomeGroupPreviewCardProp
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="font-ui-mono text-[11px] uppercase text-base-content/38">Grupo recente</p>
+        <p className="font-ui-mono text-[11px] uppercase text-base-content/38">Recent group</p>
         <p className="mt-1 truncate font-semibold text-base-content">{group.name}</p>
         <p className="mt-1 text-sm leading-relaxed text-base-content/56">
-          Reabra o grupo para rever tasks e ajustar o assunto principal.
+          Reopen the group to review notes and keep the main thread clear.
         </p>
       </div>
     </Link>

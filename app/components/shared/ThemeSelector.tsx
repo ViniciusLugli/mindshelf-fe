@@ -29,7 +29,7 @@ export function ThemeSelector({ className = "" }: ThemeSelectorProps) {
 
       <div className="min-w-0 flex-1">
         <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-base-content/35">
-          Tema
+          Theme
         </p>
         <p className="truncate text-sm font-medium text-base-content">
           {themeLabels[theme]}
@@ -39,7 +39,7 @@ export function ThemeSelector({ className = "" }: ThemeSelectorProps) {
       <KeyboardArrowDown className="text-base-content/35 transition-transform group-focus-within:rotate-180" />
 
       <select
-        aria-label="Selecionar tema"
+        aria-label="Select theme"
         className="absolute inset-0 cursor-pointer opacity-0"
         value={theme}
         onChange={(e) => changeTheme(e.target.value as (typeof themes)[number])}

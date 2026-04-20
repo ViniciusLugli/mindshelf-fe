@@ -1,3 +1,4 @@
+import { Share } from "@mui/icons-material";
 import { formatDateTime } from "@/lib/utils/date";
 
 type MessageComposerProps = {
@@ -7,8 +8,10 @@ type MessageComposerProps = {
   lastMessageAt?: string;
   feedback: string | null;
   isSubmitting: boolean;
+  isShareSubmitting: boolean;
   onDraftChange: (value: string) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onOpenShareModal: () => void;
 };
 
 export default function MessageComposer({
@@ -18,25 +21,39 @@ export default function MessageComposer({
   lastMessageAt,
   feedback,
   isSubmitting,
+  isShareSubmitting,
   onDraftChange,
   onSubmit,
+  onOpenShareModal,
 }: MessageComposerProps) {
   return (
     <div className="border-t border-base-300/60 px-5 py-4">
       <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.22em] text-base-content/35">
-        <span>{unreadCount ? `${unreadCount} nao lidas` : "Tudo em dia"}</span>
+        <span>{unreadCount ? `${unreadCount} unread` : "All caught up"}</span>
         <span>
           {lastMessageAt
-            ? `Ultima atividade ${formatDateTime(lastMessageAt)}`
-            : "Nova conversa"}
+            ? `Last activity ${formatDateTime(lastMessageAt)}`
+            : "New conversation"}
         </span>
+      </div>
+
+      <div className="mb-3 flex justify-end">
+        <button
+          type="button"
+          className="btn btn-outline rounded-full"
+          onClick={onOpenShareModal}
+          disabled={isShareSubmitting}
+        >
+          <Share fontSize="small" />
+          {isShareSubmitting ? "Sharing..." : "Share note"}
+        </button>
       </div>
 
       <form className="flex flex-col gap-3 sm:flex-row" onSubmit={onSubmit}>
         <textarea
           value={draft}
           onChange={(event) => onDraftChange(event.target.value)}
-          placeholder={`Escreva uma mensagem para ${friendName}`}
+          placeholder={`Write a message to ${friendName}`}
           className="textarea textarea-bordered min-h-24 flex-1 rounded-3xl border-base-300/70 bg-base-100 px-4 py-3"
         />
         <button
@@ -44,7 +61,7 @@ export default function MessageComposer({
           disabled={isSubmitting || !draft.trim()}
           className="btn btn-primary min-h-24 rounded-3xl px-6"
         >
-          {isSubmitting ? "Enviando..." : "Enviar"}
+          {isSubmitting ? "Sending..." : "Send"}
         </button>
       </form>
 

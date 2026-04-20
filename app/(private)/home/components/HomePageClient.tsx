@@ -3,6 +3,7 @@
 import HomeFriendsPanel from "@/app/(private)/home/components/HomeFriendsPanel";
 import HomeGroupsPanel from "@/app/(private)/home/components/HomeGroupsPanel";
 import HomeHero from "@/app/(private)/home/components/HomeHero";
+import HomeOnboardingModal from "@/app/(private)/home/components/HomeOnboardingModal";
 import HomeResponseSection from "@/app/(private)/home/components/HomeResponseSection";
 import HomeTasksPanel from "@/app/(private)/home/components/HomeTasksPanel";
 import {
@@ -10,25 +11,27 @@ import {
   useRealtimeSocial,
 } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { useHomeActivityQuery } from "@/lib/api";
-import { useCallback, useMemo, useState } from "react";
+import { useHomeActivityQuery, useUpdateCurrentUserMutation } from "@/lib/api";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { mapChatsToConversationItems } from "../utils/home.mappers";
 
 export default function HomePageClient() {
-  const { currentUser } = useSession();
+  const { currentUser, setCurrentUser } = useSession();
   const { chats, friends, pendingInvites } = useRealtimeSocial();
   const { acceptFriendRequest, rejectFriendRequest } =
     useRealtimeRelationshipActions();
+  const updateCurrentUserMutation = useUpdateCurrentUserMutation();
   const [feedback, setFeedback] = useState<string | null>(null);
   const [busyInviteId, setBusyInviteId] = useState<string | null>(null);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const homeActivityQuery = useHomeActivityQuery();
   const homeData = homeActivityQuery.data ?? { groups: [], tasks: [] };
   const isLoading = homeActivityQuery.isLoading;
   const queryFeedback =
-    homeActivityQuery.error instanceof Error
-      ? homeActivityQuery.error.message
+      homeActivityQuery.error instanceof Error
+        ? homeActivityQuery.error.message
       : homeActivityQuery.error
-        ? "Nao foi possivel carregar suas atividades recentes."
+        ? "Could not load your latest activity."
         : null;
 
   const unreadCount = useMemo(
@@ -36,11 +39,17 @@ export default function HomePageClient() {
     [chats],
   );
   const recentFriends = useMemo(() => friends.slice(0, 5), [friends]);
-  const primaryName = currentUser?.name?.trim().split(/\s+/)[0] || "usuario";
+  const primaryName = currentUser?.name?.trim().split(/\s+/)[0] || "there";
   const conversationItems = useMemo(
     () => mapChatsToConversationItems(chats),
     [chats],
   );
+
+  useEffect(() => {
+    if (currentUser && !currentUser.onboarding_completed) {
+      setIsOnboardingOpen(true);
+    }
+  }, [currentUser]);
 
   const handleInviteAction = useCallback(
     async (userId: string, action: "accept" | "reject") => {
@@ -57,7 +66,7 @@ export default function HomePageClient() {
         setFeedback(
           error instanceof Error
             ? error.message
-            : "Nao foi possivel responder ao pedido de amizade.",
+            : "Could not update that invite.",
         );
       } finally {
         setBusyInviteId(null);
@@ -66,9 +75,37 @@ export default function HomePageClient() {
     [acceptFriendRequest, rejectFriendRequest],
   );
 
+  const handleCompleteOnboarding = useCallback(async () => {
+    try {
+      await updateCurrentUserMutation.mutateAsync({ onboarding_completed: true });
+
+      if (currentUser) {
+        setCurrentUser({
+          ...currentUser,
+          onboarding_completed: true,
+        });
+      }
+
+      setIsOnboardingOpen(false);
+    } catch (error) {
+      setFeedback(
+        error instanceof Error
+          ? error.message
+          : "Could not save your onboarding status.",
+      );
+    }
+  }, [currentUser, setCurrentUser, updateCurrentUserMutation]);
+
   return (
     <section className="home-reading-desk px-4 py-5 sm:px-5 sm:py-6">
       <div className="w-full space-y-6">
+        <HomeOnboardingModal
+          open={isOnboardingOpen}
+          isSaving={updateCurrentUserMutation.isPending}
+          onClose={() => setIsOnboardingOpen(false)}
+          onComplete={() => void handleCompleteOnboarding()}
+        />
+
         <HomeHero
           primaryName={primaryName}
           unreadCount={unreadCount}

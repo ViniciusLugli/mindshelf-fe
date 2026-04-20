@@ -31,14 +31,13 @@ export default function GroupWorkspaceHeader({
             </div>
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-                Grupo
+                Group
               </p>
               <h1 className="mt-2 text-4xl font-bold text-base-content">
                 {group.name}
               </h1>
               <p className="mt-2 text-sm text-base-content/55">
-                Explore as tasks do grupo, crie novas ideias e ajuste a
-                identidade principal do espaco.
+                Review the group's notes, create something new, and keep the space organized.
               </p>
             </div>
           </div>
@@ -49,21 +48,21 @@ export default function GroupWorkspaceHeader({
               className="btn btn-ghost rounded-full text-error"
               onClick={onDeleteGroup}
             >
-              Apagar grupo
+              Delete group
             </button>
             <button
               type="button"
               className="btn btn-ghost rounded-full"
               onClick={onConfigureGroup}
             >
-              Configurar grupo
+              Edit group
             </button>
             <button
               type="button"
               className="btn btn-primary rounded-full"
               onClick={onCreateTask}
             >
-              Criar task
+              Create note
             </button>
           </div>
         </div>

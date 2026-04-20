@@ -59,7 +59,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
     return (
       <section className="px-5 py-8">
         <div className="rounded-4xl border border-base-300/70 bg-base-100/95 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
-          Carregando task...
+          Loading note...
         </div>
       </section>
     );
@@ -72,7 +72,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
           {feedback ??
             (taskWorkspaceQuery.error instanceof Error
               ? taskWorkspaceQuery.error.message
-              : "Task nao encontrada.")}
+              : "Note not found.")}
         </div>
       </section>
     );
@@ -100,7 +100,7 @@ export default function TaskWorkspace({ taskId }: { taskId: string }) {
       <RichTextEditor
         value={notes}
         onChange={setNotesDraft}
-        placeholder="Escreva como se estivesse no Word: titulos, listas, destaques e links."
+        placeholder="Write with headings, lists, highlights, and links."
       />
 
       <TaskSettingsModal

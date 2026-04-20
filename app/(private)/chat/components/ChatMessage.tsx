@@ -34,7 +34,7 @@ export default function ChatMessage({
                 isMine ? "text-primary-content/70" : "text-base-content/35"
               }`}
             >
-              Task compartilhada
+              Shared note
             </p>
             <button
               type="button"
@@ -49,9 +49,9 @@ export default function ChatMessage({
               disabled={!canOpenSharedTask}
             >
               <TaskCard
-                title={message.shared_task.title || "Task compartilhada"}
+                title={message.shared_task.title || "Shared note"}
                 notes={stripHtml(message.shared_task.notes)}
-                groupName={message.shared_task.group_name || "Grupo"}
+                groupName={message.shared_task.group_name || "Group"}
                 groupColor={message.shared_task.group_color || "#E76F51"}
               />
             </button>
@@ -61,10 +61,10 @@ export default function ChatMessage({
               }`}
             >
               {message.shared_task.imported_task_id
-                ? "Abrir sua copia salva dessa task."
+                ? "Open the copy saved to your workspace."
                 : isMine
-                  ? "Snapshot enviado para o destinatario importar no proprio grupo."
-                  : "Escolha um grupo seu para importar essa task compartilhada."}
+                  ? "A snapshot was sent so the other person can import it into a group."
+                  : "Choose one of your groups to import this shared note."}
             </p>
             {message.content ? (
               <p
@@ -86,7 +86,7 @@ export default function ChatMessage({
           }`}
         >
           <span>{formatTime(message.created_at)}</span>
-          {isMine ? <span>{message.read_at ? "Lida" : "Enviada"}</span> : null}
+          {isMine ? <span>{message.read_at ? "Read" : "Sent"}</span> : null}
         </div>
       </div>
     </div>

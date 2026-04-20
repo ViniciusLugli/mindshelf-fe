@@ -18,14 +18,13 @@ export default function TaskDeleteModal({
   return (
     <AppModal
       open={open}
-      title="Apagar task"
-      description="Essa acao remove a task permanentemente. Confirme apenas se tiver certeza."
+      title="Delete note"
+      description="This action removes the note permanently. Only continue if you're sure."
       onClose={onClose}
     >
       <div className="space-y-5">
         <div className="rounded-3xl border border-error/20 bg-error/8 px-4 py-4 text-sm text-error">
-          A task &quot;{taskTitle}&quot; sera apagada e nao podera ser
-          recuperada.
+          The note &quot;{taskTitle}&quot; will be deleted and cannot be recovered.
         </div>
         <div className="flex justify-end gap-3">
           <button
@@ -33,7 +32,7 @@ export default function TaskDeleteModal({
             className="btn btn-ghost rounded-full"
             onClick={onClose}
           >
-            Cancelar
+            Cancel
           </button>
           <button
             type="button"
@@ -41,7 +40,7 @@ export default function TaskDeleteModal({
             onClick={onDelete}
             disabled={isSaving}
           >
-            {isSaving ? "Apagando..." : "Confirmar exclusao"}
+            {isSaving ? "Deleting..." : "Confirm delete"}
           </button>
         </div>
       </div>

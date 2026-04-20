@@ -23,13 +23,13 @@ export default function HomeTaskPreviewCard({ task }: HomeTaskPreviewCardProps) 
         <NorthEastRounded className="text-base-content/25" fontSize="small" />
       </div>
 
-      <h3 className="mt-4 font-editorial text-[2rem] leading-[0.95] text-base-content sm:text-[2.2rem]">
-        {task.title}
-      </h3>
+        <h3 className="mt-4 font-editorial text-[2rem] leading-[0.95] text-base-content sm:text-[2.2rem]">
+          {task.title}
+        </h3>
 
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-base-content/60">
         {truncateText(
-          stripHtml(task.notes) || "Abra a task para continuar o raciocinio.",
+          stripHtml(task.notes) || "Open the note to continue writing.",
           180,
         )}
       </p>

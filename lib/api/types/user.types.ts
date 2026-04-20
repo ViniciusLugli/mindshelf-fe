@@ -5,6 +5,7 @@ export type UserResponse = {
   name: string;
   email: string;
   avatar_url: string;
+  onboarding_completed?: boolean;
 };
 
 export type PaginatedUserResponse = PaginatedResponse<UserResponse>;
@@ -18,5 +19,6 @@ export type CreateUserRequest = {
 export type UpdateUserRequest = {
   email?: string;
   name?: string;
+  onboarding_completed?: boolean;
   password?: string;
 };

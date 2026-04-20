@@ -1,7 +1,9 @@
 type LogoSize = "sm" | "md" | "lg";
+type LogoTone = "dark" | "light";
 
 type LogoProps = {
   size?: LogoSize;
+  tone?: LogoTone;
 };
 
 const sizeStyles: Record<
@@ -37,8 +39,26 @@ const sizeStyles: Record<
   },
 };
 
-export default function Logo({ size = "md" }: LogoProps) {
+const toneStyles: Record<
+  LogoTone,
+  {
+    title: string;
+    subtitle: string;
+  }
+> = {
+  dark: {
+    title: "text-[#FAF7F0]",
+    subtitle: "text-[#A89E94]",
+  },
+  light: {
+    title: "text-[#1E1A17]",
+    subtitle: "text-[#6B625C]",
+  },
+};
+
+export default function Logo({ size = "md", tone = "dark" }: LogoProps) {
   const styles = sizeStyles[size];
+  const palette = toneStyles[tone];
 
   return (
     <div className={`flex items-center ${styles.container}`}>
@@ -77,12 +97,12 @@ export default function Logo({ size = "md" }: LogoProps) {
       </div>
       <div>
         <h1
-          className={`mb-1 font-serif font-semibold leading-[1.1] tracking-[-0.5px] text-[#FAF7F0] ${styles.title}`}
+          className={`mb-1 font-serif font-semibold leading-[1.1] tracking-[-0.5px] ${palette.title} ${styles.title}`}
         >
           Mind<span className="text-[#C4601A]">Shelf</span>
         </h1>
         <div
-          className={`font-sans font-light tracking-[0.05em] text-[#A89E94] ${styles.subtitle}`}
+          className={`font-sans font-light tracking-[0.05em] ${palette.subtitle} ${styles.subtitle}`}
         >
           Your knowledge, curated and shared
         </div>

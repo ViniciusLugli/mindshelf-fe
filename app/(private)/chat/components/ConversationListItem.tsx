@@ -41,7 +41,7 @@ export default function ConversationListItem({
           ) : null}
         </div>
         <p className="mt-2 text-sm text-base-content/55">
-          {truncateText(entry.lastMessage || "Nenhuma mensagem ainda.", 46)}
+          {truncateText(entry.lastMessage || "No messages yet.", 46)}
         </p>
       </div>
     </Link>

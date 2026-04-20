@@ -34,17 +34,17 @@ export default function ShareTaskModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral/35 p-4 backdrop-blur-sm">
       <button
         type="button"
-        aria-label="Fechar modal"
+        aria-label="Close modal"
         className="absolute inset-0"
         onClick={onClose}
       />
       <div className="relative z-10 w-full max-w-3xl rounded-4xl border border-base-300/70 bg-base-100 shadow-2xl">
         <div className="space-y-2 border-b border-base-300/60 px-6 py-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-            Compartilhar task
+            Share note
           </p>
           <h2 className="text-2xl font-semibold text-base-content">
-            Envie uma task para {selectedFriendName}
+            Send a note to {selectedFriendName}
           </h2>
         </div>
 
@@ -52,13 +52,13 @@ export default function ShareTaskModal({
           <SearchField
             value={taskSearch}
             onChange={onTaskSearchChange}
-            placeholder="Procure uma task pelo titulo"
+            placeholder="Search a note by title"
           />
 
           <div className="grid gap-4 md:grid-cols-2">
             {isLoadingTasks ? (
               <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
-                Carregando tasks...
+                Loading notes...
               </div>
             ) : tasks.length ? (
               tasks.map((task) => (
@@ -80,7 +80,7 @@ export default function ShareTaskModal({
               ))
             ) : (
               <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
-                Nenhuma task encontrada.
+                No notes found.
               </div>
             )}
           </div>

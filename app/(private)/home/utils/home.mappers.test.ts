@@ -79,10 +79,10 @@ describe("mapChatsToConversationItems", () => {
     ]);
 
     expect(items.find((item) => item.friendId === "shared-task-friend")?.preview).toBe(
-      "Uma task foi compartilhada nessa conversa.",
+      "A note was shared in this conversation.",
     );
     expect(items.find((item) => item.friendId === "empty-friend")?.preview).toBe(
-      "Abra a conversa para retomar o contexto.",
+      "Open the conversation to pick up the context.",
     );
   });
 

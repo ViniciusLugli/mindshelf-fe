@@ -39,7 +39,7 @@ export default function RelationshipActions({
       await callback();
     } catch (error) {
       setFeedback(
-        error instanceof Error ? error.message : "Nao foi possivel concluir a acao.",
+        error instanceof Error ? error.message : "Could not complete that action.",
       );
     } finally {
       setIsBusy(false);
@@ -59,7 +59,7 @@ export default function RelationshipActions({
                 runAction(() => acceptFriendRequest({ friend_id: userId }))
               }
             >
-              Aceitar pedido
+              Accept request
             </button>
             <button
               type="button"
@@ -69,13 +69,13 @@ export default function RelationshipActions({
                 runAction(() => rejectFriendRequest({ friend_id: userId }))
               }
             >
-              Recusar
+              Decline
             </button>
           </>
         ) : isFriend ? (
           <>
             <Link href={`/chat/${userId}`} className="btn btn-primary rounded-full">
-              Enviar mensagem
+              Send message
             </Link>
             <button
               type="button"
@@ -83,12 +83,12 @@ export default function RelationshipActions({
               disabled={isBusy}
               onClick={() => runAction(() => removeFriend({ friend_id: userId }))}
             >
-              Remover amizade
+              Remove friend
             </button>
           </>
         ) : hasOutgoingInvite ? (
           <button type="button" className="btn rounded-full" disabled>
-            Convite enviado
+            Invite sent
           </button>
         ) : (
           <button
@@ -97,7 +97,7 @@ export default function RelationshipActions({
             disabled={isBusy}
             onClick={() => runAction(() => sendFriendRequest({ friend_id: userId }))}
           >
-            Enviar convite
+            Send invite
           </button>
         )}
       </div>

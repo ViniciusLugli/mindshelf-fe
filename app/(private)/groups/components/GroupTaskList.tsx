@@ -21,10 +21,10 @@ export default function GroupTaskList({
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-            Tasks do grupo
+            Group notes
           </p>
           <h2 className="mt-2 text-2xl font-semibold text-base-content">
-            Explore e filtre o que esta ativo
+            Browse what is active
           </h2>
         </div>
 
@@ -32,7 +32,7 @@ export default function GroupTaskList({
           <SearchField
             value={search}
             onChange={onSearchChange}
-            placeholder="Procure por titulo ou conteudo"
+            placeholder="Search by title or content"
           />
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function GroupTaskList({
           ))
         ) : (
           <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-16 text-center text-sm text-base-content/45">
-            Nenhuma task corresponde a busca.
+            No notes match your search.
           </div>
         )}
       </div>

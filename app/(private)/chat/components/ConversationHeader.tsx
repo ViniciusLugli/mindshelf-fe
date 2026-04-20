@@ -1,18 +1,15 @@
 import UserAvatar from "@/app/components/UI/UserAvatar";
-import { Share } from "@mui/icons-material";
 import type { UserResponse } from "@/lib/api";
 import Link from "next/link";
 
 type ConversationHeaderProps = {
   friend: UserResponse;
   messageCount: number;
-  onShareTask: () => void;
 };
 
 export default function ConversationHeader({
   friend,
   messageCount,
-  onShareTask,
 }: ConversationHeaderProps) {
   return (
     <div className="flex flex-col gap-4 border-b border-base-300/60 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
@@ -27,7 +24,7 @@ export default function ConversationHeader({
             {friend.name}
           </p>
           <p className="mt-1 text-xs uppercase tracking-[0.22em] text-base-content/30">
-            {messageCount} mensagens carregadas
+            {messageCount} messages loaded
           </p>
         </div>
       </div>
@@ -37,16 +34,8 @@ export default function ConversationHeader({
           href={`/account/${friend.id}`}
           className="btn btn-ghost rounded-full"
         >
-          Ver perfil
+          View profile
         </Link>
-        <button
-          type="button"
-          className="btn btn-primary rounded-full"
-          onClick={onShareTask}
-        >
-          <Share fontSize="small" />
-          Compartilhar task
-        </button>
       </div>
     </div>
   );

@@ -1,13 +1,24 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import AuthForm from "@/app/components/auth/AuthForm";
 import AuthLayout from "@/app/components/auth/AuthLayout";
 
 const features = [
-  { label: "Capture ideas instantly, without friction" },
-  { label: "Collaborate with your team in real time" },
-  { label: "Organize intelligently and find what matters fast" },
+  { label: "Create focused groups for each topic" },
+  { label: "Write notes with full rich text" },
+  { label: "Share context directly in chat" },
 ];
 
-export default function RegisterPage() {
+const AUTH_TOKEN_COOKIE_KEY = "mindshelf_token";
+
+export default async function RegisterPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(AUTH_TOKEN_COOKIE_KEY)?.value;
+
+  if (token?.trim()) {
+    redirect("/home");
+  }
+
   return (
     <AuthLayout
       leftPanelContent={
@@ -16,11 +27,11 @@ export default function RegisterPage() {
             className="text-[2.6rem] font-bold leading-[1.1] text-neutral-content"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
-            Your ideas deserve a better home.
+            Build a calmer place for your work.
           </p>
           <p className="text-base leading-relaxed text-neutral-content/55">
-            Capture, organize, and evolve your thoughts with your team in one
-            elegant, distraction-free space.
+            Create your first group, write a note, and keep every conversation in
+            the same flow.
           </p>
 
           <div className="h-0.5 w-12 bg-primary/70" />

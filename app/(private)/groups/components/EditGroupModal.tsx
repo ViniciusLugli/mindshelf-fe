@@ -25,15 +25,15 @@ export default function EditGroupModal({
   return (
     <AppModal
       open={open}
-      title="Configurar grupo"
-      description="Atualize o nome principal e a identidade visual do grupo."
+      title="Edit group"
+      description="Update the group name and visual identity."
       onClose={onClose}
     >
       <form className="space-y-5" onSubmit={onSubmit}>
         <label className="form-control gap-2 flex flex-col">
-          <span className="text-sm font-medium text-base-content/70">
-            Nome do grupo
-          </span>
+            <span className="text-sm font-medium text-base-content/70">
+              Group name
+            </span>
           <input
             className="input input-bordered rounded-2xl border-base-300/70"
             value={groupName}
@@ -42,9 +42,9 @@ export default function EditGroupModal({
         </label>
 
         <label className="form-control gap-2 flex flex-col">
-          <span className="text-sm font-medium text-base-content/70">
-            Cor do grupo
-          </span>
+            <span className="text-sm font-medium text-base-content/70">
+              Group color
+            </span>
           <div className="rounded-[1.4rem] border border-base-300/60 bg-base-200/35 p-4">
             <div className="flex items-center gap-3 rounded-2xl border border-base-300/60 bg-base-100/80 px-4 py-3 text-sm text-base-content/60">
               <span
@@ -57,8 +57,7 @@ export default function EditGroupModal({
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <ColorPicker value={groupColor} onChange={onGroupColorChange} />
               <span className="text-xs text-base-content/45">
-                Escolha uma cor em hexadecimal para atualizar o destaque do
-                grupo.
+                Choose a hex color to update the group's accent.
               </span>
             </div>
           </div>
@@ -70,14 +69,14 @@ export default function EditGroupModal({
             className="btn btn-ghost rounded-full"
             onClick={onClose}
           >
-            Cancelar
+            Cancel
           </button>
           <button
             type="submit"
             className="btn btn-primary rounded-full"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Salvando..." : "Salvar grupo"}
+            {isSubmitting ? "Saving..." : "Save group"}
           </button>
         </div>
       </form>

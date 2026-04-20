@@ -24,12 +24,12 @@ function HomeResponseSection({
   return (
     <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6">
       <HomeDeskHeading
-        eyebrow="O que pede resposta"
-        title="Convites e conversas ficam na mesma mesa"
-        description="A prioridade desta tela e simples: quem esta esperando uma resposta aparece antes de qualquer outra coisa."
+        eyebrow="Needs your reply"
+        title="Invites and conversations"
+        description="The first things you see are the ones waiting on you."
         action={
           <Link href="/contacts/pending" className="btn btn-ghost rounded-full">
-            Gerenciar convites
+            Manage invites
           </Link>
         }
       />
@@ -40,15 +40,14 @@ function HomeResponseSection({
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="font-ui-mono text-[11px] uppercase text-base-content/38">
-                  Conversas recentes
+                  Recent conversations
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-base-content/58">
-                  Entre direto nos dialogos que estao vivos, com destaque para o
-                  que ainda nao foi lido.
+                  Open the threads that are active now, with unread messages highlighted first.
                 </p>
               </div>
               <span className="font-ui-mono rounded-full border border-base-300/70 bg-base-100 px-3 py-1.5 text-[11px] uppercase text-base-content/48">
-                {unreadCount} nao lida(s)
+                {unreadCount} unread
               </span>
             </div>
           </div>
@@ -58,21 +57,20 @@ function HomeResponseSection({
               <HomeConversationCard key={item.id} item={item} />
             ))
           ) : (
-            <HomeEmptyState message="Suas conversas vao aparecer aqui quando o fluxo comecar." />
+            <HomeEmptyState message="Your conversations will show up here once things start moving." />
           )}
         </div>
 
         <div className="space-y-3">
           <div className="rounded-[1.75rem] border border-base-300/60 bg-base-200/30 p-4">
             <p className="font-ui-mono text-[11px] uppercase text-base-content/38">
-              Pedidos pendentes
+              Pending invites
             </p>
             <p className="mt-3 font-editorial text-3xl leading-none text-base-content">
               {invites.length}
             </p>
             <p className="mt-2 text-sm leading-relaxed text-base-content/58">
-              Convites que desbloqueiam novas conversas e ampliam sua estante de
-              contexto.
+              New connections that can unlock more conversations and shared work.
             </p>
           </div>
 
@@ -88,7 +86,7 @@ function HomeResponseSection({
                 />
               ))
           ) : (
-            <HomeEmptyState message="Nenhum pedido pendente agora." />
+            <HomeEmptyState message="No pending invites right now." />
           )}
         </div>
       </div>

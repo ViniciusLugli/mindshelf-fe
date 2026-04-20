@@ -65,10 +65,10 @@ export function useTaskWorkspaceActions({
       });
       await taskWorkspaceQuery.refetch();
       onSaveSuccess();
-      setFeedback("Task salva com sucesso.");
+      setFeedback("Note saved successfully.");
     } catch (error) {
       setFeedback(
-        error instanceof Error ? error.message : "Nao foi possivel salvar a task.",
+        error instanceof Error ? error.message : "Could not save the note.",
       );
     }
   };
@@ -86,7 +86,7 @@ export function useTaskWorkspaceActions({
       router.refresh();
     } catch (error) {
       setFeedback(
-        error instanceof Error ? error.message : "Nao foi possivel apagar a task.",
+        error instanceof Error ? error.message : "Could not delete the note.",
       );
     }
   };

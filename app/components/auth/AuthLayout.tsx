@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import Logo from "../shared/Logo";
 
 type AuthLayoutProps = {
   leftPanelContent: ReactNode;
@@ -29,9 +30,7 @@ export default function AuthLayout({
         <div className="pointer-events-none absolute left-0 top-0 h-1 w-32 bg-primary" />
 
         <div className="relative">
-          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-neutral-content/40">
-            MindShelf
-          </span>
+          <Logo size="sm" tone="dark" />
         </div>
 
         <div className="relative max-w-105">{leftPanelContent}</div>

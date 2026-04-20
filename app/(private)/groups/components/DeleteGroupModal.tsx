@@ -18,14 +18,13 @@ export default function GroupDeleteModal({
   return (
     <AppModal
       open={open}
-      title="Apagar grupo"
-      description="Essa acao remove o grupo permanentemente. Confirme apenas se tiver certeza."
+      title="Delete group"
+      description="This action removes the group permanently. Only continue if you're sure."
       onClose={onClose}
     >
       <div className="space-y-5">
         <div className="rounded-3xl border border-error/20 bg-error/8 px-4 py-4 text-sm text-error">
-          O grupo &quot;{groupName}&quot; sera apagado e nao podera ser
-          recuperado.
+          The group &quot;{groupName}&quot; will be deleted and cannot be recovered.
         </div>
         <div className="flex justify-end gap-3">
           <button
@@ -33,7 +32,7 @@ export default function GroupDeleteModal({
             className="btn btn-ghost rounded-full"
             onClick={onClose}
           >
-            Cancelar
+            Cancel
           </button>
           <button
             type="button"
@@ -41,7 +40,7 @@ export default function GroupDeleteModal({
             onClick={onDelete}
             disabled={isSaving}
           >
-            {isSaving ? "Apagando..." : "Confirmar exclusao"}
+            {isSaving ? "Deleting..." : "Confirm delete"}
           </button>
         </div>
       </div>

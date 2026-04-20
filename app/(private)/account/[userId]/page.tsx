@@ -22,7 +22,7 @@ export default function AccountProfilePage() {
     profileQuery.error instanceof Error
       ? profileQuery.error.message
       : profileQuery.error
-        ? "Nao foi possivel carregar esse perfil."
+        ? "Could not load this profile."
         : null;
 
   const relationship = useMemo(() => {
@@ -40,7 +40,7 @@ export default function AccountProfilePage() {
     return (
       <section className="px-5 py-10">
         <div className="rounded-[2rem] border border-base-300/70 bg-base-100/90 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
-          Carregando perfil...
+          Loading profile...
         </div>
       </section>
     );
@@ -50,7 +50,7 @@ export default function AccountProfilePage() {
     return (
       <section className="px-5 py-10">
         <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
-          O identificador do perfil e invalido.
+          The profile identifier is invalid.
         </div>
       </section>
     );
@@ -60,7 +60,7 @@ export default function AccountProfilePage() {
     return (
       <section className="px-5 py-10">
         <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
-          {error || "Perfil nao encontrado."}
+          {error || "Profile not found."}
         </div>
       </section>
     );
@@ -77,7 +77,7 @@ export default function AccountProfilePage() {
               <UserAvatar name={profile.name} avatarUrl={profile.avatar_url} size="xl" />
               <div className="space-y-2">
                 <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-                  Perfil
+                  Profile
                 </p>
                 <h1 className="text-4xl font-bold text-base-content">{profile.name}</h1>
                 <p className="text-sm text-base-content/55">{profile.email}</p>
@@ -86,10 +86,10 @@ export default function AccountProfilePage() {
 
             <div className="flex gap-3">
               {relationship.isSelf ? (
-                <Link href="/account" className="btn btn-primary rounded-full">
-                  Editar minha conta
-                </Link>
-              ) : null}
+                  <Link href="/account" className="btn btn-primary rounded-full">
+                    Edit my account
+                  </Link>
+                ) : null}
             </div>
           </div>
 
@@ -97,13 +97,13 @@ export default function AccountProfilePage() {
             <div className="space-y-5 rounded-[1.8rem] border border-base-300/60 bg-base-100 p-6">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                  Relacao
+                  Connection
                 </p>
                 <h2 className="mt-2 text-2xl font-semibold text-base-content">
-                  Conecte-se com {profile.name}
+                  Connect with {profile.name}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-base-content/55">
-                  Envie convites, responda pedidos recebidos ou abra uma conversa direta quando ja forem amigos.
+                  Send an invite, respond to requests, or open a direct chat when you're already connected.
                 </p>
               </div>
 
@@ -118,16 +118,16 @@ export default function AccountProfilePage() {
 
             <aside className="space-y-4 rounded-[1.8rem] border border-base-300/60 bg-base-200/35 p-6">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                Atalhos
+                Shortcuts
               </p>
               <Link href="/account" className="btn btn-ghost w-full rounded-full justify-start">
-                Voltar para minha conta
+                Back to my account
               </Link>
               <Link href="/chat" className="btn btn-ghost w-full rounded-full justify-start">
-                Ver conversas
+                View chat
               </Link>
               <Link href="/contacts/pending" className="btn btn-ghost w-full rounded-full justify-start">
-                Convites pendentes
+                Pending invites
               </Link>
             </aside>
           </div>

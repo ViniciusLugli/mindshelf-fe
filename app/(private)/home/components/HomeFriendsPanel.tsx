@@ -13,9 +13,9 @@ function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
   return (
     <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6 xl:h-full">
       <HomeDeskHeading
-        eyebrow="Pessoas por perto"
-        title="Sua rede fica ao alcance"
-        description="Os contatos recentes aparecem aqui como apoio, sem disputar espaco com as prioridades principais."
+        eyebrow="People nearby"
+        title="Your network stays close"
+        description="Recent connections are easy to reach when you need a quick conversation."
       />
 
       <div className="mt-6 space-y-3">
@@ -43,7 +43,7 @@ function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
             </Link>
           ))
         ) : (
-          <HomeEmptyState message="Seus contatos vao aparecer aqui assim que as amizades forem aceitas." />
+          <HomeEmptyState message="Your people will show up here once invites are accepted." />
         )}
       </div>
     </section>

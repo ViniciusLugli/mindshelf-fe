@@ -33,7 +33,7 @@ export default function HomeInviteCard({
       </div>
 
       <p className="mt-4 font-ui-mono text-[11px] uppercase text-base-content/35">
-        Recebido em {formatDateTime(invite.created_at)}
+        Received {formatDateTime(invite.created_at)}
       </p>
 
       <div className="mt-4 flex gap-2">
@@ -43,7 +43,7 @@ export default function HomeInviteCard({
           disabled={busy}
           onClick={() => onAction(invite.requester.id, "accept")}
         >
-          Aceitar
+          Accept
         </button>
         <button
           type="button"
@@ -51,7 +51,7 @@ export default function HomeInviteCard({
           disabled={busy}
           onClick={() => onAction(invite.requester.id, "reject")}
         >
-          Recusar
+          Decline
         </button>
       </div>
     </article>

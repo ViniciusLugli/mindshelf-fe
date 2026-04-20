@@ -12,7 +12,7 @@ export default function TaskPage() {
     return (
       <section className="px-5 py-8">
         <div className="rounded-4xl border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
-          O identificador da task e invalido.
+          The note identifier is invalid.
         </div>
       </section>
     );

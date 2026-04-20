@@ -34,26 +34,26 @@ export default function ImportSharedTaskModal({
   return (
     <AppModal
       open={open}
-      title="Importar task compartilhada"
-      description="Escolha um dos seus grupos para salvar uma copia dessa task compartilhada." 
+      title="Import shared note"
+      description="Choose one of your groups to save a copy of this shared note."
       onClose={onClose}
     >
       {sharedTask ? (
         <div className="space-y-5">
           <TaskCard
-            title={sharedTask.title || "Task compartilhada"}
+            title={sharedTask.title || "Shared note"}
             notes={stripHtml(sharedTask.notes)}
-            groupName={sharedTask.group_name || "Grupo original"}
+            groupName={sharedTask.group_name || "Original group"}
             groupColor={sharedTask.group_color || "#E76F51"}
           />
 
           <label className="form-control gap-2">
             <span className="text-sm font-medium text-base-content/70">
-              Salvar no grupo
+              Save to group
             </span>
             {isLoadingGroups ? (
               <div className="rounded-3xl border border-dashed border-base-300/70 px-4 py-4 text-sm text-base-content/45">
-                Carregando seus grupos...
+                Loading your groups...
               </div>
             ) : groups.length ? (
               <select
@@ -62,7 +62,7 @@ export default function ImportSharedTaskModal({
                 onChange={(event) => onGroupChange(event.target.value)}
                 disabled={isImporting}
               >
-                <option value="">Selecione um grupo</option>
+                <option value="">Select a group</option>
                 {groups.map((group) => (
                   <option key={group.id} value={group.id}>
                     {group.name}
@@ -71,9 +71,9 @@ export default function ImportSharedTaskModal({
               </select>
             ) : (
               <div className="space-y-3 rounded-3xl border border-dashed border-base-300/70 px-4 py-4 text-sm text-base-content/55">
-                <p>Voce precisa ter pelo menos um grupo para importar essa task.</p>
+                <p>You need at least one group before importing this note.</p>
                 <Link href="/groups/new" className="btn btn-primary rounded-full">
-                  Criar grupo
+                  Create group
                 </Link>
               </div>
             )}
@@ -92,7 +92,7 @@ export default function ImportSharedTaskModal({
               onClick={onClose}
               disabled={isImporting}
             >
-              Cancelar
+              Cancel
             </button>
             <button
               type="button"
@@ -100,7 +100,7 @@ export default function ImportSharedTaskModal({
               onClick={onConfirm}
               disabled={isImporting || isLoadingGroups || !groups.length || !selectedGroupId}
             >
-              {isImporting ? "Importando..." : "Salvar no meu grupo"}
+              {isImporting ? "Importing..." : "Save to my group"}
             </button>
           </div>
         </div>

@@ -21,7 +21,7 @@ export default function AppModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral/35 p-4 backdrop-blur-sm">
       <button
         type="button"
-        aria-label="Fechar modal"
+        aria-label="Close modal"
         className="absolute inset-0 cursor-default"
         onClick={onClose}
       />

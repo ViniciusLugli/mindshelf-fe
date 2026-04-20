@@ -24,11 +24,11 @@ export function getCopy(mode: AuthMode) {
     submitLabel: isRegister ? "Create account" : "Sign in",
     heading: isRegister ? "Create your account" : "Welcome back",
     subtitle: isRegister
-      ? "Start organizing your ideas with your team."
-      : "Sign in to continue using MindShelf.",
+      ? "Get started in a few seconds."
+      : "Sign in to open your workspace.",
     switchText: isRegister
       ? "Already have an account?"
-      : "Do not have an account?",
+      : "Don't have an account?",
     switchLinkLabel: isRegister ? "Sign in" : "Create one",
     switchHref: isRegister ? "/login" : "/register",
   };
@@ -94,11 +94,11 @@ export function formatAuthError(error: unknown): string {
     }
 
     if (message.toLowerCase().includes("network")) {
-      return "Nao foi possivel conectar ao servidor. Verifique sua conexao e tente novamente.";
+      return "Could not connect to the server. Check your connection and try again.";
     }
 
     return message;
   }
 
-  return "Nao foi possivel autenticar. Tente novamente.";
+  return "Could not authenticate. Please try again.";
 }

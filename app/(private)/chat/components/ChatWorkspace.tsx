@@ -17,6 +17,7 @@ import { sharedTaskApi, useGroupsQuery } from "@/lib/api";
 import type { MessageResponse } from "@/lib/api";
 import { queryKeys } from "@/lib/api/query-keys";
 import { useQueryClient } from "@tanstack/react-query";
+import type { UserResponse } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useConversationEntries } from "../hooks/useConversationEntries";
@@ -102,11 +103,11 @@ export default function ChatWorkspace({
       });
       setDraft("");
     } catch (error) {
-      setFeedback(
-        error instanceof Error
-          ? error.message
-          : "Nao foi possivel enviar a mensagem.",
-      );
+        setFeedback(
+          error instanceof Error
+            ? error.message
+          : "Could not send your message.",
+        );
     } finally {
       setIsSubmitting(false);
     }
@@ -124,11 +125,11 @@ export default function ChatWorkspace({
       setSharingOpen(false);
       setTaskSearch("");
     } catch (error) {
-      setFeedback(
-        error instanceof Error
-          ? error.message
-          : "Nao foi possivel compartilhar a task.",
-      );
+        setFeedback(
+          error instanceof Error
+            ? error.message
+          : "Could not share the note.",
+        );
     } finally {
       setIsSubmitting(false);
     }
@@ -183,21 +184,31 @@ export default function ChatWorkspace({
       handleCloseImportModal();
       router.push(`/tasks/${importedTask.id}`);
     } catch (error) {
-      setImportError(
-        error instanceof Error
-          ? error.message
-          : "Nao foi possivel importar a task compartilhada.",
-      );
+        setImportError(
+          error instanceof Error
+            ? error.message
+          : "Could not import the shared note.",
+        );
     } finally {
       setIsImportingSharedTask(false);
     }
   };
 
+  const openShareModal = (friend?: UserResponse | null) => {
+    if (!friend) {
+      setFeedback("Choose a conversation before sharing a note.");
+      return;
+    }
+
+    setFeedback(null);
+    setSharingOpen(true);
+  };
+
   return (
-    <section className="space-y-6 px-5 py-6">
+    <section className="mx-auto max-w-[1380px] space-y-6 px-5 py-6">
       <ChatWorkspaceHeader />
 
-      <div className="grid gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
+      <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,880px)] xl:justify-center">
         <ConversationList
           search={search}
           onSearchChange={setSearch}
@@ -214,9 +225,10 @@ export default function ChatWorkspace({
             draft={draft}
             feedback={feedback}
             isSubmitting={isSubmitting}
+            isShareSubmitting={isSubmitting}
             onDraftChange={setDraft}
             onSendMessage={handleSendMessage}
-            onOpenShareModal={() => setSharingOpen(true)}
+            onOpenShareModal={() => openShareModal(selectedFriend)}
             onSharedTaskClick={handleSharedTaskClick}
           />
         </div>

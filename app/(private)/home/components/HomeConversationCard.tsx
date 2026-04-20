@@ -36,7 +36,7 @@ export default function HomeConversationCard({
             <div className="flex items-center gap-2">
               {item.unreadCount > 0 ? (
                 <span className="font-ui-mono rounded-full bg-primary px-2.5 py-1 text-[10px] uppercase text-primary-content">
-                  {item.unreadCount} nova(s)
+                  {item.unreadCount} new
                 </span>
               ) : null}
               <span className="font-ui-mono text-[11px] uppercase text-base-content/38">

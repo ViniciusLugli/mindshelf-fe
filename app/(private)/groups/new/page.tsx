@@ -34,7 +34,7 @@ export default function NewGroupPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const isSubmitting = createGroupMutation.isPending;
 
-  const previewTitle = state.groupName.trim() || "Novo Grupo";
+  const previewTitle = state.groupName.trim() || "New group";
   const normalizedGroupColor = normalizeHexColor(state.groupColor);
   const previewColor = normalizedGroupColor || DEFAULT_GROUP_COLOR;
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -43,11 +43,11 @@ export default function NewGroupPage() {
 
     const groupName = state.groupName.trim();
     if (!groupName) {
-      setErrorMessage("O nome do grupo é obrigatório.");
+      setErrorMessage("Group name is required.");
       return;
     }
     if (!normalizedGroupColor) {
-      setErrorMessage("Escolha uma cor hex válida.");
+      setErrorMessage("Choose a valid hex color.");
       return;
     }
 
@@ -59,7 +59,7 @@ export default function NewGroupPage() {
       router.push("/groups");
     } catch (error) {
       console.error("Failed to create group", error);
-      setErrorMessage("Não foi possível criar o grupo. Tente novamente.");
+      setErrorMessage("Could not create the group. Please try again.");
     }
   }
 
@@ -69,17 +69,16 @@ export default function NewGroupPage() {
         <div className="mx-auto w-full max-w-lg space-y-10">
           <div className="space-y-3">
             <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-base-content/35">
-              Grupos · Novo
+              Groups · New
             </p>
             <h1
               className="text-4xl font-bold leading-[1.08] text-base-content sm:text-5xl"
               style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
             >
-              Crie um espaço para suas ideias.
+              Create a home for this stream of work.
             </h1>
             <p className="text-sm leading-relaxed text-base-content/50">
-              Defina o nome e a identidade visual do grupo. O preview ao lado
-              reflete as mudanças em tempo real.
+              Set the group name and color. The preview updates in real time.
             </p>
           </div>
 
@@ -90,11 +89,11 @@ export default function NewGroupPage() {
                   1
                 </span>
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/40">
-                  Identidade
+                  Identity
                 </p>
               </div>
               <InputField
-                label="Nome do grupo"
+                label="Group name"
                 placeholder="Ex: Product Design Squad"
                 value={state.groupName}
                 onChange={(value) =>
@@ -111,7 +110,7 @@ export default function NewGroupPage() {
                   2
                 </span>
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/40">
-                  Cor do grupo
+                  Group color
                 </p>
               </div>
 
@@ -120,7 +119,7 @@ export default function NewGroupPage() {
                   <button
                     key={presetColor}
                     type="button"
-                    aria-label={`Usar ${presetColor}`}
+                     aria-label={`Use ${presetColor}`}
                     onClick={() =>
                       setState((prev) => ({ ...prev, groupColor: presetColor }))
                     }
@@ -180,7 +179,7 @@ export default function NewGroupPage() {
                 className="btn btn-ghost btn-sm text-base-content/50"
                 disabled={isSubmitting}
               >
-                Cancelar
+                Cancel
               </button>
               <button
                 type="submit"
@@ -190,10 +189,10 @@ export default function NewGroupPage() {
                 {isSubmitting ? (
                   <>
                     <span className="loading loading-spinner loading-xs" />
-                    Criando...
+                    Creating...
                   </>
                 ) : (
-                  "Criar grupo"
+                  "Create group"
                 )}
               </button>
             </div>

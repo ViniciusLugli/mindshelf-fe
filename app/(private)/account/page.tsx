@@ -63,10 +63,10 @@ export default function AccountPage() {
         email: resolvedForm.email,
         password: "",
       });
-      setFeedback("Suas configuracoes foram atualizadas.");
+      setFeedback("Your settings have been updated.");
     } catch (error) {
       setFeedback(
-        error instanceof Error ? error.message : "Nao foi possivel salvar a conta.",
+        error instanceof Error ? error.message : "Could not save your account.",
       );
     }
   };
@@ -85,21 +85,21 @@ export default function AccountPage() {
       <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
         <div className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-            Minha conta
+            My account
           </p>
 
           <div className="mt-5 flex items-center gap-4">
             <UserAvatar
-              name={currentUser?.name || "Usuario"}
+              name={currentUser?.name || "User"}
               avatarUrl={currentUser?.avatar_url}
               size="xl"
             />
             <div>
               <h1 className="text-3xl font-bold text-base-content">
-                {currentUser?.name || "Sua conta"}
+                {currentUser?.name || "Your account"}
               </h1>
               <p className="mt-1 text-sm text-base-content/55">
-                {currentUser?.email || "Carregando informacoes..."}
+                {currentUser?.email || "Loading account details..."}
               </p>
             </div>
           </div>
@@ -107,15 +107,15 @@ export default function AccountPage() {
           <div className="mt-8 space-y-4 rounded-[1.75rem] border border-base-300/60 bg-base-200/35 p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-lg font-semibold text-base-content">Convites pendentes</p>
+                <p className="text-lg font-semibold text-base-content">Pending invites</p>
                 <p className="text-sm text-base-content/55">
-                  Veja quem quer se conectar com voce.
+                  See who wants to connect with you.
                 </p>
               </div>
               <span className="badge badge-primary badge-lg">{pendingCount}</span>
             </div>
             <Link href="/contacts/pending" className="btn btn-primary w-full rounded-full">
-              Abrir convites
+              Open invites
             </Link>
           </div>
 
@@ -123,7 +123,7 @@ export default function AccountPage() {
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-lg font-semibold text-base-content">Amigos</h2>
               <Link href="/chat" className="text-sm font-medium text-primary">
-                Abrir chat
+                Open chat
               </Link>
             </div>
             <div className="space-y-3">
@@ -147,7 +147,7 @@ export default function AccountPage() {
                 ))
               ) : (
                 <div className="rounded-[1.3rem] border border-dashed border-base-300/70 px-4 py-6 text-sm text-base-content/45">
-                  Seus amigos vao aparecer aqui.
+                  Your friends will show up here.
                 </div>
               )}
             </div>
@@ -156,10 +156,10 @@ export default function AccountPage() {
           <div className="mt-6 rounded-[1.75rem] border border-error/20 bg-error/8 p-5">
             <div className="space-y-2">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-error/70">
-                Sessao
+                Session
               </p>
               <p className="text-sm text-base-content/60">
-                Encerre a sessao neste dispositivo quando terminar de usar sua conta.
+                Sign out of this device when you're done using your account.
               </p>
             </div>
             <button
@@ -167,7 +167,7 @@ export default function AccountPage() {
               className="btn btn-outline btn-error mt-4 w-full rounded-full"
               onClick={handleLogout}
             >
-              Sair da conta
+              Sign out
             </button>
           </div>
         </div>
@@ -180,13 +180,13 @@ export default function AccountPage() {
             <div className="space-y-5 rounded-[1.75rem] border border-base-300/60 bg-[radial-gradient(circle_at_top_left,rgba(231,111,81,0.08),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.42),transparent)] p-5 sm:p-6">
               <div className="space-y-2">
                 <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-                  Configuracoes
+                  Settings
                 </p>
                 <h2 className="text-2xl font-semibold text-base-content">
-                  Ajuste seus dados principais
+                  Update your details
                 </h2>
                 <p className="text-sm text-base-content/55">
-                  A API atual permite alterar nome, email e senha. O avatar segue vindo do backend.
+                  You can update your name, email, and password here.
                 </p>
               </div>
 
@@ -197,7 +197,7 @@ export default function AccountPage() {
                       htmlFor="account-name"
                       className="block text-sm font-medium text-base-content/70"
                     >
-                      Nome
+                      Name
                     </label>
                     <input
                       id="account-name"
@@ -238,12 +238,12 @@ export default function AccountPage() {
                       htmlFor="account-password"
                       className="block text-sm font-medium text-base-content/70"
                     >
-                      Nova senha
+                      New password
                     </label>
                     <input
                       id="account-password"
                       type="password"
-                      placeholder="Preencha apenas se quiser trocar"
+                      placeholder="Only fill this in if you want to change it"
                       className="input input-bordered h-13 w-full rounded-2xl border-base-300/70 bg-base-100 px-4"
                       value={resolvedForm.password}
                       onChange={(event) =>
@@ -258,13 +258,13 @@ export default function AccountPage() {
 
                 <div className="rounded-[1.5rem] border border-base-300/60 bg-base-100/80 p-4 shadow-sm">
                   <div className="mb-3 space-y-1">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
-                      Aparencia
-                    </p>
-                    <p className="text-sm text-base-content/55">
-                      Escolha como a interface deve aparecer para voce.
-                    </p>
-                  </div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
+                        Appearance
+                      </p>
+                      <p className="text-sm text-base-content/55">
+                        Choose how the interface looks for you.
+                      </p>
+                    </div>
                   <ThemeSelector />
                 </div>
               </div>
@@ -278,7 +278,7 @@ export default function AccountPage() {
 
             <div className="mt-6 flex justify-end">
               <button className="btn btn-primary rounded-full px-6" disabled={isSaving}>
-                {isSaving ? "Salvando..." : "Salvar alteracoes"}
+                {isSaving ? "Saving..." : "Save changes"}
               </button>
             </div>
           </form>
@@ -286,10 +286,10 @@ export default function AccountPage() {
           <div className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
             <div className="space-y-2">
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-                Buscar usuarios
+                Find people
               </p>
               <h2 className="text-2xl font-semibold text-base-content">
-                Encontre pessoas para colaborar
+                Search for collaborators
               </h2>
             </div>
 
@@ -297,14 +297,14 @@ export default function AccountPage() {
               <SearchField
                 value={search}
                 onChange={setSearch}
-                placeholder="Procure pelo nome de um usuario"
+                placeholder="Search by a user's name"
               />
             </div>
 
             <div className="mt-5 grid gap-4 lg:grid-cols-2">
               {isSearching ? (
                 <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
-                  Buscando usuarios...
+                  Searching users...
                 </div>
               ) : results.length ? (
                 results.map((user) => {
@@ -348,11 +348,11 @@ export default function AccountPage() {
                 })
               ) : search.trim() ? (
                 <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
-                  Nenhum usuario encontrado.
+                  No users found.
                 </div>
               ) : (
                 <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
-                  Digite um nome para pesquisar usuarios.
+                  Type a name to start searching.
                 </div>
               )}
             </div>

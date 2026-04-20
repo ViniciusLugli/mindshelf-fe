@@ -1,21 +1,21 @@
-const dateTimeFormatter = new Intl.DateTimeFormat("pt-BR", {
+const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
   timeStyle: "short",
 });
 
-const timeFormatter = new Intl.DateTimeFormat("pt-BR", {
+const timeFormatter = new Intl.DateTimeFormat("en-US", {
   hour: "2-digit",
   minute: "2-digit",
 });
 
 export function formatDateTime(value?: string) {
   if (!value) {
-    return "Agora";
+    return "Now";
   }
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
-    return "Agora";
+    return "Now";
   }
 
   return dateTimeFormatter.format(date);

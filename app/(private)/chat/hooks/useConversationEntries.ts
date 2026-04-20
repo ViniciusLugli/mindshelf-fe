@@ -22,7 +22,7 @@ export function useConversationEntries({
         unreadCount: chat.unread_count ?? 0,
         lastMessage:
           chat.last_message?.type === "shared_task"
-            ? "Task compartilhada"
+            ? "Shared note"
             : chat.last_message?.content,
         lastMessageAt:
           chat.last_message?.created_at ?? chat.last_message?.received_at,

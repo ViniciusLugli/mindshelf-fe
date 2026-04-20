@@ -12,7 +12,7 @@ export default function GroupDetailsPage() {
     return (
       <section className="px-5 py-8">
         <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
-          O identificador do grupo e invalido.
+          The group identifier is invalid.
         </div>
       </section>
     );

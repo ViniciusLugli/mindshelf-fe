@@ -16,21 +16,20 @@ export default function TasksPage() {
     error instanceof Error
       ? error.message
       : error
-        ? "Nao foi possivel carregar as tasks."
+        ? "Could not load your notes."
         : null;
 
   return (
     <section className="space-y-6 px-5 py-6">
       <div className="space-y-2">
         <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-          Tasks
+          Notes
         </p>
         <h1 className="text-3xl font-bold text-base-content">
-          Busque suas tasks
+          Find your notes
         </h1>
         <p className="max-w-2xl text-sm leading-relaxed text-base-content/55">
-          Encontre rapidamente o que precisa editar, revisar ou compartilhar com
-          seus amigos.
+          Search for something to edit, review, or share.
         </p>
       </div>
 
@@ -38,7 +37,7 @@ export default function TasksPage() {
         <SearchField
           value={search}
           onChange={setSearch}
-          placeholder="Procure tasks por titulo"
+          placeholder="Search notes by title"
         />
       </div>
 
@@ -51,7 +50,7 @@ export default function TasksPage() {
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {isLoading ? (
           <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-4 py-18 text-center text-sm text-base-content/45">
-            Carregando tasks...
+            Loading notes...
           </div>
         ) : tasks.length ? (
           tasks.map((task) => (
@@ -67,7 +66,7 @@ export default function TasksPage() {
           ))
         ) : (
           <div className="col-span-full rounded-[1.75rem] border border-dashed border-base-300/70 px-4 py-18 text-center text-sm text-base-content/45">
-            Nenhuma task encontrada.
+            No notes found.
           </div>
         )}
       </div>

@@ -112,13 +112,13 @@ describe("formatAuthError", () => {
 
   it("maps network errors and generic failures to user-friendly messages", () => {
     expect(formatAuthError(new Error("Network Error"))).toBe(
-      "Nao foi possivel conectar ao servidor. Verifique sua conexao e tente novamente.",
+      "Could not connect to the server. Check your connection and try again.",
     );
     expect(formatAuthError(new Error("   "))).toBe(
-      "Nao foi possivel autenticar. Tente novamente.",
+      "Could not authenticate. Please try again.",
     );
     expect(formatAuthError("unknown failure")).toBe(
-      "Nao foi possivel autenticar. Tente novamente.",
+      "Could not authenticate. Please try again.",
     );
   });
 });

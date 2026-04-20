@@ -14,23 +14,23 @@ function HomeTasksPanel({ isLoading, tasks }: HomeTasksPanelProps) {
   return (
     <section className="home-paper home-rise rounded-[2.25rem] border border-base-300/70 p-5 shadow-sm sm:p-6 xl:row-span-2">
       <HomeDeskHeading
-        eyebrow="Retome o trabalho"
-        title="Tasks abertas como material de leitura"
-        description="Os rascunhos recentes ficam com mais espaco para voce voltar ao raciocinio sem procurar em varias telas."
+        eyebrow="Keep writing"
+        title="Recent notes"
+        description="Open drafts stay close so you can continue thinking without extra clicks."
         action={
           <Link href="/tasks" className="btn btn-ghost rounded-full">
-            Ver todas
+            View all
           </Link>
         }
       />
 
       <div className="mt-6 grid gap-4">
         {isLoading ? (
-          <HomeEmptyState message="Carregando tasks..." />
+          <HomeEmptyState message="Loading notes..." />
         ) : tasks.length ? (
           tasks.map((task) => <HomeTaskPreviewCard key={task.id} task={task} />)
         ) : (
-          <HomeEmptyState message="Nenhuma task recente por aqui." />
+          <HomeEmptyState message="No recent notes yet." />
         )}
       </div>
     </section>

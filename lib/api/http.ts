@@ -85,7 +85,7 @@ function formatApiError(error: unknown): never {
       )
     ) {
       throw new Error(
-        `API ${status}: o frontend recebeu HTML em vez de JSON. Verifique se a rota /api do Next esta proxyando corretamente para o backend.`,
+        `API ${status}: the frontend received HTML instead of JSON. Check whether the Next /api route is proxying to the backend correctly.`,
       );
     }
 

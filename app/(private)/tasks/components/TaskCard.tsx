@@ -32,7 +32,7 @@ export default function TaskCard({
         </div>
 
         <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/30">
-          Task
+          Note
         </span>
       </div>
 
@@ -41,7 +41,7 @@ export default function TaskCard({
           {title}
         </h3>
         <p className="text-sm leading-relaxed text-base-content/55">
-          {truncateText(notes || "Abra a task para começar a escrever.", 140)}
+          {truncateText(notes || "Open the note to start writing.", 140)}
         </p>
       </div>
     </article>

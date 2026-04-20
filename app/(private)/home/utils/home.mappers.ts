@@ -16,10 +16,10 @@ export function mapChatsToConversationItems(
       unreadCount: chat.unread_count ?? 0,
       preview:
         chat.last_message?.type === "shared_task"
-          ? "Uma task foi compartilhada nessa conversa."
+          ? "A note was shared in this conversation."
           : truncateText(
               chat.last_message?.content ||
-                "Abra a conversa para retomar o contexto.",
+                "Open the conversation to pick up the context.",
               112,
             ),
     }))

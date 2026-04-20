@@ -12,6 +12,7 @@ type ConversationPanelProps = {
   draft: string;
   feedback: string | null;
   isSubmitting: boolean;
+  isShareSubmitting: boolean;
   onDraftChange: (value: string) => void;
   onSendMessage: (event: React.FormEvent<HTMLFormElement>) => void;
   onOpenShareModal: () => void;
@@ -26,6 +27,7 @@ export default function ConversationPanel({
   draft,
   feedback,
   isSubmitting,
+  isShareSubmitting,
   onDraftChange,
   onSendMessage,
   onOpenShareModal,
@@ -36,10 +38,10 @@ export default function ConversationPanel({
       <div className="flex min-h-160 items-center justify-center px-6 text-center">
         <div className="max-w-md space-y-3">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
-            Nenhuma conversa selecionada
+            No conversation selected
           </p>
           <h2 className="text-3xl font-semibold text-base-content">
-            Escolha um amigo para abrir o chat.
+            Pick someone to open the chat.
           </h2>
         </div>
       </div>
@@ -51,7 +53,6 @@ export default function ConversationPanel({
       <ConversationHeader
         friend={friend}
         messageCount={messages.length}
-        onShareTask={onOpenShareModal}
       />
 
       <div className="flex min-h-135 flex-col">
@@ -68,8 +69,10 @@ export default function ConversationPanel({
           lastMessageAt={messages.at(-1)?.created_at}
           feedback={feedback}
           isSubmitting={isSubmitting}
+          isShareSubmitting={isShareSubmitting}
           onDraftChange={onDraftChange}
           onSubmit={onSendMessage}
+          onOpenShareModal={onOpenShareModal}
         />
       </div>
     </>

@@ -25,7 +25,7 @@ export default async function PrivatePageNavbar({
   return (
     <PrivateProviders initialUser={initialUser}>
       <Navbar />
-      {children}
+      <div className="mx-auto w-full max-w-[1600px] px-2 sm:px-3 lg:px-4">{children}</div>
     </PrivateProviders>
   );
 }
