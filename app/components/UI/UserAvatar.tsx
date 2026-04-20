@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 type UserAvatarProps = {
   name: string;
   avatarUrl?: string;
@@ -23,11 +21,14 @@ export default function UserAvatar({
 
   if (avatarUrl) {
     return (
-      <Image
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
         src={avatarUrl}
         alt={name}
         width={sizeConfig.pixels}
         height={sizeConfig.pixels}
+        loading="lazy"
+        decoding="async"
         className={`${sizeConfig.classes} border border-base-300/60 object-cover shadow-sm`}
       />
     );

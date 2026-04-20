@@ -70,7 +70,19 @@ export async function proxyBackendRequest(
   basePath: string,
   segments: string[] = [],
 ) {
-  const targetUrl = new URL(buildBackendUrl(buildBackendPath(basePath, segments)));
+  const requestHost =
+    request.headers.get("x-forwarded-host")?.split(",")[0]?.trim() ||
+    request.headers.get("host") ||
+    request.nextUrl.host;
+  const requestProtocol =
+    request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() ||
+    request.nextUrl.protocol;
+  const targetUrl = new URL(
+    buildBackendUrl(buildBackendPath(basePath, segments), {
+      requestHost,
+      requestProtocol,
+    }),
+  );
   targetUrl.search = request.nextUrl.search;
 
   try {
