@@ -1,4 +1,3 @@
-import { truncateText } from "@/lib/utils/text";
 import type { HomeChat, ConversationItem } from "../types/home.types";
 
 export function mapChatsToConversationItems(
@@ -17,11 +16,8 @@ export function mapChatsToConversationItems(
       preview:
         chat.last_message?.type === "shared_task"
           ? "A note was shared in this conversation."
-          : truncateText(
-              chat.last_message?.content ||
-                "Open the conversation to pick up the context.",
-              112,
-            ),
+          : chat.last_message?.content ||
+            "Open the conversation to pick up the context.",
     }))
     .sort((left, right) =>
       (right.createdAt ?? "").localeCompare(left.createdAt ?? ""),

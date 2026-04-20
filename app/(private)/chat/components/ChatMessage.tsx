@@ -21,7 +21,7 @@ export default function ChatMessage({
   return (
     <div className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[94%] rounded-[1.15rem] px-3 py-2.5 shadow-sm sm:max-w-[82%] sm:rounded-[1.6rem] sm:px-4 sm:py-3 ${
+        className={`max-w-[85vw] min-w-0 overflow-hidden rounded-[1.15rem] px-3 py-2.5 shadow-sm sm:max-w-[82%] sm:rounded-[1.6rem] sm:px-4 sm:py-3 ${
           isMine
             ? "bg-primary text-primary-content"
             : "app-surface-2 border text-base-content"
@@ -70,14 +70,16 @@ export default function ChatMessage({
               <p
                 className={`text-sm leading-relaxed ${
                   isMine ? "text-primary-content/85" : "app-muted"
-                }`}
+                } break-words [overflow-wrap:anywhere] whitespace-pre-wrap`}
               >
                 {message.content}
               </p>
             ) : null}
           </div>
         ) : (
-          <p className="text-sm leading-relaxed break-words">{message.content}</p>
+          <p className="text-sm leading-relaxed break-words [overflow-wrap:anywhere] whitespace-pre-wrap">
+            {message.content}
+          </p>
         )}
 
         <div

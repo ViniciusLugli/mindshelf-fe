@@ -78,15 +78,15 @@ describe("mapChatsToConversationItems", () => {
       }),
     ]);
 
-    expect(items.find((item) => item.friendId === "shared-task-friend")?.preview).toBe(
-      "A note was shared in this conversation.",
-    );
-    expect(items.find((item) => item.friendId === "empty-friend")?.preview).toBe(
-      "Open the conversation to pick up the context.",
-    );
+    expect(
+      items.find((item) => item.friendId === "shared-task-friend")?.preview,
+    ).toBe("A note was shared in this conversation.");
+    expect(
+      items.find((item) => item.friendId === "empty-friend")?.preview,
+    ).toBe("Open the conversation to pick up the context.");
   });
 
-  it("truncates long message previews", () => {
+  it("keeps long message previews and delegates clipping to the UI", () => {
     const longContent = "a".repeat(140);
     const [item] = mapChatsToConversationItems([
       buildChat({
@@ -99,6 +99,6 @@ describe("mapChatsToConversationItems", () => {
       }),
     ]);
 
-    expect(item.preview).toBe(`${"a".repeat(111)}...`);
+    expect(item.preview).toBe(longContent);
   });
 });

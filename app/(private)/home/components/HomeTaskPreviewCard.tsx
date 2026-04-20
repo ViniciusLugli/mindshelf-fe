@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { NorthEastRounded } from "@mui/icons-material";
 import Link from "next/link";
-import { stripHtml, truncateText } from "@/lib/utils/text";
+import { stripHtml } from "@/lib/utils/text";
 import type { TaskResponse } from "@/lib/api";
 
 type HomeTaskPreviewCardProps = {
@@ -16,7 +16,10 @@ function HomeTaskPreviewCard({ task }: HomeTaskPreviewCardProps) {
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <span className="h-3 w-3 rounded-full" style={{ backgroundColor: task.group_color }} />
+          <span
+            className="h-3 w-3 rounded-full"
+            style={{ backgroundColor: task.group_color }}
+          />
           <span className="app-faint font-ui-mono text-[11px] uppercase">
             {task.group_name}
           </span>
@@ -24,15 +27,12 @@ function HomeTaskPreviewCard({ task }: HomeTaskPreviewCardProps) {
         <NorthEastRounded className="app-faint" fontSize="small" />
       </div>
 
-        <h3 className="mt-4 font-editorial text-[2rem] leading-[0.95] text-base-content sm:text-[2.2rem]">
-          {task.title}
-        </h3>
+      <h3 className="mt-4 font-editorial text-[2rem] leading-[0.95] text-base-content sm:text-[2.2rem]">
+        {task.title}
+      </h3>
 
-      <p className="app-subtle mt-3 max-w-2xl text-sm leading-relaxed">
-        {truncateText(
-          stripHtml(task.notes) || "Open the note to continue writing.",
-          180,
-        )}
+      <p className="app-preview-text app-subtle mt-3 max-w-2xl text-sm leading-relaxed">
+        {stripHtml(task.notes) || "Open the note to continue writing."}
       </p>
     </Link>
   );

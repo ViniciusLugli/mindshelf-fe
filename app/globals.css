@@ -159,6 +159,16 @@ body {
   color: var(--app-text-muted);
 }
 
+.app-preview-text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
 .landing-aurora {
   background-image:
     radial-gradient(circle at 10% 18%, var(--app-accent-warm), transparent 28%),

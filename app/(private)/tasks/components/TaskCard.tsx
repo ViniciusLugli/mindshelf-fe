@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { truncateText } from "@/lib/utils/text";
 
 type TaskCardProps = {
   id?: string;
@@ -40,8 +39,8 @@ export default function TaskCard({
         <h3 className="text-xl font-semibold leading-tight text-base-content transition-colors group-hover/task:text-primary">
           {title}
         </h3>
-        <p className="app-subtle text-sm leading-relaxed">
-          {truncateText(notes || "Open the note to start writing.", 140)}
+        <p className="app-preview-text app-subtle text-sm leading-relaxed">
+          {notes || "Open the note to start writing."}
         </p>
       </div>
     </article>

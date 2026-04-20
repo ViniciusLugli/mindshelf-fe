@@ -46,7 +46,7 @@ function HomeConversationCard({
             </div>
           </div>
 
-          <p className="app-subtle mt-3 text-sm leading-relaxed">
+          <p className="app-preview-text app-subtle mt-3 text-sm leading-relaxed">
             {item.preview}
           </p>
         </div>

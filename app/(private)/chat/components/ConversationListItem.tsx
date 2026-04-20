@@ -1,6 +1,5 @@
 import UserAvatar from "@/app/components/UI/UserAvatar";
 import type { ConversationEntry } from "@/app/(private)/chat/types/chat.types";
-import { truncateText } from "@/lib/utils/text";
 import Link from "next/link";
 
 type ConversationListItemProps = {
@@ -40,8 +39,8 @@ export default function ConversationListItem({
             </span>
           ) : null}
         </div>
-        <p className="app-subtle mt-2 text-sm">
-          {truncateText(entry.lastMessage || "No messages yet.", 46)}
+        <p className="app-preview-text app-subtle mt-2 text-sm leading-relaxed">
+          {entry.lastMessage || "No messages yet."}
         </p>
       </div>
     </Link>
