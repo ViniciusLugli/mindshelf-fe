@@ -24,7 +24,7 @@ function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
             <Link
               key={friend.id}
               href={`/chat/${friend.id}`}
-              className="app-surface-2 flex items-center gap-3 rounded-3xl border px-3 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-lg hover:shadow-base-content/8"
+              className="app-surface-2 flex items-center gap-3 rounded-3xl border px-3 py-3 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
             >
               <UserAvatar
                 name={friend.name}

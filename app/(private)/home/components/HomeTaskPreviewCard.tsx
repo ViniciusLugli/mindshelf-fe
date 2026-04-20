@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { NorthEastRounded } from "@mui/icons-material";
 import Link from "next/link";
 import { stripHtml, truncateText } from "@/lib/utils/text";
@@ -7,11 +8,11 @@ type HomeTaskPreviewCardProps = {
   task: TaskResponse;
 };
 
-export default function HomeTaskPreviewCard({ task }: HomeTaskPreviewCardProps) {
+function HomeTaskPreviewCard({ task }: HomeTaskPreviewCardProps) {
   return (
     <Link
       href={`/tasks/${task.id}`}
-      className="app-surface-2 block rounded-[1.75rem] border px-5 py-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-lg hover:shadow-base-content/8"
+      className="app-surface-2 block rounded-[1.75rem] border px-5 py-5 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
@@ -36,3 +37,16 @@ export default function HomeTaskPreviewCard({ task }: HomeTaskPreviewCardProps) 
     </Link>
   );
 }
+
+export default memo(HomeTaskPreviewCard, (prevProps, nextProps) => {
+  const previous = prevProps.task;
+  const next = nextProps.task;
+
+  return (
+    previous.id === next.id &&
+    previous.title === next.title &&
+    previous.notes === next.notes &&
+    previous.group_name === next.group_name &&
+    previous.group_color === next.group_color
+  );
+});

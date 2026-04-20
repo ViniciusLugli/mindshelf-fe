@@ -2,30 +2,39 @@
 
 import HomeFriendsPanel from "@/app/(private)/home/components/HomeFriendsPanel";
 import HomeGroupsPanel from "@/app/(private)/home/components/HomeGroupsPanel";
-import HomeHeroSkeleton from "@/app/(private)/home/components/HomeHeroSkeleton";
-import HomeOnboardingModal from "@/app/(private)/home/components/HomeOnboardingModal";
+import HomeHero from "@/app/(private)/home/components/HomeHero";
 import HomeResponseSection from "@/app/(private)/home/components/HomeResponseSection";
 import HomeTasksPanel from "@/app/(private)/home/components/HomeTasksPanel";
 import {
   useRealtimeRelationshipActions,
-  useRealtimeSocial,
+  useRealtimeSocialCollections,
 } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
-import { useHomeActivityQuery, useUpdateCurrentUserMutation } from "@/lib/api";
+import {
+  type GroupResponse,
+  type TaskResponse,
+  useHomeActivityQuery,
+  useUpdateCurrentUserMutation,
+} from "@/lib/api";
 import dynamic from "next/dynamic";
-import { useCallback, useDeferredValue, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { mapChatsToConversationItems } from "../utils/home.mappers";
 
-const HomeHero = dynamic(
-  () => import("@/app/(private)/home/components/HomeHero"),
+const HomeOnboardingModal = dynamic(
+  () => import("@/app/(private)/home/components/HomeOnboardingModal"),
   {
-    loading: () => <HomeHeroSkeleton />,
+    loading: () => null,
   },
 );
 
+const EMPTY_HOME_ACTIVITY = {
+  groups: [] as GroupResponse[],
+  tasks: [] as TaskResponse[],
+};
+
 export default function HomePageClient() {
   const { currentUser, setCurrentUser } = useSession();
-  const { chats, friends, pendingInvites } = useRealtimeSocial();
+  const { chats, friends, pendingInvites } = useRealtimeSocialCollections();
   const { acceptFriendRequest, rejectFriendRequest } =
     useRealtimeRelationshipActions();
   const updateCurrentUserMutation = useUpdateCurrentUserMutation();
@@ -35,7 +44,7 @@ export default function HomePageClient() {
     string | null
   >(null);
   const homeActivityQuery = useHomeActivityQuery();
-  const homeData = homeActivityQuery.data ?? { groups: [], tasks: [] };
+  const homeData = homeActivityQuery.data ?? EMPTY_HOME_ACTIVITY;
   const isLoading = homeActivityQuery.isLoading;
   const queryFeedback =
     homeActivityQuery.error instanceof Error
@@ -56,9 +65,6 @@ export default function HomePageClient() {
   );
   const pendingInviteCount = pendingInvites.length;
   const resumptionsCount = homeData.tasks.length + homeData.groups.length;
-  const deferredUnreadCount = useDeferredValue(unreadCount);
-  const deferredPendingInviteCount = useDeferredValue(pendingInviteCount);
-  const deferredResumptionsCount = useDeferredValue(resumptionsCount);
   const isOnboardingOpen = Boolean(
     currentUser &&
     !currentUser.onboarding_completed &&
@@ -123,18 +129,20 @@ export default function HomePageClient() {
   return (
     <section className="home-reading-desk px-4 py-5 sm:px-5 sm:py-6">
       <div className="w-full space-y-6">
-        <HomeOnboardingModal
-          open={isOnboardingOpen}
-          isSaving={updateCurrentUserMutation.isPending}
-          onClose={() => setDismissedOnboardingUserId(currentUser?.id ?? null)}
-          onComplete={() => void handleCompleteOnboarding()}
-        />
+        {isOnboardingOpen ? (
+          <HomeOnboardingModal
+            open
+            isSaving={updateCurrentUserMutation.isPending}
+            onClose={() => setDismissedOnboardingUserId(currentUser?.id ?? null)}
+            onComplete={() => void handleCompleteOnboarding()}
+          />
+        ) : null}
 
         <HomeHero
           primaryName={primaryName}
-          unreadCount={deferredUnreadCount}
-          pendingInviteCount={deferredPendingInviteCount}
-          resumptionsCount={deferredResumptionsCount}
+          unreadCount={unreadCount}
+          pendingInviteCount={pendingInviteCount}
+          resumptionsCount={resumptionsCount}
           profileName={currentUser?.name}
           profileEmail={currentUser?.email}
           profileAvatarUrl={currentUser?.avatar_url}

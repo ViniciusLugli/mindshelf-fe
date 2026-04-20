@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Link from "next/link";
 import type { GroupResponse } from "@/lib/api";
 import { getContrastTextColor } from "@/lib/utils/color-contrast";
@@ -6,13 +7,13 @@ type HomeGroupPreviewCardProps = {
   group: GroupResponse;
 };
 
-export default function HomeGroupPreviewCard({ group }: HomeGroupPreviewCardProps) {
+function HomeGroupPreviewCard({ group }: HomeGroupPreviewCardProps) {
   const badgeTextColor = getContrastTextColor(group.color);
 
   return (
     <Link
       href={`/groups/${group.id}`}
-      className="app-surface-2 flex items-center gap-4 rounded-[1.7rem] border px-4 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-lg hover:shadow-base-content/8"
+      className="app-surface-2 flex items-center gap-4 rounded-[1.7rem] border px-4 py-4 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
     >
       <div
         className="flex h-14 w-14 items-center justify-center rounded-[1.35rem] text-lg font-semibold shadow-lg"
@@ -31,3 +32,14 @@ export default function HomeGroupPreviewCard({ group }: HomeGroupPreviewCardProp
     </Link>
   );
 }
+
+export default memo(HomeGroupPreviewCard, (prevProps, nextProps) => {
+  const previous = prevProps.group;
+  const next = nextProps.group;
+
+  return (
+    previous.id === next.id &&
+    previous.name === next.name &&
+    previous.color === next.color
+  );
+});

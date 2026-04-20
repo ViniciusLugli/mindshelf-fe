@@ -1,3 +1,4 @@
+import { memo } from "react";
 import UserAvatar from "@/app/components/UI/UserAvatar";
 import { formatDateTime } from "@/lib/utils/date";
 import type { HomeInvite } from "../types/home.types";
@@ -8,7 +9,7 @@ type HomeInviteCardProps = {
   onAction: (userId: string, action: "accept" | "reject") => void;
 };
 
-export default function HomeInviteCard({
+function HomeInviteCard({
   invite,
   busy,
   onAction,
@@ -57,3 +58,18 @@ export default function HomeInviteCard({
     </article>
   );
 }
+
+export default memo(HomeInviteCard, (prevProps, nextProps) => {
+  const previous = prevProps.invite;
+  const next = nextProps.invite;
+
+  return (
+    prevProps.busy === nextProps.busy &&
+    prevProps.onAction === nextProps.onAction &&
+    previous.requester.id === next.requester.id &&
+    previous.requester.name === next.requester.name &&
+    previous.requester.email === next.requester.email &&
+    previous.requester.avatar_url === next.requester.avatar_url &&
+    previous.created_at === next.created_at
+  );
+});

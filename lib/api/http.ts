@@ -7,6 +7,7 @@ import axios, {
 import type { ApiError } from "./types";
 
 export const AUTH_TOKEN_COOKIE_KEY = "mindshelf_token";
+export const PERSISTENT_LOGIN_COOKIE_KEY = "mindshelf_persistent_login";
 
 type CookieOptions = {
   days?: number;
@@ -173,6 +174,33 @@ export function clearAuthTokenCookie(path = "/") {
   }
 
   document.cookie = `${AUTH_TOKEN_COOKIE_KEY}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=${path}; SameSite=Lax`;
+}
+
+export function setPersistentLoginCookie(options?: CookieOptions) {
+  if (!isBrowser()) {
+    return;
+  }
+
+  const days = options?.days ?? 30;
+  const path = options?.path ?? "/";
+  const sameSite = options?.sameSite ?? "Lax";
+  const secure =
+    options?.secure ??
+    (typeof window !== "undefined" && window.location.protocol === "https:");
+  const expires = new Date(
+    Date.now() + days * 24 * 60 * 60 * 1000,
+  ).toUTCString();
+  const securePart = secure ? "; Secure" : "";
+
+  document.cookie = `${PERSISTENT_LOGIN_COOKIE_KEY}=1; Expires=${expires}; Path=${path}; SameSite=${sameSite}${securePart}`;
+}
+
+export function clearPersistentLoginCookie(path = "/") {
+  if (!isBrowser()) {
+    return;
+  }
+
+  document.cookie = `${PERSISTENT_LOGIN_COOKIE_KEY}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=${path}; SameSite=Lax`;
 }
 
 export function httpGet<T>(

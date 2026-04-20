@@ -38,17 +38,23 @@ type PendingRequest = {
   reject: (error: Error) => void;
 };
 
-type RealtimeSocialContextValue = {
+type RealtimeSocialCollectionsContextValue = {
   chats: ChatResponse[];
   friends: UserResponse[];
   pendingInvites: ReceivedFriendRequestResponse[];
-  connectionStatus: ConnectionStatus;
-  lastError: string | null;
-  outgoingInviteIds: string[];
   refreshChats: () => Promise<ChatResponse[] | void>;
   refreshFriends: () => Promise<UserResponse[] | void>;
   refreshPendingInvites: () => Promise<ReceivedFriendRequestResponse[] | void>;
 };
+
+type RealtimeSocialMetaContextValue = {
+  connectionStatus: ConnectionStatus;
+  lastError: string | null;
+  outgoingInviteIds: string[];
+};
+
+type RealtimeSocialContextValue = RealtimeSocialCollectionsContextValue &
+  RealtimeSocialMetaContextValue;
 
 type RealtimeRelationshipActionsContextValue = {
   sendFriendRequest: (payload: FriendRequest) => Promise<StatusMessageResponse | void>;
@@ -74,11 +80,99 @@ type RealtimeConversationContextValue = {
   }) => void;
 };
 
-const RealtimeSocialContext = createContext<RealtimeSocialContextValue | null>(null);
+const RealtimeSocialCollectionsContext =
+  createContext<RealtimeSocialCollectionsContextValue | null>(null);
+const RealtimeSocialMetaContext =
+  createContext<RealtimeSocialMetaContextValue | null>(null);
 const RealtimeRelationshipActionsContext =
   createContext<RealtimeRelationshipActionsContextValue | null>(null);
 const RealtimeConversationContext =
   createContext<RealtimeConversationContextValue | null>(null);
+
+function areUsersEqual(current: UserResponse[], next: UserResponse[]) {
+  return (
+    current.length === next.length &&
+    current.every((user, index) => {
+      const nextUser = next[index];
+
+      return (
+        user.id === nextUser?.id &&
+        user.name === nextUser?.name &&
+        user.email === nextUser?.email &&
+        user.avatar_url === nextUser?.avatar_url &&
+        user.onboarding_completed === nextUser?.onboarding_completed
+      );
+    })
+  );
+}
+
+function arePendingInvitesEqual(
+  current: ReceivedFriendRequestResponse[],
+  next: ReceivedFriendRequestResponse[],
+) {
+  return (
+    current.length === next.length &&
+    current.every((invite, index) => {
+      const nextInvite = next[index];
+
+      return (
+        invite.requester.id === nextInvite?.requester.id &&
+        invite.requester.name === nextInvite?.requester.name &&
+        invite.requester.email === nextInvite?.requester.email &&
+        invite.requester.avatar_url === nextInvite?.requester.avatar_url &&
+        invite.created_at === nextInvite?.created_at
+      );
+    })
+  );
+}
+
+function getMessageSignature(message?: MessageResponse | null) {
+  if (!message) {
+    return "";
+  }
+
+  return [
+    message.id,
+    message.type,
+    message.content,
+    message.sender_id,
+    message.receiver_id,
+    message.created_at,
+    message.received_at,
+    message.read_at,
+    message.shared_task?.source_task_id,
+    message.shared_task?.imported_task_id,
+  ].join("|");
+}
+
+function areChatsEqual(current: ChatResponse[], next: ChatResponse[]) {
+  return (
+    current.length === next.length &&
+    current.every((chat, index) => {
+      const nextChat = next[index];
+
+      return (
+        chat.friend.id === nextChat?.friend.id &&
+        chat.friend.name === nextChat?.friend.name &&
+        chat.friend.email === nextChat?.friend.email &&
+        chat.friend.avatar_url === nextChat?.friend.avatar_url &&
+        chat.unread_count === nextChat?.unread_count &&
+        getMessageSignature(chat.last_message) ===
+          getMessageSignature(nextChat?.last_message)
+      );
+    })
+  );
+}
+
+function areMessagesEqual(current: MessageResponse[], next: MessageResponse[]) {
+  return (
+    current.length === next.length &&
+    current.every(
+      (message, index) =>
+        getMessageSignature(message) === getMessageSignature(next[index]),
+    )
+  );
+}
 
 function sortChats(chats: ChatResponse[]) {
   return [...chats].sort((left, right) => {
@@ -182,6 +276,7 @@ function withImportedSharedTask(
 
 export function RealtimeProvider({ children }: { children: React.ReactNode }) {
   const { currentUser } = useSession();
+  const currentUserId = currentUser?.id ?? null;
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>(
     "disconnected",
   );
@@ -207,6 +302,16 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
   const pendingRequestsRef = useRef<PendingRequest[]>([]);
   const queuedMessagesRef = useRef<string[]>([]);
   const requestedConversationIdRef = useRef<string | null>(null);
+  const currentUserIdRef = useRef<string | null>(currentUserId);
+  const activeConversationIdRef = useRef<string | null>(activeConversationId);
+
+  useEffect(() => {
+    currentUserIdRef.current = currentUserId;
+  }, [currentUserId]);
+
+  useEffect(() => {
+    activeConversationIdRef.current = activeConversationId;
+  }, [activeConversationId]);
 
   const safeSend = useCallback((payload: WebSocketRequestEnvelope) => {
     const message = JSON.stringify(payload);
@@ -459,7 +564,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
   );
 
   const connect = useCallback(() => {
-    if (!currentUser || typeof window === "undefined") {
+    if (!currentUserId || typeof window === "undefined") {
       return;
     }
 
@@ -503,18 +608,29 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
             const nextChats = Array.isArray(response.data)
               ? (response.data as ChatResponse[])
               : [];
-            setChats(sortChats(nextChats));
+            const sortedChats = sortChats(nextChats);
+            setChats((current) =>
+              areChatsEqual(current, sortedChats) ? current : sortedChats,
+            );
             break;
           }
           case "get_friends": {
-            setFriends(Array.isArray(response.data) ? (response.data as UserResponse[]) : []);
+            const nextFriends = Array.isArray(response.data)
+              ? (response.data as UserResponse[])
+              : [];
+            setFriends((current) =>
+              areUsersEqual(current, nextFriends) ? current : nextFriends,
+            );
             break;
           }
           case "get_pending_friend_requests": {
-            setPendingInvites(
-              Array.isArray(response.data)
-                ? (response.data as ReceivedFriendRequestResponse[])
-                : [],
+            const nextInvites = Array.isArray(response.data)
+              ? (response.data as ReceivedFriendRequestResponse[])
+              : [];
+            setPendingInvites((current) =>
+              arePendingInvitesEqual(current, nextInvites)
+                ? current
+                : nextInvites,
             );
             break;
           }
@@ -523,25 +639,36 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
             if (!friendId) {
               break;
             }
-            setMessagesByUserId((current) => ({
-              ...current,
-              [friendId]: Array.isArray(response.data)
-                ? (response.data as MessageResponse[])
-                : [],
-            }));
+            const nextMessages = Array.isArray(response.data)
+              ? (response.data as MessageResponse[])
+              : [];
+            setMessagesByUserId((current) => {
+              const existingMessages = current[friendId] ?? [];
+
+              if (areMessagesEqual(existingMessages, nextMessages)) {
+                return current;
+              }
+
+              return {
+                ...current,
+                [friendId]: nextMessages,
+              };
+            });
             break;
           }
           case "message_received":
           case "message_sent": {
             const message = response.data as MessageResponse | undefined;
-            if (!message || !currentUser) {
+            const activeUserId = currentUserIdRef.current;
+
+            if (!message || !activeUserId) {
               break;
             }
 
             const otherUser =
-              message.sender_id === currentUser.id ? message.receiver : message.sender;
+              message.sender_id === activeUserId ? message.receiver : message.sender;
             const otherUserId =
-              message.sender_id === currentUser.id
+              message.sender_id === activeUserId
                 ? message.receiver_id ?? otherUser?.id
                 : message.sender_id ?? otherUser?.id;
 
@@ -559,14 +686,17 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
               )?.unread_count;
               const nextUnreadCount =
                 response.action === "message_received" &&
-                activeConversationId !== otherUserId
+                activeConversationIdRef.current !== otherUserId
                   ? (activeUnreadCount ?? 0) + 1
                   : 0;
 
               return upsertChat(current, otherUser, message, nextUnreadCount);
             });
 
-            if (response.action === "message_received" && activeConversationId === otherUserId) {
+            if (
+              response.action === "message_received" &&
+              activeConversationIdRef.current === otherUserId
+            ) {
               void markMessagesRead({
                 with_user_id: otherUserId,
                 up_to_message_id: message.id,
@@ -576,7 +706,9 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
           }
           case "mark_messages_read": {
             const payload = response.data as MarkMessagesReadResponse | undefined;
-            if (!payload?.with_user_id || !currentUser) {
+            const activeUserId = currentUserIdRef.current;
+
+            if (!payload?.with_user_id || !activeUserId) {
               break;
             }
 
@@ -584,7 +716,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
               markConversationMessagesRead(
                 current,
                 payload.with_user_id ?? "",
-                currentUser.id,
+                activeUserId,
                 payload.read_at,
               ),
             );
@@ -599,7 +731,9 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
           }
           case "messages_read": {
             const payload = response.data as MarkMessagesReadResponse | undefined;
-            if (!payload?.with_user_id || !currentUser) {
+            const activeUserId = currentUserIdRef.current;
+
+            if (!payload?.with_user_id || !activeUserId) {
               break;
             }
 
@@ -607,7 +741,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
               markConversationMessagesRead(
                 current,
                 payload.with_user_id ?? "",
-                currentUser.id,
+                activeUserId,
                 payload.read_at,
                 true,
               ),
@@ -651,8 +785,7 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
       );
     };
   }, [
-    activeConversationId,
-    currentUser,
+    currentUserId,
     markMessagesRead,
     resolvePendingRequest,
     syncSocialCollections,
@@ -663,9 +796,9 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
   }, [connect]);
 
   useEffect(() => {
-    shouldReconnectRef.current = Boolean(currentUser);
+    shouldReconnectRef.current = Boolean(currentUserId);
 
-    if (!currentUser) {
+    if (!currentUserId) {
       socketRef.current?.close();
       socketRef.current = null;
       return;
@@ -681,16 +814,13 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
       socketRef.current?.close();
       socketRef.current = null;
     };
-  }, [connect, currentUser]);
+  }, [connect, currentUserId]);
 
-  const socialValue = useMemo<RealtimeSocialContextValue>(
+  const socialCollectionsValue = useMemo<RealtimeSocialCollectionsContextValue>(
     () => ({
       chats,
       friends,
       pendingInvites,
-      outgoingInviteIds,
-      connectionStatus,
-      lastError,
       refreshChats,
       refreshFriends,
       refreshPendingInvites,
@@ -699,13 +829,19 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
       chats,
       friends,
       pendingInvites,
-      outgoingInviteIds,
-      connectionStatus,
-      lastError,
       refreshChats,
       refreshFriends,
       refreshPendingInvites,
     ],
+  );
+
+  const socialMetaValue = useMemo<RealtimeSocialMetaContextValue>(
+    () => ({
+      outgoingInviteIds,
+      connectionStatus,
+      lastError,
+    }),
+    [connectionStatus, lastError, outgoingInviteIds],
   );
 
   const relationshipActionsValue = useMemo<RealtimeRelationshipActionsContextValue>(
@@ -741,24 +877,47 @@ export function RealtimeProvider({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <RealtimeSocialContext.Provider value={socialValue}>
-      <RealtimeRelationshipActionsContext.Provider value={relationshipActionsValue}>
-        <RealtimeConversationContext.Provider value={conversationValue}>
-          {children}
-        </RealtimeConversationContext.Provider>
-      </RealtimeRelationshipActionsContext.Provider>
-    </RealtimeSocialContext.Provider>
+    <RealtimeSocialCollectionsContext.Provider value={socialCollectionsValue}>
+      <RealtimeSocialMetaContext.Provider value={socialMetaValue}>
+        <RealtimeRelationshipActionsContext.Provider value={relationshipActionsValue}>
+          <RealtimeConversationContext.Provider value={conversationValue}>
+            {children}
+          </RealtimeConversationContext.Provider>
+        </RealtimeRelationshipActionsContext.Provider>
+      </RealtimeSocialMetaContext.Provider>
+    </RealtimeSocialCollectionsContext.Provider>
   );
 }
 
-export function useRealtimeSocial() {
-  const context = useContext(RealtimeSocialContext);
+export function useRealtimeSocialCollections() {
+  const context = useContext(RealtimeSocialCollectionsContext);
 
   if (!context) {
-    throw new Error("useRealtimeSocial must be used inside RealtimeProvider");
+    throw new Error(
+      "useRealtimeSocialCollections must be used inside RealtimeProvider",
+    );
   }
 
   return context;
+}
+
+export function useRealtimeSocialMeta() {
+  const context = useContext(RealtimeSocialMetaContext);
+
+  if (!context) {
+    throw new Error(
+      "useRealtimeSocialMeta must be used inside RealtimeProvider",
+    );
+  }
+
+  return context;
+}
+
+export function useRealtimeSocial() {
+  return {
+    ...useRealtimeSocialCollections(),
+    ...useRealtimeSocialMeta(),
+  };
 }
 
 export function useRealtimeRelationshipActions() {

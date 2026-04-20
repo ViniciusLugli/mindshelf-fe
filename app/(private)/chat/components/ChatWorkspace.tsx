@@ -9,7 +9,7 @@ import { useSelectedConversation } from "@/app/(private)/chat/hooks/useSelectedC
 import { useShareableTasks } from "@/app/(private)/chat/hooks/useShareableTasks";
 import {
   useRealtimeConversation,
-  useRealtimeSocial,
+  useRealtimeSocialCollections,
 } from "@/app/providers/RealtimeProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 import { sharedTaskApi, useGroupsQuery } from "@/lib/api";
@@ -29,7 +29,7 @@ export default function ChatWorkspace({
   const router = useRouter();
   const queryClient = useQueryClient();
   const { currentUser } = useSession();
-  const { chats, friends } = useRealtimeSocial();
+  const { chats, friends } = useRealtimeSocialCollections();
   const {
     messagesByUserId,
     setActiveConversationId,

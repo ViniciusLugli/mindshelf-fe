@@ -1,3 +1,4 @@
+import { memo } from "react";
 import UserAvatar from "@/app/components/UI/UserAvatar";
 import { formatDateTime } from "@/lib/utils/date";
 import Link from "next/link";
@@ -7,13 +8,13 @@ type HomeConversationCardProps = {
   item: ConversationItem;
 };
 
-export default function HomeConversationCard({
+function HomeConversationCard({
   item,
 }: HomeConversationCardProps) {
   return (
     <Link
       href={`/chat/${item.friendId}`}
-      className="app-surface-2 block rounded-[1.75rem] border px-4 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-lg hover:shadow-base-content/8 sm:px-5"
+      className="app-surface-2 block rounded-[1.75rem] border px-4 py-4 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35 sm:px-5"
     >
       <div className="flex items-start gap-4">
         <UserAvatar
@@ -53,3 +54,19 @@ export default function HomeConversationCard({
     </Link>
   );
 }
+
+export default memo(HomeConversationCard, (prevProps, nextProps) => {
+  const previous = prevProps.item;
+  const next = nextProps.item;
+
+  return (
+    previous.id === next.id &&
+    previous.friendId === next.friendId &&
+    previous.friendName === next.friendName &&
+    previous.friendEmail === next.friendEmail &&
+    previous.friendAvatarUrl === next.friendAvatarUrl &&
+    previous.createdAt === next.createdAt &&
+    previous.unreadCount === next.unreadCount &&
+    previous.preview === next.preview
+  );
+});

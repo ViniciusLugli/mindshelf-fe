@@ -2,12 +2,12 @@
 
 import RelationshipActions from "@/app/components/social/RelationshipActions";
 import UserAvatar from "@/app/components/UI/UserAvatar";
-import { useRealtimeSocial } from "@/app/providers/RealtimeProvider";
+import { useRealtimeSocialCollections } from "@/app/providers/RealtimeProvider";
 import { formatDateTime } from "@/lib/utils/date";
 import Link from "next/link";
 
 export default function PendingInvitesPage() {
-  const { pendingInvites } = useRealtimeSocial();
+  const { pendingInvites } = useRealtimeSocialCollections();
 
   return (
     <section className="space-y-6 px-5 py-6 mx-40 h-dvh">

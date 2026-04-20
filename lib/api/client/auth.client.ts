@@ -1,4 +1,10 @@
-import { clearAuthTokenCookie, httpPost, setAuthTokenCookie } from "../http";
+import {
+  clearAuthTokenCookie,
+  clearPersistentLoginCookie,
+  httpPost,
+  setAuthTokenCookie,
+  setPersistentLoginCookie,
+} from "../http";
 import type { AuthResponse, CreateUserRequest, LoginRequest } from "../types";
 import { clearSessionUser, persistSessionUser } from "@/lib/auth/session";
 
@@ -26,6 +32,12 @@ export const authApi = {
         persistent: options?.staySignedIn ?? false,
         days: options?.rememberDays ?? 30,
       });
+
+      if (options?.staySignedIn) {
+        setPersistentLoginCookie({ days: options?.rememberDays ?? 30 });
+      } else {
+        clearPersistentLoginCookie();
+      }
     }
 
     if (data.user) {
@@ -46,7 +58,8 @@ export const authApi = {
     }
 
     if (data.token) {
-      setAuthTokenCookie(data.token);
+      setAuthTokenCookie(data.token, { persistent: false });
+      clearPersistentLoginCookie();
     }
 
     if (data.user) {
@@ -58,6 +71,7 @@ export const authApi = {
 
   logout() {
     clearAuthTokenCookie();
+    clearPersistentLoginCookie();
     clearSessionUser();
   },
 };

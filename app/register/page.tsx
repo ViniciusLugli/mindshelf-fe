@@ -2,6 +2,10 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AuthForm from "@/app/components/auth/AuthForm";
 import AuthLayout from "@/app/components/auth/AuthLayout";
+import {
+  AUTH_TOKEN_COOKIE_KEY,
+  PERSISTENT_LOGIN_COOKIE_KEY,
+} from "@/lib/api/http";
 
 const features = [
   { label: "Create focused groups for each topic" },
@@ -9,13 +13,12 @@ const features = [
   { label: "Share context directly in chat" },
 ];
 
-const AUTH_TOKEN_COOKIE_KEY = "mindshelf_token";
-
 export default async function RegisterPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get(AUTH_TOKEN_COOKIE_KEY)?.value;
+  const persistentLogin = cookieStore.get(PERSISTENT_LOGIN_COOKIE_KEY)?.value;
 
-  if (token?.trim()) {
+  if (token?.trim() && persistentLogin === "1") {
     redirect("/home");
   }
 
