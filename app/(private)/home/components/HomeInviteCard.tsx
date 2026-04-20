@@ -15,7 +15,7 @@ function HomeInviteCard({
   onAction,
 }: HomeInviteCardProps) {
   return (
-    <article className="app-surface-2 rounded-[1.75rem] border p-4">
+    <article className="app-surface-2 w-full min-w-0 rounded-[1.75rem] border p-4">
       <div className="flex items-center gap-3">
         <UserAvatar
           name={invite.requester.name}

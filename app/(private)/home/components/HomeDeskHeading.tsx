@@ -14,8 +14,8 @@ export default function HomeDeskHeading({
   action,
 }: HomeDeskHeadingProps) {
   return (
-    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-      <div className="space-y-2">
+    <div className="flex min-w-0 flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="min-w-0 space-y-2">
         <p className="app-faint font-ui-mono text-[11px] uppercase">{eyebrow}</p>
         <h2 className="font-editorial text-4xl leading-[0.92] text-base-content sm:text-[2.8rem]">
           {title}
@@ -25,7 +25,7 @@ export default function HomeDeskHeading({
         </p>
       </div>
 
-      {action ? <div className="shrink-0">{action}</div> : null}
+      {action ? <div className="w-full shrink-0 lg:w-auto">{action}</div> : null}
     </div>
   );
 }

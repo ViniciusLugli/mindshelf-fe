@@ -21,14 +21,14 @@ export default function ChatMessage({
   return (
     <div className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[82%] rounded-[1.6rem] px-4 py-3 shadow-sm ${
+        className={`max-w-[94%] rounded-[1.15rem] px-3 py-2.5 shadow-sm sm:max-w-[82%] sm:rounded-[1.6rem] sm:px-4 sm:py-3 ${
           isMine
             ? "bg-primary text-primary-content"
             : "app-surface-2 border text-base-content"
         }`}
       >
         {message.type === "shared_task" && message.shared_task ? (
-          <div className="space-y-3">
+            <div className="space-y-2.5 sm:space-y-3">
             <p
               className={`text-[11px] font-bold uppercase tracking-[0.22em] ${
                 isMine ? "text-primary-content/70" : "app-faint"
@@ -77,11 +77,11 @@ export default function ChatMessage({
             ) : null}
           </div>
         ) : (
-          <p className="text-sm leading-relaxed">{message.content}</p>
+          <p className="text-sm leading-relaxed break-words">{message.content}</p>
         )}
 
         <div
-          className={`mt-3 flex items-center justify-end gap-2 text-[11px] ${
+          className={`mt-2.5 flex items-center justify-end gap-2 text-[10px] sm:mt-3 sm:text-[11px] ${
             isMine ? "text-primary-content/70" : "app-faint"
           }`}
         >

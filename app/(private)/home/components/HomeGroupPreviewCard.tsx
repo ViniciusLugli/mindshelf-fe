@@ -13,7 +13,7 @@ function HomeGroupPreviewCard({ group }: HomeGroupPreviewCardProps) {
   return (
     <Link
       href={`/groups/${group.id}`}
-      className="app-surface-2 flex items-center gap-4 rounded-[1.7rem] border px-4 py-4 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
+      className="app-surface-2 flex w-full min-w-0 items-center gap-4 rounded-[1.7rem] border px-4 py-4 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
     >
       <div
         className="flex h-14 w-14 items-center justify-center rounded-[1.35rem] text-lg font-semibold shadow-lg"

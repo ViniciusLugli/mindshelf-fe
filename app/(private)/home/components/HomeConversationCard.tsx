@@ -14,7 +14,7 @@ function HomeConversationCard({
   return (
     <Link
       href={`/chat/${item.friendId}`}
-      className="app-surface-2 block rounded-[1.75rem] border px-4 py-4 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35 sm:px-5"
+      className="app-surface-2 block w-full min-w-0 rounded-[1.75rem] border px-4 py-4 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35 sm:px-5"
     >
       <div className="flex items-start gap-4">
         <UserAvatar

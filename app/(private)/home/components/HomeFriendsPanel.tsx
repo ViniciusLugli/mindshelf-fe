@@ -11,7 +11,7 @@ type HomeFriendsPanelProps = {
 
 function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
   return (
-    <section className="home-paper home-rise app-border-soft rounded-[2.25rem] border p-5 sm:p-6 xl:h-full">
+    <section className="home-paper home-rise app-border-soft w-full min-w-0 rounded-[2.25rem] border p-5 sm:p-6 xl:h-full">
       <HomeDeskHeading
         eyebrow="People nearby"
         title="Your network stays close"
@@ -24,7 +24,7 @@ function HomeFriendsPanel({ friends }: HomeFriendsPanelProps) {
             <Link
               key={friend.id}
               href={`/chat/${friend.id}`}
-              className="app-surface-2 flex items-center gap-3 rounded-3xl border px-3 py-3 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
+              className="app-surface-2 flex w-full min-w-0 items-center gap-3 rounded-3xl border px-3 py-3 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
             >
               <UserAvatar
                 name={friend.name}

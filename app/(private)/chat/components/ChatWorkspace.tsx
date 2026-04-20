@@ -71,6 +71,7 @@ export default function ChatWorkspace({
       filteredEntries,
       messagesByUserId,
     });
+  const hasSelectedConversation = Boolean(selectedFriendId);
 
   useConversationLifecycle({
     selectedFriendId,
@@ -200,30 +201,36 @@ export default function ChatWorkspace({
   };
 
   return (
-    <section className="w-full space-y-6 px-5 py-6">
-      <div className="grid h-dvh gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
-        <ConversationList
-          search={search}
-          onSearchChange={setSearch}
-          entries={filteredEntries}
-          selectedFriendId={selectedFriendId}
-        />
-
-        <div className="app-surface-1 h-full overflow-hidden rounded-4xl border">
-          <ConversationPanel
-            friend={selectedFriend}
-            entry={selectedEntry}
-            messages={messages}
-            currentUserId={currentUser?.id}
-            draft={draft}
-            feedback={feedback}
-            isSubmitting={isSubmitting}
-            isShareSubmitting={isSubmitting}
-            onDraftChange={setDraft}
-            onSendMessage={handleSendMessage}
-            onOpenShareModal={() => openShareModal(selectedFriend)}
-            onSharedTaskClick={handleSharedTaskClick}
+    <section className="w-full px-2 py-2 sm:px-5 sm:py-6">
+      <div className="grid h-[calc(100dvh-4.75rem)] min-h-[30rem] gap-3 lg:h-dvh lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-6">
+        <div className={`${hasSelectedConversation ? "hidden lg:block" : "block"} min-h-0`}>
+          <ConversationList
+            search={search}
+            onSearchChange={setSearch}
+            entries={filteredEntries}
+            selectedFriendId={selectedFriendId}
           />
+        </div>
+
+        <div
+          className={`${hasSelectedConversation ? "block" : "hidden lg:block"} min-h-0`}
+        >
+          <div className="app-surface-1 h-full overflow-hidden rounded-[1.35rem] border sm:rounded-4xl">
+            <ConversationPanel
+              friend={selectedFriend}
+              entry={selectedEntry}
+              messages={messages}
+              currentUserId={currentUser?.id}
+              draft={draft}
+              feedback={feedback}
+              isSubmitting={isSubmitting}
+              isShareSubmitting={isSubmitting}
+              onDraftChange={setDraft}
+              onSendMessage={handleSendMessage}
+              onOpenShareModal={() => openShareModal(selectedFriend)}
+              onSharedTaskClick={handleSharedTaskClick}
+            />
+          </div>
         </div>
       </div>
 

@@ -127,8 +127,8 @@ export default function HomePageClient() {
   }, [currentUser, setCurrentUser, updateCurrentUserMutation]);
 
   return (
-    <section className="home-reading-desk px-4 py-5 sm:px-5 sm:py-6">
-      <div className="w-full space-y-6">
+    <section className="home-reading-desk min-w-0 px-4 py-5 sm:px-5 sm:py-6">
+      <div className="w-full min-w-0 space-y-6">
         {isOnboardingOpen ? (
           <HomeOnboardingModal
             open
@@ -149,7 +149,7 @@ export default function HomePageClient() {
         />
 
         {feedback || queryFeedback ? (
-          <div className="home-rise rounded-2xl border border-error/20 bg-error/8 px-4 py-3 text-sm text-error">
+          <div className="app-state-error home-rise rounded-2xl border px-4 py-3 text-sm">
             {feedback || queryFeedback}
           </div>
         ) : null}

@@ -12,7 +12,7 @@ function HomeTaskPreviewCard({ task }: HomeTaskPreviewCardProps) {
   return (
     <Link
       href={`/tasks/${task.id}`}
-      className="app-surface-2 block rounded-[1.75rem] border px-5 py-5 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
+      className="app-surface-2 block w-full min-w-0 rounded-[1.75rem] border px-5 py-5 transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/35"
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">

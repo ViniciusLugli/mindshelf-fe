@@ -27,9 +27,9 @@ function HomeHero({
   profileAvatarUrl,
 }: HomeHeroProps) {
   return (
-    <header className="home-paper home-rise app-border-soft overflow-hidden rounded-[2.5rem] border p-5 sm:p-6 lg:p-8">
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] xl:gap-8">
-        <div className="space-y-6">
+    <header className="home-paper home-rise app-border-soft w-full min-w-0 overflow-hidden rounded-[2.5rem] border p-5 sm:p-6 lg:p-8">
+      <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] xl:gap-8">
+        <div className="min-w-0 space-y-6">
           <div className="flex flex-wrap items-center gap-2.5">
             <span className="app-chip-subtle font-ui-mono rounded-full border px-3 py-1.5 text-[11px] uppercase">
               Today
@@ -49,25 +49,25 @@ function HomeHero({
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <Link href="/groups/new" className="btn btn-primary rounded-full">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link href="/groups/new" className="btn btn-primary w-full rounded-full sm:w-auto">
               <AddCircleOutlineRounded fontSize="small" />
               New group
             </Link>
-            <Link href="/chat" className="btn btn-ghost rounded-full">
+            <Link href="/chat" className="btn btn-ghost w-full rounded-full sm:w-auto">
               <ForumRounded fontSize="small" />
               Open chat
             </Link>
-            <Link href="/groups" className="btn btn-ghost rounded-full">
+            <Link href="/groups" className="btn btn-ghost w-full rounded-full sm:w-auto">
               <TableRows fontSize="small" />
               View groups
             </Link>
           </div>
         </div>
 
-        <aside className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.92fr)] xl:items-stretch">
-          <div className="home-shelf-rail app-border-soft rounded-4xl border p-4 sm:p-5">
-            <div className="app-border-soft flex items-center justify-between gap-3 border-b pb-3">
+        <aside className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,0.92fr)] xl:items-stretch">
+          <div className="home-shelf-rail app-border-soft min-w-0 rounded-4xl border p-4 sm:p-5">
+            <div className="app-border-soft flex flex-col gap-3 border-b pb-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="app-faint font-ui-mono text-[11px] uppercase">
                   Shelf rail

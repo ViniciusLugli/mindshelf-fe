@@ -15,7 +15,7 @@ export default function ConversationListItem({
   return (
     <Link
       href={`/chat/${entry.friend.id}`}
-      className={`flex items-center gap-3 rounded-3xl border px-3 py-3 transition-all ${
+      className={`flex items-center gap-3 rounded-3xl border px-3 py-3 transition-colors transition-transform ${
         isSelected
           ? "border-primary/35 bg-primary/14"
           : "app-surface-2 hover:border-primary/20"

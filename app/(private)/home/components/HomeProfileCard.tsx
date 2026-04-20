@@ -17,12 +17,12 @@ function HomeProfileCard({
 }: HomeProfileCardProps) {
   return (
     <section
-      className={`home-paper home-rise app-border-soft overflow-hidden rounded-[2.25rem] border xl:h-full ${className ?? ""}`}
+      className={`home-paper home-rise app-border-soft w-full min-w-0 overflow-hidden rounded-[2.25rem] border xl:h-full ${className ?? ""}`}
     >
       <div className="app-profile-banner h-28" />
 
       <div className="px-5 pb-5">
-        <div className="-mt-12 flex items-end gap-4">
+        <div className="-mt-12 flex min-w-0 items-end gap-4">
           <UserAvatar name={name || "User"} avatarUrl={avatarUrl ?? undefined} size="lg" />
 
           <div className="min-w-0 pb-1">
@@ -42,11 +42,11 @@ function HomeProfileCard({
           </p>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-3">
-          <Link href="/account" className="btn btn-ghost rounded-full">
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Link href="/account" className="btn btn-ghost w-full rounded-full sm:w-auto">
             My account
           </Link>
-          <Link href="/chat" className="btn btn-ghost rounded-full">
+          <Link href="/chat" className="btn btn-ghost w-full rounded-full sm:w-auto">
             Chat
           </Link>
         </div>

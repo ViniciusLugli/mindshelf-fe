@@ -22,23 +22,26 @@ function HomeResponseSection({
   onInviteAction,
 }: HomeResponseSectionProps) {
   return (
-    <section className="home-paper home-rise app-border-soft rounded-[2.25rem] border p-5 sm:p-6">
+    <section className="home-paper home-rise app-border-soft w-full min-w-0 rounded-[2.25rem] border p-5 sm:p-6">
       <HomeDeskHeading
         eyebrow="Needs your reply"
         title="Invites and conversations"
         description="The first things you see are the ones waiting on you."
         action={
-          <Link href="/contacts/pending" className="btn btn-ghost rounded-full">
+          <Link
+            href="/contacts/pending"
+            className="btn btn-ghost w-full rounded-full sm:w-auto"
+          >
             Manage invites
           </Link>
         }
       />
 
-      <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1.12fr)_320px]">
-        <div className="space-y-3">
+      <div className="mt-6 grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1.12fr)_320px]">
+        <div className="min-w-0 space-y-3">
           <div className="app-surface-2 rounded-[1.6rem] border px-4 py-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
                 <p className="app-faint font-ui-mono text-[11px] uppercase">
                   Recent conversations
                 </p>
@@ -61,7 +64,7 @@ function HomeResponseSection({
           )}
         </div>
 
-        <div className="space-y-3">
+        <div className="min-w-0 space-y-3">
           <div className="app-surface-2 rounded-[1.75rem] border p-4">
             <p className="app-faint font-ui-mono text-[11px] uppercase">
               Pending invites
