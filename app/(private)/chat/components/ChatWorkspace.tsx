@@ -1,6 +1,5 @@
 "use client";
 
-import ChatWorkspaceHeader from "@/app/(private)/chat/components/ChatWorkspaceHeader";
 import ConversationList from "@/app/(private)/chat/components/ConversationList";
 import ConversationPanel from "@/app/(private)/chat/components/ConversationPanel";
 import ImportSharedTaskModal from "@/app/(private)/chat/components/ImportSharedTaskModal";
@@ -202,8 +201,6 @@ export default function ChatWorkspace({
 
   return (
     <section className="w-full space-y-6 px-5 py-6">
-      <ChatWorkspaceHeader />
-
       <div className="grid h-dvh gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
         <ConversationList
           search={search}
