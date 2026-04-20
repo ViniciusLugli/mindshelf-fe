@@ -41,7 +41,7 @@ export default function AccountProfilePage() {
   if (isLoading) {
     return (
       <section className="px-5 py-10">
-        <div className="rounded-[2rem] border border-base-300/70 bg-base-100/90 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
+        <div className="rounded-4xl border border-base-300/70 bg-base-100/90 px-6 py-20 text-center text-sm text-base-content/45 shadow-sm">
           Loading profile...
         </div>
       </section>
@@ -51,7 +51,7 @@ export default function AccountProfilePage() {
   if (!userId) {
     return (
       <section className="px-5 py-10">
-        <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
+        <div className="rounded-4xl border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
           The profile identifier is invalid.
         </div>
       </section>
@@ -61,7 +61,7 @@ export default function AccountProfilePage() {
   if (error || !profile) {
     return (
       <section className="px-5 py-10">
-        <div className="rounded-[2rem] border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
+        <div className="rounded-4xl border border-error/20 bg-error/8 px-6 py-20 text-center text-sm text-error shadow-sm">
           {error || "Profile not found."}
         </div>
       </section>

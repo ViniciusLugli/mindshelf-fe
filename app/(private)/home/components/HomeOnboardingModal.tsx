@@ -18,7 +18,8 @@ const steps = [
   },
   {
     title: "Share it in chat",
-    description: "Bring the right note into the conversation when you need feedback.",
+    description:
+      "Bring the right note into the conversation when you need feedback.",
   },
 ] as const;
 
@@ -40,7 +41,7 @@ export default function HomeOnboardingModal({
           {steps.map((step, index) => (
             <article
               key={step.title}
-              className="rounded-[1.5rem] border border-base-300/70 bg-base-100/90 p-4"
+              className="rounded-3xl border border-base-300/70 bg-base-100/90 p-4"
             >
               <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-primary">
                 Step {index + 1}
@@ -56,7 +57,11 @@ export default function HomeOnboardingModal({
         </div>
 
         <div className="flex justify-end gap-3">
-          <button type="button" className="btn btn-ghost rounded-full" onClick={onClose}>
+          <button
+            type="button"
+            className="btn btn-ghost rounded-full"
+            onClick={onClose}
+          >
             Close
           </button>
           <button

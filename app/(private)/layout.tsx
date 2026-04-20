@@ -1,7 +1,10 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { UserResponse } from "@/lib/api/types";
-import { AUTH_USER_COOKIE_KEY, deserializeSessionUser } from "@/lib/auth/session";
+import {
+  AUTH_USER_COOKIE_KEY,
+  deserializeSessionUser,
+} from "@/lib/auth/session";
 import Navbar from "../components/shared/Navbar/Navbar";
 import PrivateProviders from "../providers/PrivateProviders";
 
@@ -25,7 +28,9 @@ export default async function PrivatePageNavbar({
   return (
     <PrivateProviders initialUser={initialUser}>
       <Navbar />
-      <div className="mx-auto w-full max-w-[1600px] px-2 sm:px-3 lg:px-4">{children}</div>
+      <div className="mx-auto w-full max-w-400 px-2 sm:px-3 lg:px-4">
+        {children}
+      </div>
     </PrivateProviders>
   );
 }

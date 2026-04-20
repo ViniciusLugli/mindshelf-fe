@@ -87,7 +87,7 @@ export default function AccountPage() {
   return (
     <section className="space-y-8 px-5 py-6">
       <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
-        <div className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
+        <div className="rounded-4xl border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
             My account
           </p>
@@ -192,7 +192,7 @@ export default function AccountPage() {
 
         <div className="space-y-6">
           <form
-            className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm"
+            className="rounded-4xl border border-base-300/70 bg-base-100/95 p-6 shadow-sm"
             onSubmit={handleSave}
           >
             <div className="space-y-5 rounded-[1.75rem] border border-base-300/60 bg-[radial-gradient(circle_at_top_left,rgba(231,111,81,0.08),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.42),transparent)] p-5 sm:p-6">
@@ -274,7 +274,7 @@ export default function AccountPage() {
                   </div>
                 </div>
 
-                <div className="rounded-[1.5rem] border border-base-300/60 bg-base-100/80 p-4 shadow-sm">
+                <div className="rounded-3xl border border-base-300/60 bg-base-100/80 p-4 shadow-sm">
                   <div className="mb-3 space-y-1">
                     <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-base-content/35">
                       Appearance
@@ -304,7 +304,7 @@ export default function AccountPage() {
             </div>
           </form>
 
-          <div className="rounded-[2rem] border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
+          <div className="rounded-4xl border border-base-300/70 bg-base-100/95 p-6 shadow-sm">
             <div className="space-y-2">
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
                 Find people
@@ -324,7 +324,7 @@ export default function AccountPage() {
 
             <div className="mt-5 grid gap-4 lg:grid-cols-2">
               {isSearching ? (
-                <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+                <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
                   Searching users...
                 </div>
               ) : results.length ? (
@@ -372,11 +372,11 @@ export default function AccountPage() {
                   );
                 })
               ) : search.trim() ? (
-                <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+                <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
                   No users found.
                 </div>
               ) : (
-                <div className="col-span-full rounded-[1.5rem] border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
+                <div className="col-span-full rounded-3xl border border-dashed border-base-300/70 px-4 py-10 text-center text-sm text-base-content/45">
                   Type a name to start searching.
                 </div>
               )}
