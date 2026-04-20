@@ -103,11 +103,9 @@ export default function ChatWorkspace({
       });
       setDraft("");
     } catch (error) {
-        setFeedback(
-          error instanceof Error
-            ? error.message
-          : "Could not send your message.",
-        );
+      setFeedback(
+        error instanceof Error ? error.message : "Could not send your message.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -125,11 +123,9 @@ export default function ChatWorkspace({
       setSharingOpen(false);
       setTaskSearch("");
     } catch (error) {
-        setFeedback(
-          error instanceof Error
-            ? error.message
-          : "Could not share the note.",
-        );
+      setFeedback(
+        error instanceof Error ? error.message : "Could not share the note.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -184,11 +180,11 @@ export default function ChatWorkspace({
       handleCloseImportModal();
       router.push(`/tasks/${importedTask.id}`);
     } catch (error) {
-        setImportError(
-          error instanceof Error
-            ? error.message
+      setImportError(
+        error instanceof Error
+          ? error.message
           : "Could not import the shared note.",
-        );
+      );
     } finally {
       setIsImportingSharedTask(false);
     }
@@ -205,10 +201,10 @@ export default function ChatWorkspace({
   };
 
   return (
-    <section className="mx-auto max-w-[1380px] space-y-6 px-5 py-6">
+    <section className="w-full space-y-6 px-5 py-6">
       <ChatWorkspaceHeader />
 
-      <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,880px)] xl:justify-center">
+      <div className="grid h-dvh gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
         <ConversationList
           search={search}
           onSearchChange={setSearch}
@@ -216,7 +212,7 @@ export default function ChatWorkspace({
           selectedFriendId={selectedFriendId}
         />
 
-        <div className="rounded-4xl border border-base-300/70 bg-base-100/95 shadow-sm">
+        <div className="h-full overflow-hidden rounded-4xl border border-base-300/70 bg-base-100/95 shadow-sm">
           <ConversationPanel
             friend={selectedFriend}
             entry={selectedEntry}

@@ -16,14 +16,14 @@ export default function ConversationList({
   selectedFriendId,
 }: ConversationListProps) {
   return (
-    <aside className="space-y-4 rounded-4xl border border-base-300/70 bg-base-100/90 p-4 shadow-sm">
+    <aside className="flex h-full min-h-0 flex-col gap-4 overflow-hidden rounded-4xl border border-base-300/70 bg-base-100/90 p-4 shadow-sm">
       <SearchField
         value={search}
         onChange={onSearchChange}
         placeholder="Search for a friend"
       />
 
-      <div className="space-y-2">
+      <div className="min-h-0 space-y-2 overflow-y-auto pr-1">
         {entries.length ? (
           entries.map((entry) => (
             <ConversationListItem

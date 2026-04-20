@@ -20,7 +20,7 @@ export default function TasksPage() {
         : null;
 
   return (
-    <section className="space-y-6 px-5 py-6">
+    <section className="space-y-6 px-5 py-6 mx-40 h-dvh">
       <div className="space-y-2">
         <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
           Notes

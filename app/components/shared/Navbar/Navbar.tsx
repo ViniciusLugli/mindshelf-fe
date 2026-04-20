@@ -12,7 +12,7 @@ export default function Navbar() {
   const { currentUser } = useSession();
 
   return (
-    <div className="navbar mx-auto min-h-16 w-full max-w-400 bg-neutral text-neutral-content px-3 py-2 sm:min-h-20 sm:px-4 lg:min-h-23 lg:px-8">
+    <div className="navbar min-h-16 bg-neutral text-neutral-content px-3 py-2 sm:min-h-20 sm:px-4 lg:min-h-23 lg:px-8">
       <div className="navbar-start">
         <div className="dropdown">
           <div

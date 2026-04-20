@@ -13,16 +13,22 @@ export default function GroupsPage() {
   const { data, isLoading, error } = useGroupsQuery(debouncedSearch, 1, 24);
   const groups = data?.data ?? [];
   const feedback =
-    error instanceof Error ? error.message : error ? "Could not load your groups." : null;
+    error instanceof Error
+      ? error.message
+      : error
+        ? "Could not load your groups."
+        : null;
 
   return (
-    <section className="space-y-6 px-5 py-6">
+    <section className="space-y-6 px-5 py-6 mx-40 h-dvh">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
             Groups
           </p>
-          <h1 className="text-3xl font-bold text-base-content">All your groups</h1>
+          <h1 className="text-3xl font-bold text-base-content">
+            All your groups
+          </h1>
           <p className="text-sm text-base-content/55">
             Search by name, open your notes, and adjust each space when needed.
           </p>

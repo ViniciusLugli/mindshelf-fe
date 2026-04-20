@@ -35,8 +35,8 @@ export default function ConversationPanel({
 }: ConversationPanelProps) {
   if (!friend) {
     return (
-      <div className="flex min-h-160 items-center justify-center px-6 text-center">
-        <div className="max-w-md space-y-3">
+      <div className="flex h-full min-h-0 items-center justify-center px-6 text-center">
+        <div className="space-y-3">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-base-content/35">
             No conversation selected
           </p>
@@ -49,13 +49,10 @@ export default function ConversationPanel({
   }
 
   return (
-    <>
-      <ConversationHeader
-        friend={friend}
-        messageCount={messages.length}
-      />
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      <ConversationHeader friend={friend} messageCount={messages.length} />
 
-      <div className="flex min-h-135 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <MessageList
           messages={messages}
           currentUserId={currentUserId}
@@ -75,6 +72,6 @@ export default function ConversationPanel({
           onOpenShareModal={onOpenShareModal}
         />
       </div>
-    </>
+    </div>
   );
 }
