@@ -88,7 +88,6 @@ export default function AccountProfilePage() {
                 <h1 className="text-4xl font-bold text-base-content">
                   {profile.name}
                 </h1>
-                <p className="app-subtle text-sm">{profile.email}</p>
               </div>
             </div>
 

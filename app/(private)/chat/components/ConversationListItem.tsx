@@ -31,7 +31,6 @@ export default function ConversationListItem({
             <p className="font-semibold text-base-content">
               {entry.friend.name}
             </p>
-            <p className="app-faint text-xs">{entry.friend.email}</p>
           </div>
           {entry.unreadCount > 0 ? (
             <span className="badge badge-error border-0 text-white">
