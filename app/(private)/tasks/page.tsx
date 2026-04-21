@@ -20,7 +20,7 @@ export default function TasksPage() {
         : null;
 
   return (
-    <section className="space-y-6 px-5 py-6 mx-40 h-dvh">
+    <section className="mx-auto min-h-[calc(100dvh-4rem)] w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div className="space-y-2">
         <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
           Notes
@@ -33,7 +33,7 @@ export default function TasksPage() {
         </p>
       </div>
 
-      <div className="max-w-xl">
+      <div className="w-full max-w-xl">
         <SearchField
           value={search}
           onChange={setSearch}
@@ -47,7 +47,7 @@ export default function TasksPage() {
         </div>
       ) : null}
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {isLoading ? (
           <div className="app-empty-state col-span-full rounded-[1.75rem] border border-dashed px-4 py-18 text-center text-sm">
             Loading notes...

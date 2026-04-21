@@ -10,7 +10,7 @@ export default function PendingInvitesPage() {
   const { pendingInvites } = useRealtimeSocialCollections();
 
   return (
-    <section className="space-y-6 px-5 py-6 mx-40 h-dvh">
+    <section className="mx-auto min-h-[calc(100dvh-4rem)] w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div className="space-y-2">
         <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
           Pending invites
@@ -23,7 +23,7 @@ export default function PendingInvitesPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
         {pendingInvites.length ? (
           pendingInvites.map((invite) => (
             <article

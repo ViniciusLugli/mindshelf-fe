@@ -20,7 +20,7 @@ export default function GroupsPage() {
         : null;
 
   return (
-    <section className="space-y-6 px-5 py-6 mx-40 h-dvh">
+    <section className="mx-auto min-h-[calc(100dvh-4rem)] w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2">
           <p className="app-faint text-[11px] font-bold uppercase tracking-[0.28em]">
@@ -34,12 +34,15 @@ export default function GroupsPage() {
           </p>
         </div>
 
-        <Link href="/groups/new" className="btn btn-primary rounded-full">
+        <Link
+          href="/groups/new"
+          className="btn btn-primary w-full rounded-full sm:w-auto"
+        >
           Create group
         </Link>
       </div>
 
-      <div className="max-w-xl">
+      <div className="w-full max-w-xl">
         <SearchField
           value={search}
           onChange={setSearch}
@@ -53,7 +56,7 @@ export default function GroupsPage() {
         </div>
       ) : null}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {isLoading ? (
           <div className="app-empty-state col-span-full rounded-[1.75rem] border border-dashed px-4 py-18 text-center text-sm">
             Loading groups...
