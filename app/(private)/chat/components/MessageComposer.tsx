@@ -30,14 +30,17 @@ export default function MessageComposer({
     <div className="app-border-soft border-t px-3 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:px-5 sm:py-4">
       <div className="app-faint mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] sm:mb-3 sm:flex-row sm:text-xs sm:tracking-[0.22em]">
         <span>{unreadCount ? `${unreadCount} unread` : "All caught up"}</span>
-        <span className="max-w-[52%] truncate text-right sm:max-w-none sm:text-left">
+        <span className="truncate text-right text-[9px] leading-tight sm:max-w-[52%] sm:text-left sm:text-xs sm:leading-normal">
           {lastMessageAt
             ? `Last activity ${formatDateTime(lastMessageAt)}`
             : "New conversation"}
         </span>
       </div>
 
-      <form className="flex items-end gap-2 sm:flex-row sm:items-end sm:gap-3" onSubmit={onSubmit}>
+      <form
+        className="flex items-end gap-2 sm:flex-row sm:items-end sm:gap-3"
+        onSubmit={onSubmit}
+      >
         <button
           type="button"
           className="btn btn-outline btn-square h-12 w-12 shrink-0 rounded-2xl sm:h-14 sm:w-14 sm:rounded-3xl"
@@ -61,7 +64,11 @@ export default function MessageComposer({
           className="btn btn-primary btn-square h-12 w-12 shrink-0 rounded-2xl sm:h-14 sm:w-14 sm:rounded-3xl"
           aria-label={isSubmitting ? "Sending message" : "Send message"}
         >
-          {isSubmitting ? <span className="loading loading-spinner loading-xs" /> : <SendRounded fontSize="small" />}
+          {isSubmitting ? (
+            <span className="loading loading-spinner loading-xs" />
+          ) : (
+            <SendRounded fontSize="small" />
+          )}
         </button>
       </form>
 

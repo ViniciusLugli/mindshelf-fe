@@ -71,7 +71,7 @@ export default function ChatWorkspace({
       filteredEntries,
       messagesByUserId,
     });
-  const hasSelectedConversation = Boolean(selectedFriendId);
+  const hasSelectedConversation = Boolean(initialFriendId);
 
   useConversationLifecycle({
     selectedFriendId,
@@ -203,7 +203,9 @@ export default function ChatWorkspace({
   return (
     <section className="w-full px-2 py-2 sm:px-5 sm:py-6">
       <div className="grid h-[calc(100dvh-4.75rem)] min-h-[30rem] gap-3 lg:h-dvh lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-6">
-        <div className={`${hasSelectedConversation ? "hidden lg:block" : "block"} min-h-0`}>
+        <div
+          className={`${hasSelectedConversation ? "hidden lg:block" : "block"} min-h-0`}
+        >
           <ConversationList
             search={search}
             onSearchChange={setSearch}
