@@ -14,6 +14,11 @@ O frontend do MindShelf tem 3 responsabilidades principais:
 
 O backend vive em outro repositório e a infraestrutura em AWS será mantida com Terraform em um terceiro repositório dedicado.
 
+### Links para o repositório
+
+- [Github]("https://github.com/ViniciusLugli/mindshelf-fe")
+- [Bitbucket]("https://bitbucket.org/viniciuslugli/mindshelf-fe/src/main/")
+
 ## Stack
 
 - Next.js 16
@@ -76,13 +81,13 @@ http://localhost:3000
 
 ### Desenvolvimento
 
-| Variável | Obrigatória | Exemplo | Uso |
-| --- | --- | --- | --- |
-| `API_ORIGIN` | sim | `http://localhost:8080` | origem do backend usada no proxy server-side do Next |
-| `NEXT_PUBLIC_API_ORIGIN` | sim | `http://localhost:8080` | origem pública usada no browser, principalmente para WebSocket |
-| `NEXT_PUBLIC_WS_PATH` | não | `/api/ws` | caminho do WebSocket quando `NEXT_PUBLIC_WS_URL` não é informado |
-| `NEXT_PUBLIC_WS_URL` | não | `ws://localhost:8080/api/ws` | URL completa do WebSocket |
-| `ALLOWED_DEV_ORIGINS` | não | `192.168.0.10,192.168.0.20` | origens extras permitidas pelo Next em desenvolvimento |
+| Variável                 | Obrigatória | Exemplo                      | Uso                                                              |
+| ------------------------ | ----------- | ---------------------------- | ---------------------------------------------------------------- |
+| `API_ORIGIN`             | sim         | `http://localhost:8080`      | origem do backend usada no proxy server-side do Next             |
+| `NEXT_PUBLIC_API_ORIGIN` | sim         | `http://localhost:8080`      | origem pública usada no browser, principalmente para WebSocket   |
+| `NEXT_PUBLIC_WS_PATH`    | não         | `/api/ws`                    | caminho do WebSocket quando `NEXT_PUBLIC_WS_URL` não é informado |
+| `NEXT_PUBLIC_WS_URL`     | não         | `ws://localhost:8080/api/ws` | URL completa do WebSocket                                        |
+| `ALLOWED_DEV_ORIGINS`    | não         | `192.168.0.10,192.168.0.20`  | origens extras permitidas pelo Next em desenvolvimento           |
 
 ### Produção
 
